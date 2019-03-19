@@ -1,5 +1,7 @@
 package application.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,8 +11,8 @@ import java.util.List;
 public class Supply {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "role_id")
-    @javax.persistence.Id
+    @Column(name = "supply_id")
+    @Id
     private int Id;
 
     @Column(name = "name")
@@ -22,7 +24,8 @@ public class Supply {
     @Column(name="created_date")
     private Date createdDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supply")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supply", fetch = FetchType.LAZY)
+//    @JsonIgnore
     private List<Product> listProducts = new ArrayList<>();
 
     public List<Product> getListProducts() {
