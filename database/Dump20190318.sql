@@ -16,166 +16,312 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `dbo_cart`
+-- Table structure for table `dbo_cart`
 --
 
-LOCK TABLES `dbo_cart` WRITE;
-/*!40000 ALTER TABLE `dbo_cart` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_cart` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_cart` (
+  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`cart_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_cart_product`
+-- Table structure for table `dbo_cart_product`
 --
 
-LOCK TABLES `dbo_cart_product` WRITE;
-/*!40000 ALTER TABLE `dbo_cart_product` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_cart_product` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_cart_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_cart_product` (
+  `cart_product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cart_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  PRIMARY KEY (`cart_product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_category`
+-- Table structure for table `dbo_category`
 --
 
-LOCK TABLES `dbo_category` WRITE;
-/*!40000 ALTER TABLE `dbo_category` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_category` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_category` (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `short_desc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_color`
+-- Table structure for table `dbo_color`
 --
 
-LOCK TABLES `dbo_color` WRITE;
-/*!40000 ALTER TABLE `dbo_color` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_color` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_color`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_color` (
+  `color_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `short_desc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`color_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_delivery_status`
+-- Table structure for table `dbo_delivery_status`
 --
 
-LOCK TABLES `dbo_delivery_status` WRITE;
-/*!40000 ALTER TABLE `dbo_delivery_status` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_delivery_status` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_delivery_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_delivery_status` (
+  `delivery_status_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`delivery_status_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_order`
+-- Table structure for table `dbo_order`
 --
 
-LOCK TABLES `dbo_order` WRITE;
-/*!40000 ALTER TABLE `dbo_order` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_order` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_order` (
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `guid` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `customer_name` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(45) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_order_delivery_status`
+-- Table structure for table `dbo_order_delivery_status`
 --
 
-LOCK TABLES `dbo_order_delivery_status` WRITE;
-/*!40000 ALTER TABLE `dbo_order_delivery_status` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_order_delivery_status` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_order_delivery_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_order_delivery_status` (
+  `order_delivery_status_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `delivery_status_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`order_delivery_status_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_order_product`
+-- Table structure for table `dbo_order_product`
 --
 
-LOCK TABLES `dbo_order_product` WRITE;
-/*!40000 ALTER TABLE `dbo_order_product` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_order_product` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_order_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_order_product` (
+  `order_product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`order_product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_product`
+-- Table structure for table `dbo_product`
 --
 
-LOCK TABLES `dbo_product` WRITE;
-/*!40000 ALTER TABLE `dbo_product` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_product` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_product` (
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `short_desc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `main_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `supply_id` int(11) DEFAULT NULL,
+  `promotion_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_product_entity`
+-- Table structure for table `dbo_product_entity`
 --
 
-LOCK TABLES `dbo_product_entity` WRITE;
-/*!40000 ALTER TABLE `dbo_product_entity` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_product_entity` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_product_entity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_product_entity` (
+  `product_entity_id` int(11) NOT NULL AUTO_INCREMENT,
+  `amount` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `size_id` int(11) DEFAULT NULL,
+  `color_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`product_entity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_product_image`
+-- Table structure for table `dbo_product_image`
 --
 
-LOCK TABLES `dbo_product_image` WRITE;
-/*!40000 ALTER TABLE `dbo_product_image` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_product_image` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_product_image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_product_image` (
+  `product_image_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `link` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`product_image_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_promotion`
+-- Table structure for table `dbo_promotion`
 --
 
-LOCK TABLES `dbo_promotion` WRITE;
-/*!40000 ALTER TABLE `dbo_promotion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_promotion` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_promotion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_promotion` (
+  `promotion_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_date` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `short_desc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `discount` decimal(3,2) DEFAULT NULL,
+  `begin_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  PRIMARY KEY (`promotion_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_rate`
+-- Table structure for table `dbo_rate`
 --
 
-LOCK TABLES `dbo_rate` WRITE;
-/*!40000 ALTER TABLE `dbo_rate` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_rate` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_rate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_rate` (
+  `rate_id` int(11) NOT NULL AUTO_INCREMENT,
+  `star` int(11) DEFAULT NULL,
+  `comment` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`rate_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_role`
+-- Table structure for table `dbo_role`
 --
 
-LOCK TABLES `dbo_role` WRITE;
-/*!40000 ALTER TABLE `dbo_role` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_role` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_role` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_size`
+-- Table structure for table `dbo_size`
 --
 
-LOCK TABLES `dbo_size` WRITE;
-/*!40000 ALTER TABLE `dbo_size` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_size` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_size`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_size` (
+  `size_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `short_desc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`size_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_supply`
+-- Table structure for table `dbo_supply`
 --
 
-LOCK TABLES `dbo_supply` WRITE;
-/*!40000 ALTER TABLE `dbo_supply` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_supply` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_supply`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_supply` (
+  `supply_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `short_desc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`supply_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_user`
+-- Table structure for table `dbo_user`
 --
 
-LOCK TABLES `dbo_user` WRITE;
-/*!40000 ALTER TABLE `dbo_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_user` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `password_hash` varchar(400) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `avatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gender` int(1) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `phone_number` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dateOfBirth` date DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dbo_user_role`
+-- Table structure for table `dbo_user_role`
 --
 
-LOCK TABLES `dbo_user_role` WRITE;
-/*!40000 ALTER TABLE `dbo_user_role` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dbo_user_role` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `dbo_user_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `dbo_user_role` (
+  `user_role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`user_role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -186,4 +332,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-18 23:40:26
+-- Dump completed on 2019-03-19 23:14:03
