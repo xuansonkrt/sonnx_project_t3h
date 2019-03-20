@@ -7,25 +7,8 @@ import java.util.List;
 public class AdminProductVM {
 
     private List<SupplyVM> supplyVMList;
-    private List<PromotionVM> promotionVMSList;
-
+    private List<PromotionVM> promotionVMList;
     private List<ProductVM> productVMList;
-
-    public List<SupplyVM> getSupplyVMList() {
-        return supplyVMList;
-    }
-
-    public void setSupplyVMList(List<SupplyVM> supplyVMList) {
-        this.supplyVMList = supplyVMList;
-    }
-
-    public List<PromotionVM> getPromotionVMSList() {
-        return promotionVMSList;
-    }
-
-    public void setPromotionVMSList(List<PromotionVM> promotionVMSList) {
-        this.promotionVMSList = promotionVMSList;
-    }
 
     private List<CategoryVM> categoryVMList;
     private String keyWord;
@@ -61,5 +44,21 @@ public class AdminProductVM {
 
     public void setLayoutHeaderAdminVM(LayoutHeaderAdminVM layoutHeaderAdminVM) {
         this.layoutHeaderAdminVM = layoutHeaderAdminVM;
+    }
+
+    public List<SupplyVM> getSupplyVMList() {
+        return supplyVMList;
+    }
+
+    public void setSupplyVMList(List<SupplyVM> supplyVMList) {
+        this.supplyVMList = supplyVMList;
+    }
+
+    public List<PromotionVM> getPromotionVMList() {
+        return promotionVMList;
+    }
+
+    public void setPromotionVMList(List<PromotionVM> promotionVMList) {
+        this.promotionVMList = promotionVMList;
     }
 }

@@ -37,6 +37,9 @@ $(document).ready(function() {
         $('#input-product-desc').val("");
         $("#input-product-category").val("");
         $("#input-product-price").val("");
+        $("#input-product-promotion").val("");
+        $("#input-product-supply").val("");
+
         $('.product-main-image').attr('src', 'https://www.vietnamprintpack.com/images/default.jpg');
 
     });
@@ -54,6 +57,9 @@ $(document).ready(function() {
                 $("#input-product-desc").val(res.data.data.shortDesc);
                 $("#input-product-category").val(res.data.data.categoryId);
                 $("#input-product-price").val(res.data.data.price);
+                $("#input-product-promotion").val(res.data.data.promotionId);
+                $("#input-product-supply").val(res.data.data.supplyId);
+
                 if(res.data.data.mainImage != null) {
                     $('.product-main-image').attr('src', res.data.data.mainImage);
                 }
@@ -81,7 +87,7 @@ $(document).ready(function() {
         dataProduct.name = $('#input-product-name').val();
         dataProduct.shortDesc = $('#input-product-desc').val();
         dataProduct.categoryId = $("#input-product-category").val();
-        dataProduct.promotionId = 1;
+        dataProduct.promotionId = $("#input-product-promotion").val();;
         dataProduct.supplyId = $("#input-product-supply").val();
 
         dataProduct.mainImage = $('.product-main-image').attr('src');

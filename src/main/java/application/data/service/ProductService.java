@@ -74,5 +74,8 @@ import java.util.List;
          return productRepository.getTotalProducts();
      }
 
+    public List<Product> getListProductByName(String productName){
+         return productRepository.getListProductByName(productName);
+    }
 
  }

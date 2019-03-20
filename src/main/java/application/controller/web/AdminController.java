@@ -158,12 +158,14 @@ public class AdminController {
 //
         Pageable pageable = new PageRequest(page, size);
         Page<Product> productPage = null;
-//
+        List<Product> productList= new ArrayList<>();
         if (productName.getName() != null && !productName.getName().isEmpty()) {
-            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,productName.getName().trim());
+          //  productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,productName.getName().trim());
+            productList=productService.getListProductByName(productName.getName());
             vm.setKeyWord("Find with key: " + productName.getName());
         } else {
-            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,null);
+            productList=productService.getListAllProducts();
+     //       productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,null);
         }
 //
 //
@@ -185,16 +187,33 @@ public class AdminController {
 //            productVM.setPromotionId(product.getPromotionId());
 //            productVMList.add(productVM);
 //        }
+
+            for(Product product : productList) {
+            ProductVM productVM = new ProductVM();
+            if(product.getCategory() == null) {
+                productVM.setCategoryName("Unknown");
+            } else {
+                productVM.setCategoryName(product.getCategory().getName());
+            }
+            productVM.setId(product.getId());
+            productVM.setName(product.getName());
+            productVM.setMainImage(product.getMainImage());
+            productVM.setPrice(product.getPrice());
+            productVM.setShortDesc(product.getShortDesc());
+            productVM.setCreatedDate(product.getCreatedDate());
+            productVM.setPromotionId(product.getPromotionId());
+            productVMList.add(productVM);
+        }
         LayoutHeaderAdminVM layoutHeaderAdminVM= new LayoutHeaderAdminVM("Xuan Son","#");
 //        //vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         vm.setLayoutHeaderAdminVM(layoutHeaderAdminVM);
         vm.setCategoryVMList(categoryVMList);
         vm.setProductVMList(productVMList);
         vm.setSupplyVMList(supplyVMList);
-        vm.setPromotionVMSList(promotionVMList);
-//        if(productVMList.size() == 0) {
-//            vm.setKeyWord("Not found any product");
-//        }
+        vm.setPromotionVMList(promotionVMList);
+        if(productVMList.size() == 0) {
+            vm.setKeyWord("Not found any product");
+        }
 
 
         model.addAttribute("vm",vm);
