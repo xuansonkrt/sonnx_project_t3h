@@ -5,6 +5,7 @@ import application.data.model.Supply;
 import application.data.service.CategoryService;
 import application.model.api.BaseApiResult;
 import application.model.api.DataApiResult;
+import application.model.dto.CategoryDTO;
 import application.model.dto.SupplyDTO;
 import application.model.viewmodel.CategoryVM;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class CategoryApiController {
 
     @PostMapping("/update/{categoryId}")
     public BaseApiResult update (@PathVariable int categoryId,
-                                 @RequestBody SupplyDTO dto){
+                                 @RequestBody CategoryDTO dto){
         BaseApiResult result = new BaseApiResult();
         try{
             Category category = categoryService.findOne(categoryId);
@@ -70,7 +71,7 @@ public class CategoryApiController {
     }
 
     @PostMapping(value = "/create")
-    public BaseApiResult createProduct(@RequestBody Supply dto){
+    public BaseApiResult createProduct(@RequestBody CategoryDTO dto){
         DataApiResult result = new DataApiResult();
 
         try {

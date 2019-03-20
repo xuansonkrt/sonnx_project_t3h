@@ -8,7 +8,7 @@ import java.util.List;
 @Entity(name = "dbo_color")
 public class Color {
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "size_id")
+    @Column(name = "color_id")
     @Id
     private  int id;
 
@@ -23,6 +23,8 @@ public class Color {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "color")
     private List<ProductEntity> productEntityList = new ArrayList<>();
+
+
 
     public int getId() {
         return id;

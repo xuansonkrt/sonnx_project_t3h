@@ -28,7 +28,7 @@ public class Promotion {
     private Date endDate;
 
     @Column(name = "discount")
-    private Date discount;
+    private double discount;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
     private List<Product> listProducts = new ArrayList<>();
@@ -81,11 +81,11 @@ public class Promotion {
         this.endDate = endDate;
     }
 
-    public Date getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Date discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 

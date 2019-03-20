@@ -1,5 +1,7 @@
 package application.model.dto;
 
+import java.util.Date;
+
 public class ProductDTO {
     private int id;
     private int categoryId;
@@ -9,6 +11,15 @@ public class ProductDTO {
     private Double price;
     private int promotionId;
     private int supplyId;
+    private Date createdDate;
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
     public int getId() {
         return id;

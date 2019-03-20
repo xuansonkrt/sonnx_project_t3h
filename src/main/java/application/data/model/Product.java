@@ -10,6 +10,13 @@ public class Product {
     @Id
     private int id;
 
+    @Column(name = "promotion_id", insertable = false, updatable = false)
+    private int promotionId;
+
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name="promotion_id")
+    private Promotion promotion;
+
     @Column(name = "supply_id", insertable = false, updatable = false)
     private int supplyId;
 
@@ -24,12 +31,7 @@ public class Product {
     @JoinColumn(name="category_id")
     private Category category;
 
-    @Column(name = "promotion_id", insertable = false, updatable = false)
-    private int promotionId;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name="promotion_id")
-    private Promotion promotion;
 
 
     @Column(name = "name")

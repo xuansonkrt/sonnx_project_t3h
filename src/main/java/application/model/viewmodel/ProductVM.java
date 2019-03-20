@@ -1,5 +1,7 @@
 package application.model.viewmodel;
 
+import application.data.model.Promotion;
+
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +17,33 @@ public class ProductVM   {
     private SupplyVM supplyVM;
     private CategoryVM categoryVM;
     private PromotionVM promotionVM;
+    private int PromotionId;
+    private int CategoryId;
+    private int SupplyId;
+
+    public int getPromotionId() {
+        return PromotionId;
+    }
+
+    public void setPromotionId(int promotionId) {
+        PromotionId = promotionId;
+    }
+
+    public int getCategoryId() {
+        return CategoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        CategoryId = categoryId;
+    }
+
+    public int getSupplyId() {
+        return SupplyId;
+    }
+
+    public void setSupplyId(int supplyId) {
+        SupplyId = supplyId;
+    }
 
     public int getId() {
         return id;
