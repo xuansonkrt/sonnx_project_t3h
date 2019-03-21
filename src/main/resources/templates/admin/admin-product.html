@@ -44,12 +44,12 @@
                     <h1 class="page-header" id="main-title">Product</h1>
                     <div id="main-content">
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-sm-8 col-12">
                                 <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal" style="margin-bottom: 20px" data-target="#exampleModalLong">
                                     Add new Product
                                 </button>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 col-12">
                                 <form style="float: right" class="form-inline my-2 my-lg-0 float-sm-right" th:action="@{/admin/product}" th:object="${productname}"  method="get">
                                     <input class="form-control mr-sm-2" type="search" th:field="*{name}"  placeholder="Search..." aria-label="Search">
                                     <button class="btn btn-success" type="submit">Search</button>
@@ -94,9 +94,9 @@
                                 <td colspan="1" th:text="${product.getPrice() + ' $'}" style="text-align: right"></td>
                                 <td colspan="2" th:text="${product.getCreatedDate()}"></td>
                                 <td colspan="2">
-                                    <i class="fa fa-edit tooltip-test edit-promotion" th:attr="data-promotion = ${product.getId()}" data-toggle="modal" title="Edit supply" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px"></i>
+                                    <i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" title="Edit supply" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px"></i>
 
-                                    <i class="fa fa-trash-o tooltip-test del-promotion" th:attr="data-promotion = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px"></i>
+                                    <i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px"></i>
 
                                 </td>
                             </tr>
@@ -138,7 +138,7 @@
                 <div class="modal-header" style="background-color: #1ab7ea; border-radius: 4px 4px 0 0;">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h5 class="modal-title" style="color: white" id="exampleModalLongTitle">Add new/ update Supply</h5>
+                            <h5 class="modal-title" style="color: white" id="exampleModalLongTitle">Add new/ update Product</h5>
                         </div>
                         <div class="col-sm-6">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right">
@@ -158,8 +158,13 @@
                                     <img style="max-width: 200px; height: auto" src="https://www.vietnamprintpack.com/images/default.jpg" class="product-main-image">
                                 </div>
 
-                                <div style="text-align: center; margin-top: 20px" class="mx-auto">
-                                    <input type='file'  id="change-product-mainImage"/>
+                                <div style="text-align: center; margin-top: 20px" class=" row mx-auto">
+                                    <div class="col-sm-3">
+
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input  type='file'  id="change-product-mainImage"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -172,16 +177,30 @@
 
                             <div class="form-group">
                                 <label>Category:</label>
-                                <select class="form-control" id="input-product-category">
+                                <select class="form-control" id="input-product-category" placeholder="Choose Category">
                                     <option th:each="category : ${vm.getCategoryVMList()}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Supply:</label>
-                                <select class="form-control" id="input-product-supply">
+                                <select class="form-control" id="input-product-supply" placeholder="Choose Supply">
                                     <option th:each="supply : ${vm.getSupplyVMList()}" th:value="${supply.getId()}" th:text="${supply.getName()}"></option>
                                 </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Promotion:</label>
+                                <select class="form-control" id="input-product-promotion" placeholder="Choose Promotion">
+                                    <option th:each="promotion : ${vm.getPromotionVMList()}" th:value="${promotion.getId()}" th:text="${promotion.getName()}"></option>
+                                </select>
+                            </div>
+
+
+
+                            <div class="form-group margin-bottom-15" style="width: 100%">
+                                <label>Price:</label>
+                                <input type="text" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-product-price">
                             </div>
 
 
@@ -190,17 +209,6 @@
                                 <textarea type="text" class="form-control" id="input-product-desc"></textarea>
                             </div>
 
-                            <div class="form-group margin-bottom-15" style="width: 100%">
-                                <label>Price:</label>
-                                <input type="text" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-product-price">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Promotion:</label>
-                                <select class="form-control" id="input-product-promotion">
-                                    <option th:each="promotion : ${vm.getPromotionVMList()}" th:value="${promotion.getId()}" th:text="${promotion.getName()}"></option>
-                                </select>
-                            </div>
                         </div>
 
                     </div >

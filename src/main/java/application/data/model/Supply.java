@@ -7,39 +7,29 @@ import java.util.List;
 
 @Entity(name = "dbo_supply")
 public class Supply {
-
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "supply_id")
     @Id
-    private int Id;
+    private int id;
 
-    @Column(name = "name")
+    @Column(name="name")
     private String name;
 
-    @Column(name="short_desc")
-    private  String shortDesc;
+    @Column(name = "short_desc")
+    private String shortDesc;
 
-    @Column(name="created_date")
+    @Column(name = "created_date")
     private Date createdDate;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supply", fetch = FetchType.LAZY)
-////    @JsonIgnore
-//    private List<Product> listProducts = new ArrayList<>();
-//
-//    public List<Product> getListProducts() {
-//        return listProducts;
-//    }
-
-//    public void setListProducts(List<Product> listProducts) {
-//        this.listProducts = listProducts;
-//    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supply")
+    private List<Product> listProducts = new ArrayList<>();
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -64,5 +54,13 @@ public class Supply {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public List<Product> getListProducts() {
+        return listProducts;
+    }
+
+    public void setListProducts(List<Product> listProducts) {
+        this.listProducts = listProducts;
     }
 }

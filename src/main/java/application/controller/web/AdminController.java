@@ -247,6 +247,26 @@ public class AdminController {
             categoryVMList.add(categoryVM);
         }
 
+        List<Supply> supplyList = supplyService.getAll();
+        List<SupplyVM> supplyVMList = new ArrayList<>();
+
+        for(Supply supply : supplyList) {
+            SupplyVM supplyVM = new SupplyVM();
+            supplyVM.setId(supply.getId());
+            supplyVM.setName(supply.getName());
+            supplyVMList.add(supplyVM);
+        }
+
+        List<Promotion> promotionList = promotionService.getAll();
+        List<PromotionVM> promotionVMList = new ArrayList<>();
+
+        for(Promotion promotion : promotionList) {
+            PromotionVM promotionVM = new PromotionVM();
+            promotionVM.setId(promotion.getId());
+            promotionVM.setName(promotion.getName());
+            promotionVMList.add(promotionVM);
+        }
+
 
         Pageable pageable = new PageRequest(page, size);
 
@@ -282,6 +302,8 @@ public class AdminController {
         vm.setLayoutHeaderAdminVM(layoutHeaderAdminVM);
         vm.setCategoryVMList(categoryVMList);
         vm.setProductVMList(productVMList);
+        vm.setSupplyVMList(supplyVMList);
+        vm.setPromotionVMList(promotionVMList);
         if(productVMList.size() == 0) {
             vm.setKeyWord("Not found any product");
         }

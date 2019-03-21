@@ -172,16 +172,30 @@
 
                             <div class="form-group">
                                 <label>Category:</label>
-                                <select class="form-control" id="input-product-category">
+                                <select class="form-control" id="input-product-category" placeholder="Choose Category">
                                     <option th:each="category : ${vm.getCategoryVMList()}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Supply:</label>
-                                <select class="form-control" id="input-product-supply">
+                                <select class="form-control" id="input-product-supply" placeholder="Choose Supply">
                                     <option th:each="supply : ${vm.getSupplyVMList()}" th:value="${supply.getId()}" th:text="${supply.getName()}"></option>
                                 </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Promotion:</label>
+                                <select class="form-control" id="input-product-promotion" placeholder="Choose Promotion">
+                                    <option th:each="promotion : ${vm.getPromotionVMList()}" th:value="${promotion.getId()}" th:text="${promotion.getName()}"></option>
+                                </select>
+                            </div>
+
+
+
+                            <div class="form-group margin-bottom-15" style="width: 100%">
+                                <label>Price:</label>
+                                <input type="text" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-product-price">
                             </div>
 
 
@@ -190,17 +204,6 @@
                                 <textarea type="text" class="form-control" id="input-product-desc"></textarea>
                             </div>
 
-                            <div class="form-group margin-bottom-15" style="width: 100%">
-                                <label>Price:</label>
-                                <input type="text" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-product-price">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Promotion:</label>
-                                <select class="form-control" id="input-product-promotion">
-                                    <option th:each="promotion : ${vm.getPromotionVMList()}" th:value="${promotion.getId()}" th:text="${promotion.getName()}"></option>
-                                </select>
-                            </div>
                         </div>
 
                     </div >
