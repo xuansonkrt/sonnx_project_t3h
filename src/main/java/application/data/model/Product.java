@@ -3,36 +3,33 @@ package application.data.model;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "dbo_product")
+@Entity(name="dbo_product")
 public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id")
     @Id
     private int id;
 
-    @Column(name = "promotion_id", insertable = false, updatable = false)
-    private int promotionId;
+    @Column(name = "category_id", insertable = false, updatable = false)
+    private int categoryId;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name="promotion_id")
-    private Promotion promotion;
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @Column(name = "supply_id", insertable = false, updatable = false)
     private int supplyId;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name="supply_id")
+    @JoinColumn(name = "supply_id")
     private Supply supply;
 
-    @Column(name = "category_id", insertable = false, updatable = false)
-    private int categoryId;
+//    @Column(name = "promotion_id", insertable = false, updatable = false)
+//    private int promotionId;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name="category_id")
-    private Category category;
-
-
-
+//    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "promotion_id")
+//    private Promotion promotion;
 
     @Column(name = "name")
     private String name;
@@ -40,11 +37,11 @@ public class Product {
     @Column(name = "short_desc")
     private String shortDesc;
 
-    @Column(name = "main_image")
+    @Column(name="main_image")
     private String mainImage;
 
     @Column(name = "price")
-    private Double price;
+    private double price;
 
     @Column(name = "created_date")
     private Date createdDate;
@@ -55,22 +52,6 @@ public class Product {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getSupplyId() {
-        return supplyId;
-    }
-
-    public void setSupplyId(int supplyId) {
-        this.supplyId = supplyId;
-    }
-
-    public Supply getSupply() {
-        return supply;
-    }
-
-    public void setSupply(Supply supply) {
-        this.supply = supply;
     }
 
     public int getCategoryId() {
@@ -89,21 +70,37 @@ public class Product {
         this.category = category;
     }
 
-    public int getPromotionId() {
-        return promotionId;
+    public int getSupplyId() {
+        return supplyId;
     }
 
-    public void setPromotionId(int promotionId) {
-        this.promotionId = promotionId;
+    public void setSupplyId(int supplyId) {
+        this.supplyId = supplyId;
     }
 
-    public Promotion getPromotion() {
-        return promotion;
+    public Supply getSupply() {
+        return supply;
     }
 
-    public void setPromotion(Promotion promotion) {
-        this.promotion = promotion;
+    public void setSupply(Supply supply) {
+        this.supply = supply;
     }
+
+//    public int getPromotionId() {
+//        return promotionId;
+//    }
+//
+//    public void setPromotionId(int promotionId) {
+//        this.promotionId = promotionId;
+//    }
+
+//    public Promotion getPromotion() {
+//        return promotion;
+//    }
+//
+//    public void setPromotion(Promotion promotion) {
+//        this.promotion = promotion;
+//    }
 
     public String getName() {
         return name;
@@ -129,11 +126,11 @@ public class Product {
         this.mainImage = mainImage;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -144,4 +141,6 @@ public class Product {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
+
 }

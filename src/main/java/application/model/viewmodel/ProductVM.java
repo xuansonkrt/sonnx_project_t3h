@@ -16,18 +16,18 @@ public class ProductVM   {
     private List<ProductImageVM> productImageVMS;
     private SupplyVM supplyVM;
     private CategoryVM categoryVM;
-    private PromotionVM promotionVM;
-    private int PromotionId;
+//    private PromotionVM promotionVM;
+    //private int PromotionId;
     private int CategoryId;
     private int SupplyId;
 
-    public int getPromotionId() {
-        return PromotionId;
-    }
-
-    public void setPromotionId(int promotionId) {
-        PromotionId = promotionId;
-    }
+//    public int getPromotionId() {
+//        return PromotionId;
+//    }
+//
+//    public void setPromotionId(int promotionId) {
+//        PromotionId = promotionId;
+//    }
 
     public int getCategoryId() {
         return CategoryId;
@@ -125,11 +125,11 @@ public class ProductVM   {
         this.categoryVM = categoryVM;
     }
 
-    public PromotionVM getPromotionVM() {
-        return promotionVM;
-    }
-
-    public void setPromotionVM(PromotionVM promotionVM) {
-        this.promotionVM = promotionVM;
-    }
+//    public PromotionVM getPromotionVM() {
+//        return promotionVM;
+//    }
+//
+//    public void setPromotionVM(PromotionVM promotionVM) {
+//        this.promotionVM = promotionVM;
+//    }
 }

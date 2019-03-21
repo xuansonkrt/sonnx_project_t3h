@@ -9,7 +9,7 @@ public class ProductDTO {
     private String shortDesc;
     private String mainImage;
     private Double price;
-    private int promotionId;
+  //  private int promotionId;
     private int supplyId;
     private Date createdDate;
 
@@ -69,13 +69,13 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public int getPromotionId() {
-        return promotionId;
-    }
-
-    public void setPromotionId(int promotionId) {
-        this.promotionId = promotionId;
-    }
+//    public int getPromotionId() {
+//        return promotionId;
+//    }
+//
+//    public void setPromotionId(int promotionId) {
+//        this.promotionId = promotionId;
+//    }
 
     public int getSupplyId() {
         return supplyId;

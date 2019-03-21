@@ -2,6 +2,7 @@ package application.controller.web;
 
 import application.data.model.*;
 import application.data.service.*;
+import application.model.dto.ProductDTO;
 import application.model.viewmodel.*;
 import application.model.viewmodel.Admin.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,112 +116,7 @@ public class AdminController {
         return "/admin/admin-category";
     }
 
-    @GetMapping("/product")
-    public String product(Model model,
-                          @Valid @ModelAttribute("productname") ProductVM productName,
-                          @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-                          @RequestParam(name = "size", required = false, defaultValue = "8") Integer size
-    ) {
-        AdminProductVM vm = new AdminProductVM();
 
-//
-//        /**
-//         * set list categoryVM
-//         */
-        List<Category> categoryList = categoryService.getAll();
-        List<CategoryVM> categoryVMList = new ArrayList<>();
-
-        for(Category category : categoryList) {
-            CategoryVM categoryVM = new CategoryVM();
-            categoryVM.setId(category.getId());
-            categoryVM.setName(category.getName());
-            categoryVMList.add(categoryVM);
-        }
-        List<Supply> supplyList = supplyService.getAll();
-        List<SupplyVM> supplyVMList = new ArrayList<>();
-
-        for(Supply supply : supplyList) {
-            SupplyVM supplyVM = new SupplyVM();
-            supplyVM.setId(supply.getId());
-            supplyVM.setName(supply.getName());
-            supplyVMList.add(supplyVM);
-        }
-
-        List<PromotionVM> promotionVMList = new ArrayList<>();
-        List<Promotion> promotionList= promotionService.getAll();
-        for(Promotion promotion : promotionList) {
-            PromotionVM promotionVM = new PromotionVM();
-            promotionVM.setId(promotion.getId());
-            promotionVM.setName(promotion.getName());
-            promotionVMList.add(promotionVM);
-        }
-
-//
-        Pageable pageable = new PageRequest(page, size);
-        Page<Product> productPage = null;
-        List<Product> productList= new ArrayList<>();
-        if (productName.getName() != null && !productName.getName().isEmpty()) {
-          //  productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,productName.getName().trim());
-            productList=productService.getListProductByName(productName.getName());
-            vm.setKeyWord("Find with key: " + productName.getName());
-        } else {
-            productList=productService.getListAllProducts();
-     //       productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,null);
-        }
-//
-//
-        List<ProductVM> productVMList = new ArrayList<>();
-//
-//        for(Product product : productPage.getContent()) {
-//            ProductVM productVM = new ProductVM();
-//            if(product.getCategory() == null) {
-//                productVM.setCategoryName("Unknown");
-//            } else {
-//                productVM.setCategoryName(product.getCategory().getName());
-//            }
-//            productVM.setId(product.getId());
-//            productVM.setName(product.getName());
-//            productVM.setMainImage(product.getMainImage());
-//            productVM.setPrice(product.getPrice());
-//            productVM.setShortDesc(product.getShortDesc());
-//            productVM.setCreatedDate(product.getCreatedDate());
-//            productVM.setPromotionId(product.getPromotionId());
-//            productVMList.add(productVM);
-//        }
-
-            for(Product product : productList) {
-            ProductVM productVM = new ProductVM();
-            if(product.getCategory() == null) {
-                productVM.setCategoryName("Unknown");
-            } else {
-                productVM.setCategoryName(product.getCategory().getName());
-            }
-            productVM.setId(product.getId());
-            productVM.setName(product.getName());
-            productVM.setMainImage(product.getMainImage());
-            productVM.setPrice(product.getPrice());
-            productVM.setShortDesc(product.getShortDesc());
-            productVM.setCreatedDate(product.getCreatedDate());
-            productVM.setPromotionId(product.getPromotionId());
-            productVMList.add(productVM);
-        }
-        LayoutHeaderAdminVM layoutHeaderAdminVM= new LayoutHeaderAdminVM("Xuan Son","#");
-//        //vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
-        vm.setLayoutHeaderAdminVM(layoutHeaderAdminVM);
-        vm.setCategoryVMList(categoryVMList);
-        vm.setProductVMList(productVMList);
-        vm.setSupplyVMList(supplyVMList);
-        vm.setPromotionVMList(promotionVMList);
-        if(productVMList.size() == 0) {
-            vm.setKeyWord("Not found any product");
-        }
-
-
-        model.addAttribute("vm",vm);
-//        model.addAttribute("page",productPage);
-
-        return "/admin/admin-product";
-    }
 
 
     @GetMapping("/promotion")
@@ -327,4 +223,52 @@ public class AdminController {
         model.addAttribute("vm", vm);
         return "/admin/admin-color";
     }
+
+
+    @GetMapping("/product")
+    public String product(Model model,
+                         @Valid @ModelAttribute("productname") ProductDTO productName,
+                          @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                          @RequestParam(name = "size", required = false, defaultValue = "8") Integer size) {
+        AdminProductVM vm= new AdminProductVM();
+        List<Product> productList;
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<Product> productPage = null;
+        if (productName.getName() != null && !productName.getName().isEmpty()) {
+            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,productName.getName().trim());
+            vm.setKeyWord("Find with key: " + productName.getName());
+        } else {
+            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,null);
+        }
+        List<ProductVM> productVMList = new ArrayList<>();
+
+        for(Product product : productPage.getContent()) {
+            ProductVM productVM = new ProductVM();
+            if(product.getCategory() == null) {
+                productVM.setCategoryName("Unknown");
+            } else {
+                productVM.setCategoryName(product.getCategory().getName());
+            }
+            productVM.setId(product.getId());
+            productVM.setName(product.getName());
+            productVM.setMainImage(product.getMainImage());
+            productVM.setPrice(product.getPrice());
+            productVM.setShortDesc(product.getShortDesc());
+            productVM.setCreatedDate(product.getCreatedDate());
+            productVM.setCategoryId(product.getCategoryId());
+        //    productVM.setPromotionId(product.getPromotionId());
+            productVM.setSupplyId(product.getSupplyId());
+            productVMList.add(productVM);
+        }
+        if(productVMList.size() == 0) {
+            vm.setKeyWord("Not found any product");
+        }
+        LayoutHeaderAdminVM layoutHeaderAdminVM=new LayoutHeaderAdminVM("Xuan Son","#");
+        vm.setLayoutHeaderAdminVM( layoutHeaderAdminVM);
+        vm.setProductVMList(productVMList);
+        model.addAttribute("vm", vm);
+        return "/admin/admin-product";
+    }
+
 }

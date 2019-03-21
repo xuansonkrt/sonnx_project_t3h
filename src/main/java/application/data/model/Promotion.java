@@ -30,8 +30,8 @@ public class Promotion {
     @Column(name = "discount")
     private double discount;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
-    private List<Product> listProducts = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
+//    private List<Product> listProducts = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -89,11 +89,11 @@ public class Promotion {
         this.discount = discount;
     }
 
-    public List<Product> getListProducts() {
-        return listProducts;
-    }
-
-    public void setListProducts(List<Product> listProducts) {
-        this.listProducts = listProducts;
-    }
+//    public List<Product> getListProducts() {
+//        return listProducts;
+//    }
+//
+//    public void setListProducts(List<Product> listProducts) {
+//        this.listProducts = listProducts;
+//    }
 }
