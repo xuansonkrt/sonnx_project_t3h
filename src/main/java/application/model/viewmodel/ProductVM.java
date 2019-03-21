@@ -12,6 +12,15 @@ public class ProductVM {
     private Double price;
     private Date createdDate;
     private List<ProductImageVM> productImageVMS;
+    private String supplyName;
+
+    public String getSupplyName() {
+        return supplyName;
+    }
+
+    public void setSupplyName(String supplyName) {
+        this.supplyName = supplyName;
+    }
 
     public int getId() {
         return id;

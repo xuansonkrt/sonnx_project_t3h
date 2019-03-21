@@ -53,6 +53,7 @@ $(document).ready(function() {
         axios.get("/api/product/detail/" + pdInfo).then(function(res){
             NProgress.done();
             if(res.data.success) {
+                console.log("data: ",res.data);
                 dataProduct.id = res.data.data.id;
                 $("#input-product-name").val(res.data.data.name);
                 $("#input-product-desc").val(res.data.data.shortDesc);

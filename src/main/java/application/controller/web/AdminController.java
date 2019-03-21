@@ -285,9 +285,15 @@ public class AdminController {
         for(Product product : productPage.getContent()) {
             ProductVM productVM = new ProductVM();
             if(product.getCategory() == null) {
-                productVM.setCategoryName("Unknown");
+                productVM.setCategoryName("");
             } else {
                 productVM.setCategoryName(product.getCategory().getName());
+            }
+
+            if(product.getSupply() == null) {
+                productVM.setSupplyName("");
+            } else {
+                productVM.setSupplyName(product.getSupply().getName());
             }
             productVM.setId(product.getId());
             productVM.setName(product.getName());

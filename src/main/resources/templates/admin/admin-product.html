@@ -72,6 +72,9 @@
                                     Category
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
+                                    Supply
+                                </th>
+                                <th colspan="2" style="background-color: #1ab7ea; text-align: center">
                                     Short Desc
                                 </th>
                                 <th colspan="1" style="background-color: #1ab7ea; text-align: center">
@@ -90,13 +93,14 @@
                                 <td colspan="1" th:text="${page.number*page.size + iter.index+1}"></td>
                                 <td colspan="2" th:text="${product.getName()}"></td>
                                 <td colspan="2" th:text="${product.getCategoryName()}"></td>
+                                <td colspan="2" th:text="${product.getSupplyName()}"></td>
                                 <td colspan="2" th:text="${product.getShortDesc()}"></td>
                                 <td colspan="1" th:text="${product.getPrice() + ' $'}" style="text-align: right"></td>
                                 <td colspan="2" th:text="${product.getCreatedDate()}"></td>
                                 <td colspan="2">
-                                    <i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" title="Edit supply" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px"></i>
-
-                                    <i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px"></i>
+                                    <i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px" title="Edit"></i>
+                                    <i class="fa fa-file-image-o tooltip-test image-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#ImageModal" style="cursor: pointer; color: blue; font-size: 20px" title="Add image"></i>
+                                    <i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px" title="Delete"></i>
 
                                 </td>
                             </tr>
@@ -216,6 +220,36 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary btn-save-product">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="ImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog w-75" role="document" style="width: 75%">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #1ab7ea; border-radius: 4px 4px 0 0;">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h5 class="modal-title" style="color: white" id="exampleModalLongTitle">Add new/ update Product</h5>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-body">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-save-image">Save changes</button>
                 </div>
             </div>
         </div>

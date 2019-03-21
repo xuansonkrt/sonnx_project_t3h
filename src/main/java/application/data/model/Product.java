@@ -23,7 +23,7 @@ public class Product {
 
 //    @Column(name = "supply_id", insertable = false, updatable = false)
 //    private int supplyId;
-
+//
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "supply_id")
     private Supply supply;
@@ -127,7 +127,7 @@ public class Product {
 //    public void setSupplyId(int supplyId) {
 //        this.supplyId = supplyId;
 //    }
-
+//
     public Supply getSupply() {
         return supply;
     }
