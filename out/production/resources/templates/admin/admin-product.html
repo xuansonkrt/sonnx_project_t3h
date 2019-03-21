@@ -41,7 +41,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header" id="main-title">Supply</h1>
+                    <h1 class="page-header" id="main-title">Product</h1>
                     <div id="main-content">
                         <div class="row">
                             <div class="col-sm-8">
@@ -86,18 +86,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="product : ${vm.getProductVMList()}">
-                                <td colspan="1" th:text="${product.getId()}"></td>
+                            <tr th:each="product,iter : ${vm.getProductVMList()}">
+                                <td colspan="1" th:text="${page.number*page.size + iter.index+1}"></td>
                                 <td colspan="2" th:text="${product.getName()}"></td>
                                 <td colspan="2" th:text="${product.getCategoryName()}"></td>
                                 <td colspan="2" th:text="${product.getShortDesc()}"></td>
-                                <td colspan="1" th:text="${product.getPrice() + ' $'}"></td>
+                                <td colspan="1" th:text="${product.getPrice() + ' $'}" style="text-align: right"></td>
                                 <td colspan="2" th:text="${product.getCreatedDate()}"></td>
                                 <td colspan="2">
-                                    <i class="mdi mdi-brightness-7 tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" title="Edit product" data-target="#exampleModalLong" style="cursor: pointer"></i>
-                                    <a th:href="@{'/admin/product-image/' + ${product.getId()}}">
-                                        <i class="mdi mdi-folder-multiple-image tooltip-test" title="List images"></i>
-                                    </a>
+                                    <i class="fa fa-edit tooltip-test edit-promotion" th:attr="data-promotion = ${product.getId()}" data-toggle="modal" title="Edit supply" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px"></i>
+
+                                    <i class="fa fa-trash-o tooltip-test del-promotion" th:attr="data-promotion = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px"></i>
+
                                 </td>
                             </tr>
                             </tbody>
@@ -105,20 +105,20 @@
 
 
 
-                        <!--<nav style="margin-top: 50px" aria-label="..." th:if="${vm.getProductVMList().size()>0}">-->
-                            <!--<ul class="pagination">-->
-                                <!--<th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">-->
-                                    <!--<li class="page-item active" th:if="${page.number == i}" aria-current="page">-->
-                                        <!--<a class="page-link" th:href="${''}" th:text="${i+1}"><span class="sr-only"></span></a>-->
-                                    <!--</li>-->
-                                    <!--<li class="page-item"  th:unless="${page.number == i}"><a class="page-link" th:text="${i+1}"-->
-                                                                                              <!--th:href="${'?'-->
-                                                                                       <!--+('&page='+i)-->
-                                                                                       <!--+(#httpServletRequest.getParameter('size')==null?'':('&size='+#httpServletRequest.getParameter('size')))-->
-                                                                                       <!--+(#httpServletRequest.getParameter('name')==null?'':('&name='+#httpServletRequest.getParameter('name')))}"></a></li>-->
-                                <!--</th:block>-->
-                            <!--</ul>-->
-                        <!--</nav>-->
+                        <nav style="margin-top: 50px" aria-label="..." th:if="${vm.getProductVMList().size()>0}">
+                            <ul class="pagination">
+                                <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                                    <li class="page-item active" th:if="${page.number == i}" aria-current="page">
+                                        <a class="page-link" th:href="${''}" th:text="${i+1}"><span class="sr-only"></span></a>
+                                    </li>
+                                    <li class="page-item"  th:unless="${page.number == i}"><a class="page-link" th:text="${i+1}"
+                                                                                              th:href="${'?'
+                                                                                       +('&page='+i)
+                                                                                       +(#httpServletRequest.getParameter('size')==null?'':('&size='+#httpServletRequest.getParameter('size')))
+                                                                                       +(#httpServletRequest.getParameter('name')==null?'':('&name='+#httpServletRequest.getParameter('name')))}"></a></li>
+                                </th:block>
+                            </ul>
+                        </nav>
                     </div>
 
                 </div>

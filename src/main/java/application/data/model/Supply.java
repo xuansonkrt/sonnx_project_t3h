@@ -1,7 +1,5 @@
 package application.data.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,17 +22,17 @@ public class Supply {
     @Column(name="created_date")
     private Date createdDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supply", fetch = FetchType.LAZY)
-//    @JsonIgnore
-    private List<Product> listProducts = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supply", fetch = FetchType.LAZY)
+////    @JsonIgnore
+//    private List<Product> listProducts = new ArrayList<>();
+//
+//    public List<Product> getListProducts() {
+//        return listProducts;
+//    }
 
-    public List<Product> getListProducts() {
-        return listProducts;
-    }
-
-    public void setListProducts(List<Product> listProducts) {
-        this.listProducts = listProducts;
-    }
+//    public void setListProducts(List<Product> listProducts) {
+//        this.listProducts = listProducts;
+//    }
 
     public int getId() {
         return Id;

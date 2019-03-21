@@ -1,21 +1,25 @@
 package application.model.dto;
 
-import application.extension.CustomDateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import java.util.Date;
 
-public class ProductDTO {
-
+public class ProductDTO2 {
     private int id;
     private int categoryId;
     private String name;
     private String shortDesc;
     private String mainImage;
     private Double price;
-
-    @JsonSerialize(using = CustomDateSerializer.class)
+    private int promotionId;
+    private int supplyId;
     private Date createdDate;
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
     public int getId() {
         return id;
@@ -65,11 +69,19 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public int getPromotionId() {
+        return promotionId;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setPromotionId(int promotionId) {
+        this.promotionId = promotionId;
+    }
+
+    public int getSupplyId() {
+        return supplyId;
+    }
+
+    public void setSupplyId(int supplyId) {
+        this.supplyId = supplyId;
     }
 }
