@@ -1,5 +1,6 @@
 package application.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class ProductImage {
     @Column(name = "product_id", insertable=false, updatable = false)
     private int productId;
 
+    @JsonIgnore
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;

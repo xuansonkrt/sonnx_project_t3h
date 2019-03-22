@@ -28,8 +28,9 @@ public class ProductImageController {
 
     @Autowired
     ProductService productService;
-    @PostMapping("/ListImage")
-    public ResponseEntity<?> update(@RequestParam(value = "productId") int productId){
+
+    @PostMapping("/ListImage/{productId}")
+    public @ResponseBody DataApiResult listImage(@PathVariable int productId){
         DataApiResult result= new DataApiResult();
         List<ProductImage> list = new ArrayList<>();
 
@@ -42,8 +43,28 @@ public class ProductImageController {
         } catch (Exception e){
             result.setMessage(e.getMessage());
             result.setSuccess(false);
-            return ResponseEntity.badRequest().body(result);
+           // return ResponseEntity.badRequest().body(result);
         }
-        return ResponseEntity.ok(result);
+//        return ResponseEntity.ok(result);
+        return  result;
+    }
+
+    @PostMapping("/Detail/{productImageId}")
+    public @ResponseBody DataApiResult detailImage(@PathVariable int productImageId){
+        DataApiResult result= new DataApiResult();
+        List<ProductImage> list = new ArrayList<>();
+
+        try{
+            ProductImage productImage = productImageService.findOne(productImageId);
+            result.setMessage("Success");
+            result.setSuccess(true);
+            result.setData(productImage);
+        } catch (Exception e){
+            result.setMessage(e.getMessage());
+            result.setSuccess(false);
+            // return ResponseEntity.badRequest().body(result);
+        }
+//        return ResponseEntity.ok(result);
+        return  result;
     }
 }

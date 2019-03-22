@@ -1,6 +1,8 @@
 package application.data.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +26,7 @@ public class Product {
 //    @Column(name = "supply_id", insertable = false, updatable = false)
 //    private int supplyId;
 //
+    @JsonIgnore
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "supply_id")
     private Supply supply;

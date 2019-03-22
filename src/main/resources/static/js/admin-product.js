@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     var dataProduct = {};
-
+    var listImage =[];
 
 
     function readURL(input) {
@@ -142,7 +142,7 @@ $(document).ready(function() {
         $("#product-id").val(productId);
         console.log("data: ",data);
         $.ajax({
-            url:"/ProductImage/ListImage",
+            url:"/ProductImage/ListImage/"+productId,
             data: {
                 productId:productId
             },
@@ -151,8 +151,28 @@ $(document).ready(function() {
             contentType: "application/json",
             success: function (data) {
                 if (data.success === true) {
-                    alert(data.message);
-                    console.log("data: ", data.data);
+                    var list=data.data;
+                    listImage=data.data;
+                    var length= list.length;
+                    for(var i=0; i<length; i++){
+                        var div= $("<div></div>");
+                        div.addClass("col-sm-3 mx-15px edit-image");
+                        div.attr("id",list[i].id);
+
+                        var span=$("<span>&times;</span>");
+                        span.addClass("closebtn");
+                        span.attr("id",list[i].id);
+
+                        var image=$("<img>")
+                        image.attr("src",list[i].link);
+                        image.attr("width","100%");
+                        image.attr("id",list[i].id);
+                        image.attr("onclick","myFunction(this)");
+                        image.attr("class","image-product-2");
+                        div.append(span);
+                        div.append(image);
+                        $("#block-image").append(div);
+                    }
                 }
                 else {
                     alert(data.message);
@@ -163,6 +183,32 @@ $(document).ready(function() {
             }
         });
 
+    });
+
+    $(".image-product-2").click(function () {
+        var productImageId = $(this).attr("id");
+        alert("ahihi");
+        $.ajax({
+            url:"/ProductImage/Detail/"+productImageId,
+            data: {
+                productImageId:productImageId
+            },
+            type:"POST",
+            dataType:"json",
+            contentType: "application/json",
+            success: function (data) {
+                if (data.success === true) {
+
+                    console.log("detail : ", data.data );
+                }
+                else {
+                    alert(data.message);
+                }
+            }.bind(this),
+            error: function (e) {
+                console.log(e);
+            }
+        });
     });
 
     $("#btn-add-image").click(function (e) {
@@ -196,7 +242,9 @@ $(document).ready(function() {
                     contentType: "application/json",
                     success: function (data) {
                         if (data.success === true) {
-                            alert(data.message);
+                            // alert(data.message);
+                            console.log("data image: ",data);
+                            // location.reload();
                         }
                         else {
 
@@ -213,5 +261,17 @@ $(document).ready(function() {
             $('#myForm')[0].submit();
         });
     });
+
+
+    $(".image-product").click(function () {
+        var productId = $(this).data("product");
+        var temp= $("#product-id").val();
+        $("#product-id").val("");
+        $("#image-id").val("");
+        $("#product-image-add").attr("src","https://www.vietnamprintpack.com/images/default.jpg");
+        $("#block-image").empty();
+
+    });
+
 
 });

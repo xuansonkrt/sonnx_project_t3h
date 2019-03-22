@@ -2,7 +2,9 @@ package application.controller.api;
 
 import application.data.model.ProductImage;
 import application.data.service.ProductImageService;
+import application.data.service.ProductService;
 import application.model.api.BaseApiResult;
+import application.model.api.DataApiResult;
 import application.model.dto.ProductImageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +21,12 @@ public class ProductImageApiController {
     @Autowired
     ProductImageService productImageService;
 
+    @Autowired
+    ProductService productService;
+
     @PostMapping("/update")
     public ResponseEntity<?> update(@Valid @RequestBody ProductImageDTO productImageDTO){
-        BaseApiResult result= new BaseApiResult();
+        DataApiResult result= new DataApiResult();
 
         ProductImage productImage= productImageService.findOne(productImageDTO.getId());
         if(productImage==null){
@@ -31,6 +36,7 @@ public class ProductImageApiController {
         productImage.setLink(productImageDTO.getLink());
         productImage.setTitle(productImageDTO.getTitle());
         productImage.setProductId(productImageDTO.getProductId());
+        productImage.setProduct(productService.findOne(productImageDTO.getProductId()));
         try{
             productImageService.update(productImage);
             result.setMessage("Update success!");
