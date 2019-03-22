@@ -8,11 +8,17 @@ $(document).ready(function() {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function(e) {
-                $('#preview-product-img').attr('src', e.target.result);
+                // $('#preview-product-img').attr('src', e.target.result);
+                $('#product-image-add').attr('src', e.target.result);
+
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    $("#input-image").change(function (e) {
+        readURL(this);
+    });
 
 
     $("#change-product-mainImage").change(function() {
@@ -129,5 +135,83 @@ $(document).ready(function() {
     });
 
 
+    $("#addImage").click(function () {
+        var productId = $(this).data("product");
+        var data={};
+        data.productId= productId;
+        $("#product-id").val(productId);
+        console.log("data: ",data);
+        $.ajax({
+            url:"/ProductImage/ListImage",
+            data: {
+                productId:productId
+            },
+            type:"POST",
+            dataType:"json",
+            contentType: "application/json",
+            success: function (data) {
+                if (data.success === true) {
+                    alert(data.message);
+                    console.log("data: ", data.data);
+                }
+                else {
+                    alert(data.message);
+                }
+            }.bind(this),
+            error: function (e) {
+                console.log(e);
+            }
+        });
+
+    });
+
+    $("#btn-add-image").click(function (e) {
+        e.preventDefault();
+        var formData= new FormData();
+        NProgress.start();
+        formData.append('file',$("#input-image")[0].files[0]);
+        axios.post("/api/upload/upload-image", formData).then(function (res) {
+            NProgress.done();
+            if(res.data.success) {
+                var productImage={};
+                productImage.title= $("#input-title").val();
+                productImage.link=res.data.link;
+                productImage.productId= $("#product-id").val();
+                productImage.imageId=$("#image-id").val();
+                // NProgress.start();
+                // axios.post("/api/productImage/update", productImage).then(function (res) {
+                //     NProgress.done();
+                //     alert(ok);
+                // },function (err) {
+                //     NProgress.done();
+                //    // $('#myForm')[0].submit();
+                //     console.log(err);
+                // });
+                console.log("data: ", productImage);
+                $.ajax({
+                    url:"/api/productImage/update",
+                    data: JSON.stringify(productImage),
+                    type:"POST",
+                    dataType:"json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        if (data.success === true) {
+                            alert(data.message);
+                        }
+                        else {
+
+                        }
+                    }.bind(this),
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+            }
+           // $('#myForm')[0].submit();
+        },function (err) {
+            NProgress.done();
+            $('#myForm')[0].submit();
+        });
+    });
 
 });

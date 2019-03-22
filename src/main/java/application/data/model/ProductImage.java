@@ -1,5 +1,7 @@
 package application.data.model;
 
+import org.springframework.stereotype.Controller;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,6 +12,9 @@ public class ProductImage {
     @Column(name = "product_image_id")
     @Id
     private int id;
+
+    @Column(name = "product_id", insertable=false, updatable = false)
+    private int productId;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -62,5 +67,23 @@ public class ProductImage {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public ProductImage(int productId, String link, Date createdDate, String title) {
+        this.productId = productId;
+        this.link = link;
+        this.createdDate = createdDate;
+        this.title = title;
+    }
+
+    public ProductImage() {
     }
 }

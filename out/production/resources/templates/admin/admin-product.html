@@ -21,6 +21,7 @@
     <!-- Custom Fonts -->
     <!--<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -98,9 +99,9 @@
                                 <td colspan="1" th:text="${product.getPrice() + ' $'}" style="text-align: right"></td>
                                 <td colspan="2" th:text="${product.getCreatedDate()}"></td>
                                 <td colspan="2">
-                                    <i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" title="Edit supply" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px"></i>
-
-                                    <i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px"></i>
+                                    <i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px" title="Edit"></i>
+                                    <i id="addImage" class="fa fa-file-image-o tooltip-test image-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#ImageModal" style="cursor: pointer; color: blue; font-size: 20px" title="Add image"></i>
+                                    <i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px" title="Delete"></i>
 
                                 </td>
                             </tr>
@@ -221,6 +222,63 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary btn-save-product">Save changes</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="ImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog w-75" role="document" style="width: 75%">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #1ab7ea; border-radius: 4px 4px 0 0;">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h5 class="modal-title" style="color: white" id="exampleModalLongTitle">Add image product</h5>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-body " style="padding-top: 0px; padding-bottom: 0px">
+
+                    <!--<div style="border-bottom: 1px solid lightgray" class="mx-sm-5 row"></div>-->
+                    <div class="row" >
+                        <div class="col-sm-9 modalScroll" >
+                            <!--<div class="col-sm-3 mx-15px" >-->
+                                <!--<span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>-->
+                                <!--<img src="https://www.vietnamprintpack.com/images/default.jpg" style="width: 100%" class="image-product">-->
+                            <!--</div>-->
+
+
+
+                        </div>
+
+                        <div class="col-sm-3 py-3" style="border-left: 1px solid lightgray">
+                            <input type="text" id="image-id" class="hidden">
+                            <input type="text" id="product-id" class="hidden">
+                            <div style="text-align: center; height: 200px" class="mt-10px">
+                                <img style="max-width: 200px; height: auto" src="https://www.vietnamprintpack.com/images/default.jpg" id="product-image-add">
+                            </div>
+                            <input type="file" class="mx-10px" id="input-image">
+
+                            <div class="form-group">
+                                <label>Image description:</label>
+                                <textarea type="text" class="form-control"  rows="4"  id="input-title"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-success mb-10px" id="btn-add-image">Save changes</button>
+
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-save-image">Save changes</button>-->
+                <!--</div>-->
             </div>
         </div>
     </div>

@@ -1,13 +1,28 @@
-package application.model.viewmodel;
+package application.model.dto;
+
+import application.extension.CustomDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Date;
 
-public class ProductImageVM {
+public class ProductImageDTO {
     private int id;
-    private String link;
-    private Date createdDate;
     private int productId;
     private String title;
+    private String link;
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    private Date createdDate;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public int getProductId() {
         return productId;
@@ -23,14 +38,6 @@ public class ProductImageVM {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getLink() {
