@@ -17,6 +17,9 @@ function myFunction(obj) {
                 $("#product-id").val(data.data.productId);
                 $("#image-id").val(data.data.id);
                 $("#image-link").val(data.data.link);
+
+                // var button=$(" <button type=\"button\" class=\"btn btn-danger mb-10px\" id=\"btn-del-image\">Delete</button>");
+                $("#btn-del-image").removeClass("hidden");
             }
             else {
                 alert(data.message);
@@ -45,4 +48,12 @@ function custom_alert( message, title ) {
             }
         }
     });
+}
+
+function myFuncDel(obj) {
+    console.log("del: ",obj);
+}
+
+function loadListImage(productId) {
+
 }

@@ -49,4 +49,27 @@ public class ProductImageApiController {
         }
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("/delete/{productImageId}")
+    public ResponseEntity<?> delete(@Valid @RequestBody int productImageId){
+        DataApiResult result= new DataApiResult();
+
+        ProductImage productImage= productImageService.findOne(productImageId);
+        if(productImage==null){
+            result.setMessage("Not found product image!");
+            result.setSuccess(false);
+            return ResponseEntity.badRequest().body(result);
+        }
+
+        try{
+            productImageService.delete(productImageId);
+            result.setMessage("Update success!");
+            result.setSuccess(true);
+        } catch (Exception e){
+            result.setMessage(e.getMessage());
+            result.setSuccess(false);
+            return ResponseEntity.badRequest().body(result);
+        }
+        return ResponseEntity.ok(result);
+    }
 }

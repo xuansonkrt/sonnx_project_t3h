@@ -108,4 +108,21 @@ public class ProductApiController {
         return result;
     }
 
+
+    @PostMapping(value="/delete/{productId}") //params có/không => tùy
+    public @ResponseBody BaseApiResult delete (@PathVariable int productId){
+        BaseApiResult result= new BaseApiResult();
+        try {
+            productService.deleteProduct(productId);
+            result.setSuccess(true);
+            result.setMessage("Delete product successfully");
+
+        }catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+        }
+
+        return result;
+    }
+
 }

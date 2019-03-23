@@ -173,9 +173,10 @@ $(document).ready(function() {
                         div.addClass("col-sm-3 mx-15px edit-image");
                         div.attr("id",list[i].id);
 
-                        var span=$("<span>&times;</span>");
-                        span.addClass("closebtn");
-                        span.attr("id",list[i].id);
+                        // var span=$("<span>&times;</span>");
+                        // span.addClass("closebtn");
+                        // span.attr("id",list[i].id);
+                        // span.attr("onclick","myFuncDel(this)");
 
                         var image=$("<img>")
                         image.attr("src",list[i].link);
@@ -183,7 +184,7 @@ $(document).ready(function() {
                         image.attr("id",list[i].id);
                         image.attr("onclick","myFunction(this)");
                         image.attr("class","image-product-2");
-                        div.append(span);
+                        // div.append(span);
                         div.append(image);
                         $("#block-image").append(div);
 
@@ -262,6 +263,7 @@ $(document).ready(function() {
                             div.append(span);
                             div.append(image);
                             $("#block-image").append(div);
+                            $("#image-id").val(data.data.id);
                         } else{
                             //update infor  trên grid
                         }
@@ -282,6 +284,29 @@ $(document).ready(function() {
     $(".image-product").click(function () {
         //clear input
 
+    });
+
+    $("#btn-del-image").click(function () {
+        var productImageId=$("#image-id").val();
+        $.ajax({
+            url:"/api/productImage/delete/"+productImageId,
+            data: JSON.stringify(productImageId),
+            type:"POST",
+            dataType:"json",
+            contentType: "application/json",
+            success: function (data) {
+                if (data.success === true) {
+                    alert("ok");
+                    // log.show("Update success",true);
+                }
+                else {
+
+                }
+            }.bind(this),
+            error: function (e) {
+                console.log(e);
+            }
+        });
     });
 
 
