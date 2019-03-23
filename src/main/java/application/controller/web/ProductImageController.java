@@ -52,7 +52,7 @@ public class ProductImageController {
     @PostMapping("/Detail/{productImageId}")
     public @ResponseBody DataApiResult detailImage(@PathVariable int productImageId){
         DataApiResult result= new DataApiResult();
-        List<ProductImage> list = new ArrayList<>();
+//        List<ProductImage> list = new ArrayList<>();
 
         try{
             ProductImage productImage = productImageService.findOne(productImageId);

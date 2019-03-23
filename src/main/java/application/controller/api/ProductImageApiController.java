@@ -39,6 +39,7 @@ public class ProductImageApiController {
         productImage.setProduct(productService.findOne(productImageDTO.getProductId()));
         try{
             productImageService.update(productImage);
+            result.setData(productImage);
             result.setMessage("Update success!");
             result.setSuccess(true);
         } catch (Exception e){

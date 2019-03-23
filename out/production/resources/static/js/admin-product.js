@@ -18,6 +18,9 @@ $(document).ready(function() {
 
     $("#input-image").change(function (e) {
         readURL(this);
+        $("#image-id").val("");
+        $("#input-title").val("");
+        $("#image-link").val("");
     });
 
 
@@ -135,12 +138,23 @@ $(document).ready(function() {
     });
 
 
-    $("#addImage").click(function () {
+    $(".addImage").click(function () {
+
         var productId = $(this).data("product");
+        var temp= $("#product-id").val();
+        if(temp!=productId){
+            $("#product-id").val(productId);
+            $("#image-id").val("");
+            $("#input-title").val("");
+            $("#product-image-add").attr("src","https://www.vietnamprintpack.com/images/default.jpg");
+            $("#block-image").empty();
+        }
+
+        // var productId = $(this).data("product");
         var data={};
         data.productId= productId;
         $("#product-id").val(productId);
-        console.log("data: ",data);
+        // console.log("data: ",data);
         $.ajax({
             url:"/ProductImage/ListImage/"+productId,
             data: {
@@ -167,11 +181,14 @@ $(document).ready(function() {
                         image.attr("src",list[i].link);
                         image.attr("width","100%");
                         image.attr("id",list[i].id);
-
+                        image.attr("onclick","myFunction(this)");
                         image.attr("class","image-product-2");
                         div.append(span);
                         div.append(image);
                         $("#block-image").append(div);
+
+                        // log.show("Cập nhật thành công", true);
+
                     }
                 }
                 else {
@@ -183,83 +200,89 @@ $(document).ready(function() {
             }
         });
 
-    });
-
-    $(".image-product-2").on("click",function () {
-        var productImageId = $(this).attr("id");
-        alert("ahihi");
-        $.ajax({
-            url:"/ProductImage/Detail/"+productImageId,
-            data: {
-                productImageId:productImageId
-            },
-            type:"POST",
-            dataType:"json",
-            contentType: "application/json",
-            success: function (data) {
-                if (data.success === true) {
-
-                    console.log("detail : ", data.data );
-                }
-                else {
-                    alert(data.message);
-                }
-            }.bind(this),
-            error: function (e) {
-                console.log(e);
-            }
-        });
     });
 
     $("#btn-add-image").click(function (e) {
         e.preventDefault();
+        var flag=0;
+        var add=0;
+
+        if($("#image-id").val()=="")
+            add=1;
         var formData= new FormData();
         NProgress.start();
-        formData.append('file',$("#input-image")[0].files[0]);
-        axios.post("/api/upload/upload-image", formData).then(function (res) {
-            NProgress.done();
-            if(res.data.success) {
-                var productImage={};
-                productImage.title= $("#input-title").val();
-                productImage.link=res.data.link;
-                productImage.productId= $("#product-id").val();
-                productImage.imageId=$("#image-id").val();
-                // NProgress.start();
-                // axios.post("/api/productImage/update", productImage).then(function (res) {
-                //     NProgress.done();
-                //     alert(ok);
-                // },function (err) {
-                //     NProgress.done();
-                //    // $('#myForm')[0].submit();
-                //     console.log(err);
-                // });
-                console.log("data: ", productImage);
-                $.ajax({
-                    url:"/api/productImage/update",
-                    data: JSON.stringify(productImage),
-                    type:"POST",
-                    dataType:"json",
-                    contentType: "application/json",
-                    success: function (data) {
-                        if (data.success === true) {
-                            // alert(data.message);
-                            console.log("data image: ",data);
-                            // location.reload();
-                        }
-                        else {
+        if($("#image-link").val()==""){
+            formData.append('file',$("#input-image")[0].files[0]);
+            axios.post("/api/upload/upload-image", formData).then(function (res) {
+                NProgress.done();
+                if(res.data.success) {
+                    flag=1;
+                    $("#image-link").val(res.data.link);
+                }
+                // $('#myForm')[0].submit();
+            },function (err) {
+                NProgress.done();
+                //  $('#myForm')[0].submit();
+                console.log(err);
+            });
+        }
 
+
+        if(flag==1||$("#image-link").val()!=""){
+            var productImage={};
+            productImage.title= $("#input-title").val();
+            productImage.link=  $("#image-link").val();
+            productImage.productId= $("#product-id").val();
+            productImage.id=$("#image-id").val();
+            console.log("data: ", productImage);
+            $.ajax({
+                url:"/api/productImage/update",
+                data: JSON.stringify(productImage),
+                type:"POST",
+                dataType:"json",
+                contentType: "application/json",
+                success: function (data) {
+                    if (data.success === true) {
+                        if(add==1)
+                        {
+                            var div= $("<div></div>");
+                            div.addClass("col-sm-3 mx-15px edit-image");
+                            div.attr("id",data.data.id);
+
+                            var span=$("<span>&times;</span>");
+                            span.addClass("closebtn");
+                            span.attr("id",data.data.id);
+
+                            var image=$("<img>")
+                            image.attr("src",data.data.link);
+                            image.attr("width","100%");
+                            image.attr("id",data.data.id);
+                            image.attr("onclick","myFunction(this)");
+                            image.attr("class","image-product-2");
+                            div.append(span);
+                            div.append(image);
+                            $("#block-image").append(div);
+                        } else{
+                            //update infor  trên grid
                         }
-                    }.bind(this),
-                    error: function (e) {
-                        console.log(e);
+                        log.show("Update success",true);
                     }
-                });
-            }
-           // $('#myForm')[0].submit();
-        },function (err) {
-            NProgress.done();
-            $('#myForm')[0].submit();
-        });
+                    else {
+
+                    }
+                }.bind(this),
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
     });
+
+
+    $(".image-product").click(function () {
+        //clear input
+
+    });
+
 
 });
