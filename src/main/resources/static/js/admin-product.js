@@ -155,55 +155,22 @@ $(document).ready(function() {
         data.productId= productId;
         $("#product-id").val(productId);
         // console.log("data: ",data);
-        $.ajax({
-            url:"/ProductImage/ListImage/"+productId,
-            data: {
-                productId:productId
-            },
-            type:"POST",
-            dataType:"json",
-            contentType: "application/json",
-            success: function (data) {
-                if (data.success === true) {
-                    var list=data.data;
-                    listImage=data.data;
-                    var length= list.length;
-                    for(var i=0; i<length; i++){
-                        var div= $("<div></div>");
-                        div.addClass("col-sm-3 mx-15px edit-image");
-                        div.attr("id",list[i].id);
-
-                        // var span=$("<span>&times;</span>");
-                        // span.addClass("closebtn");
-                        // span.attr("id",list[i].id);
-                        // span.attr("onclick","myFuncDel(this)");
-
-                        var image=$("<img>")
-                        image.attr("src",list[i].link);
-                        image.attr("width","100%");
-                        image.attr("id",list[i].id);
-                        image.attr("onclick","myFunction(this)");
-                        image.attr("class","image-product-2");
-                        // div.append(span);
-                        div.append(image);
-                        $("#block-image").append(div);
-
-                        // log.show("Cập nhật thành công", true);
-
-                    }
-                }
-                else {
-                    alert(data.message);
-                }
-            }.bind(this),
-            error: function (e) {
-                console.log(e);
-            }
-        });
+        loadListImage(productId);
 
     });
 
     $("#btn-add-image").click(function (e) {
+        debugger
+        var str=$("#input-image")[0].files[0];
+        if(typeof(str) == "undefined"){
+
+            swal(
+                'Error',
+                'Full infor',
+                'error'
+            );
+            return;
+        }
         e.preventDefault();
         var flag=0;
         var add=0;
@@ -250,9 +217,9 @@ $(document).ready(function() {
                             div.addClass("col-sm-3 mx-15px edit-image");
                             div.attr("id",data.data.id);
 
-                            var span=$("<span>&times;</span>");
-                            span.addClass("closebtn");
-                            span.attr("id",data.data.id);
+                            // var span=$("<span>&times;</span>");
+                            // span.addClass("closebtn");
+                            // span.attr("id",data.data.id);
 
                             var image=$("<img>")
                             image.attr("src",data.data.link);
@@ -260,10 +227,12 @@ $(document).ready(function() {
                             image.attr("id",data.data.id);
                             image.attr("onclick","myFunction(this)");
                             image.attr("class","image-product-2");
-                            div.append(span);
+                           // div.append(span);
                             div.append(image);
                             $("#block-image").append(div);
                             $("#image-id").val(data.data.id);
+                            $("#btn-del-image").removeClass("hidden");
+
                         } else{
                             //update infor  trên grid
                         }
@@ -281,8 +250,41 @@ $(document).ready(function() {
     });
 
 
-    $(".image-product").click(function () {
-        //clear input
+    $(".del-product").click(function () {
+        var productId= $(this).data("product");
+        $.ajax({
+            url:"/api/product/delete/"+productId,
+            data: JSON.stringify(productId),
+            type:"POST",
+            dataType:"json",
+            contentType: "application/json",
+            success: function (data) {
+                if (data.success === true) {
+                    swal(
+                        'Good job!',
+                        data.message,
+                        'success'
+                    ).then(function() {
+                        location.reload();
+                    });
+                }
+                else {
+                    swal(
+                        'Error',
+                        data.message,
+                        'error'
+                    );
+                }
+            }.bind(this),
+            error: function (e) {
+                swal(
+                    'Error',
+                    'Some error when delete product',
+                    'error'
+                );
+                console.log(e);
+            }
+        });
 
     });
 
@@ -296,12 +298,16 @@ $(document).ready(function() {
             contentType: "application/json",
             success: function (data) {
                 if (data.success === true) {
+                    var id=$("#image-id").val();
+                    $("#"+id).addClass("hidden");
                     $("#input-title").val("");
                     $("#product-image-add").attr("src","https://www.vietnamprintpack.com/images/default.jpg");
-                    $("#product-id").val("");
+                  //  $("#product-id").val("");
                     $("#image-id").val("");
                     $("#image-link").val("");
                     $("#btn-del-image").addClass("hidden");
+                  //  var productId=$("#product-id").val();
+                    //loadListImage(productId);
                 }
                 else {
 

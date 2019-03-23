@@ -53,3 +53,51 @@ function custom_alert( message, title ) {
 function myFuncDel(obj) {
     console.log("del: ",obj);
 }
+
+function loadListImage(productId) {
+    $.ajax({
+        url:"/ProductImage/ListImage/"+productId,
+        data: {
+            productId:productId
+        },
+        type:"POST",
+        dataType:"json",
+        contentType: "application/json",
+        success: function (data) {
+            if (data.success === true) {
+                var list=data.data;
+                listImage=data.data;
+                var length= list.length;
+                for(var i=0; i<length; i++){
+                    var div= $("<div></div>");
+                    div.addClass("col-sm-3 mx-15px edit-image");
+                    div.attr("id",list[i].id);
+
+                    // var span=$("<span>&times;</span>");
+                    // span.addClass("closebtn");
+                    // span.attr("id",list[i].id);
+                    // span.attr("onclick","myFuncDel(this)");
+
+                    var image=$("<img>")
+                    image.attr("src",list[i].link);
+                    image.attr("width","100%");
+                    image.attr("id",list[i].id);
+                    image.attr("onclick","myFunction(this)");
+                    image.attr("class","image-product-2");
+                    // div.append(span);
+                    div.append(image);
+                    $("#block-image").append(div);
+
+                    // log.show("Cập nhật thành công", true);
+
+                }
+            }
+            else {
+                alert(data.message);
+            }
+        }.bind(this),
+        error: function (e) {
+            console.log(e);
+        }
+    });
+}
