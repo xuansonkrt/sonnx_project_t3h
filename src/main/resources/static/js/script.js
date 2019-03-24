@@ -72,7 +72,6 @@ function loadListImage(productId) {
                     var div= $("<div></div>");
                     div.addClass("col-sm-3 mx-15px edit-image");
                     div.attr("id",list[i].id);
-
                     // var span=$("<span>&times;</span>");
                     // span.addClass("closebtn");
                     // span.attr("id",list[i].id);
@@ -84,6 +83,10 @@ function loadListImage(productId) {
                     image.attr("id",list[i].id);
                     image.attr("onclick","myFunction(this)");
                     image.attr("class","image-product-2");
+                    image.addClass("mx-auto");
+                    image.attr("height","100px");
+                    image.attr("width","auto");
+
                     // div.append(span);
                     div.append(image);
                     $("#block-image").append(div);

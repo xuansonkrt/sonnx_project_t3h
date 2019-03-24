@@ -254,7 +254,7 @@ $(document).ready(function() {
         var productId= $(this).data("product");
         $.ajax({
             url:"/api/product/delete/"+productId,
-            data: JSON.stringify(productImageId),
+            data: JSON.stringify(productId),
             type:"POST",
             dataType:"json",
             contentType: "application/json",
