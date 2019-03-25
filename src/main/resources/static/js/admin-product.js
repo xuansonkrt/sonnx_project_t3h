@@ -104,7 +104,7 @@ $(document).ready(function() {
         dataProduct.mainImage = $('.product-main-image').attr('src');
         dataProduct.price = $("#input-product-price").val();
         NProgress.start();
-        console.log(dataProduct.id);
+        console.log("save product: ",dataProduct);
         var linkPost = "/api/product/create";
         if(dataProduct.id) {
             linkPost = "/api/product/update/" + dataProduct.id;

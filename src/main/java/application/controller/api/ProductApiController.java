@@ -2,8 +2,11 @@ package application.controller.api;
 
 import application.data.model.Category;
 import application.data.model.Product;
+import application.data.model.Promotion;
 import application.data.service.CategoryService;
 import application.data.service.ProductService;
+import application.data.service.PromotionService;
+import application.data.service.SupplyService;
 import application.model.api.BaseApiResult;
 import application.model.api.DataApiResult;
 import application.model.dto.ProductDTO;
@@ -29,6 +32,12 @@ public class ProductApiController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private SupplyService supplyService;
+
+    @Autowired
+    private PromotionService promotionService;
+
     @PostMapping(value = "/create")
     public BaseApiResult createProduct(@RequestBody ProductDTO dto){
         DataApiResult result = new DataApiResult();
@@ -41,6 +50,10 @@ public class ProductApiController {
             product.setMainImage(dto.getMainImage());
             product.setCategory(categoryService.findOne(dto.getCategoryId()));
             product.setCreatedDate(new Date());
+            product.setSupplyId(dto.getSupplyId());
+            product.setCategoryId(dto.getCategoryId());
+            product.setPromotion(promotionService.findOne(dto.getPromotionId()));
+
             productService.addNewProduct(product);
             result.setData(product.getId());
             result.setMessage("Save product successfully: " + product.getId());
@@ -65,6 +78,10 @@ public class ProductApiController {
             product.setMainImage(dto.getMainImage());
             product.setCategory(categoryService.findOne(dto.getCategoryId()));
             product.setCreatedDate(new Date());
+            product.setSupplyId(dto.getSupplyId());
+            product.setSupply(supplyService.findOne(dto.getSupplyId()));
+            product.setCategoryId(dto.getCategoryId());
+            product.setPromotion(promotionService.findOne(dto.getPromotionId()));
             productService.addNewProduct(product);
             result.setSuccess(true);
             result.setMessage("Update product successfully");
@@ -91,6 +108,14 @@ public class ProductApiController {
                 dto.setId(productEntity.getId());
                 if(productEntity.getCategory() != null) {
                     dto.setCategoryId(productEntity.getCategory().getId());
+                }
+
+                if(productEntity.getSupply() != null) {
+                    dto.setSupplyId(productEntity.getSupply().getId());
+                }
+
+                if(productEntity.getPromotion() != null) {
+                    dto.setPromotionId(productEntity.getPromotion().getId());
                 }
                 dto.setMainImage(productEntity.getMainImage());
                 dto.setName(productEntity.getName());

@@ -76,6 +76,9 @@
                                     Supply
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
+                                    Promotion
+                                </th>
+                                <th colspan="2" style="background-color: #1ab7ea; text-align: center">
                                     Short Desc
                                 </th>
                                 <th colspan="1" style="background-color: #1ab7ea; text-align: center">
@@ -95,6 +98,7 @@
                                 <td colspan="2" th:text="${product.getName()}"></td>
                                 <td colspan="2" th:text="${product.getCategoryName()}"></td>
                                 <td colspan="2" th:text="${product.getSupplyName()}"></td>
+                                <td colspan="2" th:text="${product.getPromotionName()}"></td>
                                 <td colspan="2" th:text="${product.getShortDesc()}"></td>
                                 <td colspan="1" th:text="${product.getPrice() + ' $'}" style="text-align: right"></td>
                                 <td colspan="2" th:text="${product.getCreatedDate()}"></td>

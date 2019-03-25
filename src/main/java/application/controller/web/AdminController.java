@@ -295,6 +295,12 @@ public class AdminController {
             } else {
                 productVM.setSupplyName(product.getSupply().getName());
             }
+
+            if(product.getPromotion() == null) {
+                productVM.setPromotionName("");
+            } else {
+                productVM.setPromotionName(product.getPromotion().getName());
+            }
             productVM.setId(product.getId());
             productVM.setName(product.getName());
             productVM.setMainImage(product.getMainImage());

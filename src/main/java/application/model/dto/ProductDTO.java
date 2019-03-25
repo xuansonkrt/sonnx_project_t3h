@@ -13,7 +13,8 @@ public class ProductDTO {
     private String shortDesc;
     private String mainImage;
     private Double price;
-
+    private int supplyId;
+    private int promotionId;
     @JsonSerialize(using = CustomDateSerializer.class)
     private Date createdDate;
 
@@ -71,5 +72,21 @@ public class ProductDTO {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public int getSupplyId() {
+        return supplyId;
+    }
+
+    public void setSupplyId(int supplyId) {
+        this.supplyId = supplyId;
+    }
+
+    public int getPromotionId() {
+        return promotionId;
+    }
+
+    public void setPromotionId(int promotionId) {
+        this.promotionId = promotionId;
     }
 }

@@ -13,6 +13,15 @@ public class ProductVM {
     private Date createdDate;
     private List<ProductImageVM> productImageVMS;
     private String supplyName;
+    private String promotionName;
+
+    public String getPromotionName() {
+        return promotionName;
+    }
+
+    public void setPromotionName(String promotionName) {
+        this.promotionName = promotionName;
+    }
 
     public String getSupplyName() {
         return supplyName;

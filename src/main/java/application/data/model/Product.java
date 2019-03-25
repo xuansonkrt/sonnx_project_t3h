@@ -23,13 +23,18 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-//    @Column(name = "supply_id", insertable = false, updatable = false)
-//    private int supplyId;
+    @Column(name = "supply_id", insertable = false, updatable = false)
+    private Integer supplyId;
 
     @JsonIgnore
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "supply_id")
     private Supply supply;
+
+    @JsonIgnore
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "promotion_id")
+    private Promotion promotion;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<ProductImage> productImageList = new ArrayList<>();
@@ -123,13 +128,13 @@ public class Product {
         this.createdDate = createdDate;
     }
 
-//    public int getSupplyId() {
-//        return supplyId;
-//    }
-//
-//    public void setSupplyId(int supplyId) {
-//        this.supplyId = supplyId;
-//    }
+    public int getSupplyId() {
+        return supplyId;
+    }
+
+    public void setSupplyId(int supplyId) {
+        this.supplyId = supplyId;
+    }
 
     public Supply getSupply() {
         return supply;
@@ -137,5 +142,17 @@ public class Product {
 
     public void setSupply(Supply supply) {
         this.supply = supply;
+    }
+
+    public void setSupplyId(Integer supplyId) {
+        this.supplyId = supplyId;
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(Promotion promotion) {
+        this.promotion = promotion;
     }
 }
