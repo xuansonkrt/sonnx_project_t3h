@@ -10,11 +10,14 @@ import application.data.service.SupplyService;
 import application.model.api.BaseApiResult;
 import application.model.api.DataApiResult;
 import application.model.dto.ProductDTO;
+import application.model.viewmodel.ProductVM;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -150,4 +153,47 @@ public class ProductApiController {
         return result;
     }
 
+    @GetMapping(value = "/getAllSearch")
+    public String getAllSearch(Model model,
+                                      @Valid @ModelAttribute("productname") ProductDTO productName,
+                                      @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                                      @RequestParam(name = "size", required = false, defaultValue = "8") Integer size,
+                                      @RequestParam(name = "categoryId", required = false, defaultValue = "") Integer categoryId,
+                                      @RequestParam(name = "supplyId", required = false, defaultValue = "") Integer supplyId){
+        DataApiResult result= new DataApiResult();
+
+
+
+        return "/admin/admin-product";
+    }
+
+
+    @PostMapping("/listSearch")
+    public BaseApiResult getList(@RequestBody String productName){
+        DataApiResult result= new DataApiResult();
+
+        try {
+            List<Product> productList= productService.getListProductByName(productName);
+            if(productList == null) {
+                result.setSuccess(false);
+                result.setMessage("Can't find this product");
+            } else {
+                List<ProductVM> productVMList = new ArrayList<>();
+                for (Product product : productList) {
+                    ProductVM dto = new ProductVM();
+                    dto.setId(product.getId());
+                    dto.setName(product.getName());
+                    dto.setPrice(product.getPrice());
+                    productVMList.add(dto);
+                }
+                result.setSuccess(true);
+                result.setData(productVMList);
+            }
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+        }
+
+        return result;
+    }
 }

@@ -11,7 +11,7 @@ public class ProductEntity {
     private int id;
 
     @Column(name = "amount")
-    private int amount;
+    private long amount;
 
     @Column(name = "size_id", insertable = false, updatable = false)
     private int sizeId;
@@ -42,11 +42,11 @@ public class ProductEntity {
         this.id = id;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 

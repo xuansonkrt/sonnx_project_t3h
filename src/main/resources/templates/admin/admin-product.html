@@ -52,12 +52,53 @@
                             </div>
                             <div class="col-sm-4 col-12">
                                 <form style="float: right" class="form-inline my-2 my-lg-0 float-sm-right" th:action="@{/admin/product}" th:object="${productname}"  method="get">
-                                    <input class="form-control mr-sm-2" type="search" th:field="*{name}"  placeholder="Search..." aria-label="Search">
+                                    <!--<div class="form-group">-->
+                                        <!--<label>Category:</label>-->
+                                        <!--<select th:field="*{categoryId}"  class="form-control" id="input-product-category" placeholder="Choose Category">-->
+                                            <!--<option th:each="category : ${vm.getCategoryVMList()}" th:value="${category.getId()}" th:text="${category.getName()}"></option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+
+                                    <!--<div class="form-group">-->
+                                        <!--<label>Category:</label>-->
+                                        <!--<select th:field="*{categoryId}"  class="form-control" id="input-product-category" placeholder="Choose Category">-->
+                                            <!--<option th:each="category : ${vm.getCategoryVMList()}" th:value="${category.getId()}" th:text="${category.getName()}"></option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                    <!---->
+                                    <input id="key-search" class="form-control mr-sm-2" type="search" th:field="*{name}"  placeholder="Search..." aria-label="Search">
                                     <button class="btn btn-success" type="submit">Search</button>
                                 </form>
                             </div>
                         </div>
+                        <div class="row">
 
+                            <!--<div class="col-sm-6">-->
+                                <!--<label class="col-sm-3">Danh mục:</label>-->
+                                <!--<div class="col-sm-9 form-group">-->
+                                    <!--<select class="form-control" id="select-category">-->
+                                        <!--<option value="" text="">&#45;&#45;Tất cả</option>-->
+                                        <!--<option th:each="category : ${vm.getCategoryVMList()}"-->
+                                                <!--th:value="${category.getId()}"-->
+                                                <!--th:text="${category.getName()}"></option>-->
+
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="col-sm-6">-->
+                                <!--<label class="col-sm-3">Nhà sản xuất:</label>-->
+                                <!--<div class="col-sm-9 form-group">-->
+                                    <!--<select class="form-control" id="select-supply">-->
+                                        <!--<option value="" text="">&#45;&#45;Tất cả</option>-->
+                                        <!--<option th:each="supply : ${vm.getSupplyVMList()}"-->
+                                                <!--th:value="${supply.getId()}"-->
+                                                <!--th:text="${supply.getName()}"></option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        </div>
                         <h2 th:if="${vm.getKeyWord()}" th:text="${vm.getKeyWord()}"></h2>
 
                         <table class="table table-bordered">
@@ -183,12 +224,7 @@
                                     <input type="text" class="form-control" id="input-product-name">
                                 </div>
 
-                                <div class="form-group">
-                                    <label>Category:</label>
-                                    <select class="form-control" id="input-product-category" placeholder="Choose Category">
-                                        <option th:each="category : ${vm.getCategoryVMList()}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
-                                    </select>
-                                </div>
+
 
                                 <div class="form-group">
                                     <label>Supply:</label>

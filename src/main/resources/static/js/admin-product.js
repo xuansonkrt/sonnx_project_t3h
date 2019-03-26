@@ -318,6 +318,14 @@ $(document).ready(function() {
             }
         });
     });
+    //load category/supply
+
+
+    $("#select-category").change(function (obj) {
+        var categoryId=$("#select-category").val();
+        var supplyId=$("#select-supply").val();
+        var name=$("#key-search").val();
+    });
 
 
 });

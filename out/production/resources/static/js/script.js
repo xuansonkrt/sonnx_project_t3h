@@ -104,3 +104,18 @@ function loadListImage(productId) {
         }
     });
 }
+
+// $(function() {
+//     var availableTutorials = [
+//         "ActionScript",
+//         "Boostrap",
+//         "Candsomething",
+//         "ActionScript",
+//         "Boostrap",
+//         "Carwith other car",
+//         "dwithsometext",
+//     ];
+//     $( "#input-nameProduct" ).autocomplete({
+//         source: availableTutorials
+//     });
+// });

@@ -70,9 +70,12 @@ import java.util.List;
          return productRepository.getListProductByCategoryOrProductNameContaining(pageable,categoryId,productName);
      }
 
-     public long getTotalProducts(){
-         return productRepository.getTotalProducts();
+     public Long getTotalProducts(int productId){
+         return productRepository.getTotalProducts(productId);
      }
 
+    public List<Product> getListProductByName(String productName){
+         return productRepository.getListProductByName(productName);
+    }
 
  }
