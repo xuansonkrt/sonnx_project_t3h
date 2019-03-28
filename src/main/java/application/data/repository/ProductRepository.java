@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     Page<Product> getListProductByCategoryOrProductNameContaining(Pageable pageable, @Param("categoryId") Integer categoryId, @Param("productName") String productName);
 
     @Query("SELECT p FROM dbo_product p " +
-            "WHERE  (:productName IS NULL OR UPPER(p.name) LIKE CONCAT('%',UPPER(:productName),'%'))")
+            "WHERE  ( UPPER(p.name) LIKE CONCAT('%',UPPER(:productName),'%'))")
     List<Product> getListProductByName(@Param("productName") String productName);
 
 }

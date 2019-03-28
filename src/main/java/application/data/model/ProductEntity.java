@@ -1,6 +1,10 @@
 package application.data.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 
 @Entity(name = "dbo_product_entity")
@@ -16,14 +20,19 @@ public class ProductEntity {
     @Column(name = "size_id", insertable = false, updatable = false)
     private int sizeId;
 
+    @JsonIgnore
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name="size_id")
     private Size size;
 
     @Column(name = "color_id", insertable = false, updatable = false)
     private int colorId;
 
+
+    @JsonIgnore
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name="color_id")
     private Color color;
 

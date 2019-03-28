@@ -20,4 +20,8 @@ public class ProductEntityService {
     {
         productEntityRepository.save(productEntityList);
     }
+
+    public List<ProductEntity> findByProductId(Integer productId){
+        return productEntityRepository.findByProductId(productId);
+    }
 }

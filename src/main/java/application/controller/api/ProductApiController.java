@@ -2,14 +2,13 @@ package application.controller.api;
 
 import application.data.model.Category;
 import application.data.model.Product;
+import application.data.model.ProductEntity;
 import application.data.model.Promotion;
-import application.data.service.CategoryService;
-import application.data.service.ProductService;
-import application.data.service.PromotionService;
-import application.data.service.SupplyService;
+import application.data.service.*;
 import application.model.api.BaseApiResult;
 import application.model.api.DataApiResult;
 import application.model.dto.ProductDTO;
+import application.model.viewmodel.ProductEntityVM;
 import application.model.viewmodel.ProductVM;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,6 +39,9 @@ public class ProductApiController {
 
     @Autowired
     private PromotionService promotionService;
+
+    @Autowired
+    private ProductEntityService productEntityService;
 
     @PostMapping(value = "/create")
     public BaseApiResult createProduct(@RequestBody ProductDTO dto){
@@ -186,9 +188,47 @@ public class ProductApiController {
                     dto.setPrice(product.getPrice());
                     productVMList.add(dto);
                 }
+
+                result.setMessage("Success");
                 result.setSuccess(true);
                 result.setData(productVMList);
             }
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+        }
+//        List<ProductVM> productVMList = new ArrayList<>();
+//                for (int i=0; i<10; i++) {
+//                    ProductVM dto = new ProductVM();
+//                    dto.setId(i);
+//                    dto.setName("name "+i);
+//                    dto.setPrice(1000D);
+//                    productVMList.add(dto);
+//                }
+//                result.setData(productVMList);
+        return result;
+    }
+
+    @PostMapping("/AmountProductEntity/{productId}")
+    public DataApiResult getAmountProductEntity(@PathVariable int productId){
+        DataApiResult result= new DataApiResult();
+
+        try {
+            List<ProductEntity> productList= productEntityService.findByProductId(productId);
+            List<ProductEntityVM> productEntityVMList= new ArrayList<>();
+
+            for(ProductEntity entity: productList){
+                ProductEntityVM obj= new ProductEntityVM();
+                obj.setProductEntityId(entity.getId());
+                obj.setAmount(entity.getAmount());
+                obj.setColorName(entity.getColor().getName());
+                obj.setSizeName(entity.getSize().getName());
+                obj.setProductId(entity.getProductId());
+                productEntityVMList.add(obj);
+            }
+            result.setSuccess(true);
+            result.setMessage("Success");
+            result.setData(productEntityVMList);
         } catch (Exception e) {
             result.setSuccess(false);
             result.setMessage(e.getMessage());
