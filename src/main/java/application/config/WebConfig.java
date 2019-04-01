@@ -44,6 +44,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 "/webjars/**",
                 "/static/img/**",
                 "/static/css/**",
+                "/static/vendor/**",
+                "/static/fonts/**",
                 "/static/js/**",
                 "/static/plugin/**",
                 "/templates/**")
@@ -51,6 +53,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                         "classpath:/META-INF/resources/webjars/",
                         "classpath:/static/img/",
                         "classpath:/static/css/",
+                        "classpath:/static/vendor/",
+                        "classpath:/static/fonts/",
                         "classpath:/static/js/",
                         "classpath:/static/plugin/",
                         "classpath:/templates/");
