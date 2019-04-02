@@ -235,6 +235,14 @@
                                     </select>
                                 </div>
 
+
+                                <div class="form-group">
+                                    <label>Category:</label>
+                                    <select class="form-control" id="input-product-category" placeholder="Choose Category">
+                                        <option th:each="category : ${vm.getCategoryVMList()}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
+                                    </select>
+                                </div>
+
                                 <div class="form-group">
                                     <label>Promotion:</label>
                                     <select class="form-control" id="input-product-promotion" placeholder="Choose Promotion">

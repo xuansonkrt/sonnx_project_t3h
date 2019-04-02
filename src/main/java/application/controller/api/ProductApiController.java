@@ -56,6 +56,7 @@ public class ProductApiController {
             product.setCategory(categoryService.findOne(dto.getCategoryId()));
             product.setCreatedDate(new Date());
             product.setSupplyId(dto.getSupplyId());
+            product.setSupply(supplyService.findOne(dto.getSupplyId()));
             product.setCategoryId(dto.getCategoryId());
             product.setPromotion(promotionService.findOne(dto.getPromotionId()));
 

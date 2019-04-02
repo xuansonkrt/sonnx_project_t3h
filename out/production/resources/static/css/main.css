@@ -230,7 +230,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 /*---------------------------------------------*/
 .left-top-bar {
-  font-family: Poppins-Regular;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
   line-height: 1.8;
   color: #b2b2b2;
@@ -239,7 +239,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 /*---------------------------------------------*/
 .right-top-bar a {
-  font-family: Poppins-Regular;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
   line-height: 1.8;
 
@@ -367,7 +367,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .main-menu > li > a {
-  font-family: Poppins-Medium;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   color: #333;
   padding: 5px 0px;
@@ -736,7 +736,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .main-menu-m > li > a {
-  font-family: Poppins-Medium;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   color: white;
   line-height: 2.8;
@@ -2340,7 +2340,7 @@ input.num-product::-webkit-inner-spin-button {
 /*//////////////////////////////////////////////////////////////////
 [ L-Text >= 26 ]*/
 .ltext-101 {
-  font-family: Poppins-Regular;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 28px;
   line-height: 1.2857;
 }
@@ -2352,7 +2352,7 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .ltext-103 {
-  font-family: Poppins-Bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 36px;
   line-height: 1.1;
   text-transform: uppercase;
@@ -2398,7 +2398,7 @@ input.num-product::-webkit-inner-spin-button {
 
 /*---------------------------------------------*/
 .ltext-201 {
-  font-family: PlayfairDisplay-Bold;
+  font-family: "Times New Roman";
   font-size: 60px;
   line-height: 1.1;
   text-transform: uppercase;
