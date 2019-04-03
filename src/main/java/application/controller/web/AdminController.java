@@ -363,8 +363,25 @@ public class AdminController {
             supplyVMList.add(supplyVM);
         }
 
+        List<Size> sizeList = sizeService.getAll();
+        List<SizeVM> sizeVMList = new ArrayList<>();
 
+        for(Size size2 : sizeList) {
+            SizeVM sizeVM = new SizeVM();
+            sizeVM.setId(size2.getId());
+            sizeVM.setName(size2.getName());
+            sizeVMList.add(sizeVM);
+        }
 
+        List<Color> colorList = colorService.getAll();
+        List<ColorVM> colorVMList = new ArrayList<>();
+
+        for(Color color : colorList) {
+            ColorVM colorVM = new ColorVM();
+            colorVM.setId(color.getId());
+            colorVM.setName(color.getName());
+            colorVMList.add(colorVM);
+        }
 
         Pageable pageable = new PageRequest(page, size);
 
@@ -398,6 +415,8 @@ public class AdminController {
         vm.setCategoryVMList(categoryVMList);
         //vm.setProductVMList(productVMList);
         vm.setSupplyVMList(supplyVMList);
+        vm.setColorVMList(colorVMList);
+        vm.setSizeVMList(sizeVMList);
        // vm.setPromotionVMList(promotionVMList);
         if(wareHouseVMSList.size() == 0) {
             vm.setKeyWord("Not found any product");

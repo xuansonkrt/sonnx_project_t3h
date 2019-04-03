@@ -1,8 +1,10 @@
 package application.data.service;
 
+import application.data.model.Product;
 import application.data.model.ProductEntity;
 import application.data.repository.ProductEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,4 +26,20 @@ public class ProductEntityService {
     public List<ProductEntity> findByProductId(Integer productId){
         return productEntityRepository.findByProductId(productId);
     }
+
+
+    public ProductEntity getByProductSizeColor(Integer productId,Integer colorId,Integer sizeId){
+        return productEntityRepository.getByProductSizeColor(productId,colorId,sizeId);
+    }
+
+//    public boolean update(ProductEntity productEntity) {
+//        try {
+//            productEntityRepository.save(productEntity);
+//            return true;
+//        } catch (Exception e) {
+//          //  logger.error(e.getMessage());
+//        }
+//        return false;
+//    }
+
 }

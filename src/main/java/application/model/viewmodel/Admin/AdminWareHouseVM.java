@@ -1,9 +1,7 @@
 package application.model.viewmodel.Admin;
 
-import application.model.viewmodel.CategoryVM;
-import application.model.viewmodel.ProductVM;
-import application.model.viewmodel.PromotionVM;
-import application.model.viewmodel.SupplyVM;
+import application.data.model.Color;
+import application.model.viewmodel.*;
 
 import java.util.List;
 
@@ -15,6 +13,24 @@ public class AdminWareHouseVM {
     private List<CategoryVM> categoryVMList;
     private String keyWord;
     private LayoutHeaderAdminVM layoutHeaderAdminVM;
+    private  List<ColorVM> colorVMList;
+    private  List<SizeVM> sizeVMList;
+
+    public List<ColorVM> getColorVMList() {
+        return colorVMList;
+    }
+
+    public void setColorVMList(List<ColorVM> colorVMList) {
+        this.colorVMList = colorVMList;
+    }
+
+    public List<SizeVM> getSizeVMList() {
+        return sizeVMList;
+    }
+
+    public void setSizeVMList(List<SizeVM> sizeVMList) {
+        this.sizeVMList = sizeVMList;
+    }
 
     public List<SupplyVM> getSupplyVMList() {
         return supplyVMList;

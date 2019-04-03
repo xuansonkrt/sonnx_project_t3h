@@ -48,7 +48,7 @@ $(document).ready(function () {
     });
 
 
-    $(".addProductEntity").click(function () {
+    $(".detailProductEntity").click(function () {
         var pdInfo = $(this).data("product");
         $.ajax({
             url:"/api/product/AmountProductEntity/"+pdInfo,
@@ -58,9 +58,11 @@ $(document).ready(function () {
                 productId: pdInfo
             },
             success: function (data) {
+                $("#productEntity").empty();
                 var list=data.data;
                 console.log("data ahihi: ",list);
                 for(var i=0; i<list.length;i++){
+                    var row=$("<tr style=\"height: 20px\"></tr>")
                     var row=$("<tr style=\"height: 20px\"></tr>")
                     var td1=$("<td colspan=\"1\">"+(i+1)+"</td>");
                     var td2=$("<td colspan=\"3\">"+list[i].sizeName+"</td>");
@@ -81,4 +83,51 @@ $(document).ready(function () {
             }
         })
     });
-});
+
+    $("#addProductEntity").on("click",function () {
+        $("#input-product").val("");
+        $("#input-color").val("");
+        $("#input-size").val("");
+        $("#input-amount").val("");
+    });
+
+    $(".btn-save-productEntity").on("click",function () {
+        var data={};
+        data.productId=$("#input-product").val();
+        data.colorId=$("#input-color").val();
+        data.sizeId=$("#input-size").val();
+        data.amount=$("#input-amount").val();
+
+        console.log("data: ",data);
+        NProgress.start();
+        var linkPost = "/api/product-entity/add";
+
+
+        axios.post(linkPost, data).then(function(res){
+            NProgress.done();
+            if(res.data.success) {
+                swal(
+                    'Good job!',
+                    res.data.message,
+                    'success'
+                ).then(function() {
+                    location.reload();
+                });
+            } else {
+                swal(
+                    'Error',
+                    res.data.message,
+                    'error'
+                );
+            }
+        }, function(err){
+            NProgress.done();
+            swal(
+                'Error',
+                'Some error when saving product',
+                'error'
+            );
+        })
+    });
+
+    });

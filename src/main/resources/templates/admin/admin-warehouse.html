@@ -47,7 +47,7 @@
                     <div id="main-content">
                         <div class="row">
                             <div class="col-sm-8 col-12">
-                                <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal" style="margin-bottom: 20px" data-target="#exampleModalLong">
+                                <button type="button" class="btn btn-primary" id="addProductEntity" data-toggle="modal" style="margin-bottom: 20px" data-target="#detailProductAdd">
                                     Nhập sản phẩm
                                 </button>
                             </div>
@@ -126,7 +126,7 @@
                                 <td colspan="2" th:text="${product.getName()}"></td>
                                 <td colspan="2" th:text="${product.getAmount()}"></td>
                                 <td colspan="2" style="width: 50px">
-                                    <i class="fa fa-edit tooltip-test addProductEntity" th:attr="data-product = ${product.getProductId()}" data-toggle="modal" data-target="#detailProduct" style="cursor: pointer; font-size: 20px" title="Chi tiết"></i>
+                                    <i class="fa fa-edit tooltip-test detailProductEntity" th:attr="data-product = ${product.getProductId()}" data-toggle="modal" data-target="#detailProduct" style="cursor: pointer; font-size: 20px" title="Chi tiết"></i>
                                     <!--<i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getProductId()}" style="cursor: pointer; color: red; font-size: 20px" title="Delete"></i>-->
 
                                 </td>
@@ -180,16 +180,9 @@
 
                         <!--<div style="border-bottom: 1px solid lightgray" class="mx-sm-5 row"></div>-->
                         <div class="row" >
-                            <!--<div class="row m">-->
-                                <!--<button style="float: right" class="btn btn-warning">Thêm</button>-->
-                            <!--</div>-->
-                            <div class=" modalScroll" id="block-image">
-                                <!--<div class="col-sm-3 mx-15px" >-->
-                                    <!--<span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>-->
-                                    <!--<img src="https://www.vietnamprintpack.com/images/default.jpg" style="width: 100%" class="image-product">-->
-                                <!--</div>-->
 
-                                <table class="table table-bordered" style="height: 500px">
+                            <div class=" modalScroll" id="block-image">
+                                <table class="table table-bordered mx-auto m-5" style="width:95%">
                                     <thead>
                                     <tr style="text-align: center">
                                         <th colspan="1"  style="background-color: #1ab7ea; text-align: center; width: 40px">
@@ -214,25 +207,6 @@
 
                             </div>
 
-                            <!--<div class="col-sm-3 py-3" style="border-left: 1px solid lightgray">-->
-                                <!--<input type="text" id="image-id" class="hidden">-->
-                                <!--<input type="text" id="product-id" class="hidden">-->
-                                <!--<input type="text" id="image-link" class="hidden">-->
-
-                                <!--<div style="text-align: center; height: 200px" class="mt-10px">-->
-                                    <!--<img class="my-auto" style="max-width: 200px; max-height: 200px; width: auto" src="https://www.vietnamprintpack.com/images/default.jpg" id="product-image-add">-->
-                                <!--</div>-->
-                                <!--&lt;!&ndash;<input type="file" class="mx-10px" id="input-image">&ndash;&gt;-->
-
-                                <!--<div class="form-group mx-10px">-->
-                                    <!--<label>Tên sản phẩm:</label>-->
-                                    <!--<input type="text" class="form-control"  id="input-nameProduct">-->
-                                    <!--<input type="text" class="form-control hidden"  id="input-productId">-->
-                                <!--</div>-->
-                                <!--<button type="button" class="btn btn-success mb-10px" id="btn-add-image">Thêm số lượng</button>-->
-                                <!--<button type="button" class="btn btn-danger mb-10px hidden" id="btn-del-image" >Delete</button>-->
-
-                            <!--</div>-->
                         </div>
                     </div>
                     <!--<div class="modal-footer">-->
@@ -244,6 +218,70 @@
         </div>
 
     </div>
+
+
+    <!--add product entity-->
+
+    <div class="modal fade w-25" id="detailProductAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
+        <div class="modal-dialog w-25" role="document" style="width: 25%">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #1ab7ea; border-radius: 4px 4px 0 0;">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h5 class="modal-title" style="color: white" id="exampleModalLongTitle">Thêm chi tiết sản phẩm</h5>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-body " style="padding-top: 0px; padding-bottom: 0px">
+
+                    <!--<div style="border-bottom: 1px solid lightgray" class="mx-sm-5 row"></div>-->
+
+                    <input type="text" class="form-control" id="input-id" class="hidden">
+
+                    <div class="form-group">
+                        <label>Sản phẩm:</label>
+                        <select class="form-control" id="input-product">
+
+                            <option th:each="product : ${vm.getWareHouseVMList()}" th:value="${product.getProductId()}" th:text="${product.getName()}"></option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Màu sắc:</label>
+                        <select class="form-control" id="input-color" >
+                            <option th:each="color : ${vm.getColorVMList()}" th:value="${color.getId()}" th:text="${color.getName()}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Size:</label>
+                        <select class="form-control" id="input-size">
+                            <option th:each="size : ${vm.getSizeVMList()}" th:value="${size.getId()}" th:text="${size.getName()}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group margin-bottom-15">
+                        <label>Số lượng:</label>
+                        <input type="number" class="form-control" id="input-amount"></input>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-primary btn-save-productEntity">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
     <!-- /#page-wrapper -->
 
 

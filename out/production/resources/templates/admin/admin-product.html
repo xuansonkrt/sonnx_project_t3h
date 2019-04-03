@@ -7,7 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Product</title>
+    <title>Sản phẩm</title>
+    <link rel="icon" type="image/png" th:href="@{/images/logo-small.png}"/>
 
     <!-- Bootstrap Core CSS -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
@@ -42,12 +43,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header" id="main-title">Product</h1>
+                    <h1 class="page-header" id="main-title">Sản phẩm</h1>
                     <div id="main-content">
                         <div class="row">
                             <div class="col-sm-8 col-12">
                                 <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal" style="margin-bottom: 20px" data-target="#exampleModalLong">
-                                    Add new Product
+                                    Thêm sản phẩm
                                 </button>
                             </div>
                             <div class="col-sm-4 col-12">
@@ -67,7 +68,7 @@
                                     <!--</div>-->
                                     <!---->
                                     <input id="key-search" class="form-control mr-sm-2" type="search" th:field="*{name}"  placeholder="Search..." aria-label="Search">
-                                    <button class="btn btn-success" type="submit">Search</button>
+                                    <button class="btn btn-success" type="submit">Tìm kiếm</button>
                                 </form>
                             </div>
                         </div>
@@ -105,28 +106,28 @@
                             <thead>
                             <tr style="text-align: center">
                                 <th colspan="1"  style="background-color: #1ab7ea; text-align: center">
-                                    Index
+                                    STT
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Name
+                                    Tên sản phẩm
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Category
+                                    Danh mục
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Supply
+                                    Nhà sản xuất
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Promotion
+                                    Khuyến mại
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Short Desc
+                                    Mô tả
                                 </th>
                                 <th colspan="1" style="background-color: #1ab7ea; text-align: center">
-                                    Price
+                                    Giá
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Created Date
+                                    Ngày tạo
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
 
@@ -189,7 +190,7 @@
                     <div class="modal-header" style="background-color: #1ab7ea; border-radius: 4px 4px 0 0;">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h5 class="modal-title" style="color: white" id="exampleModalLongTitle1">Add new/ update Product</h5>
+                                <h5 class="modal-title" style="color: white" id="exampleModalLongTitle1">Thêm/Sửa sản phẩm</h5>
                             </div>
                             <div class="col-sm-6">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right">
@@ -222,14 +223,14 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group " style="margin-top: 20px">
-                                    <label>Product name:</label>
+                                    <label>Tên sản phẩm:</label>
                                     <input type="text" class="form-control" id="input-product-name">
                                 </div>
 
 
 
                                 <div class="form-group">
-                                    <label>Supply:</label>
+                                    <label>Nhà cung cấp:</label>
                                     <select class="form-control" id="input-product-supply" placeholder="Choose Supply">
                                         <option th:each="supply : ${vm.getSupplyVMList()}" th:value="${supply.getId()}" th:text="${supply.getName()}"></option>
                                     </select>
@@ -237,14 +238,14 @@
 
 
                                 <div class="form-group">
-                                    <label>Category:</label>
+                                    <label>Danh mục:</label>
                                     <select class="form-control" id="input-product-category" placeholder="Choose Category">
                                         <option th:each="category : ${vm.getCategoryVMList()}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Promotion:</label>
+                                    <label>Khuyến mại:</label>
                                     <select class="form-control" id="input-product-promotion" placeholder="Choose Promotion">
                                         <option th:each="promotion : ${vm.getPromotionVMList()}" th:value="${promotion.getId()}" th:text="${promotion.getName()}"></option>
                                     </select>
@@ -253,13 +254,13 @@
 
 
                                 <div class="form-group margin-bottom-15" style="width: 100%">
-                                    <label>Price:</label>
+                                    <label>Giá:</label>
                                     <input type="text" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-product-price">
                                 </div>
 
 
                                 <div class="form-group margin-bottom-15">
-                                    <label>Product description:</label>
+                                    <label>Mô tả:</label>
                                     <textarea type="text" class="form-control" id="input-product-desc"></textarea>
                                 </div>
 
@@ -268,8 +269,8 @@
                         </div >
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-save-product">Save changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary btn-save-product">Lưu</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
 
                     </div>
                 </div>
