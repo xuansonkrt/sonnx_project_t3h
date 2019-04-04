@@ -14,6 +14,15 @@ public class ProductVM {
     private List<ProductImageVM> productImageVMS;
     private String supplyName;
     private String promotionName;
+    private int categoryId;
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public String getPromotionName() {
         return promotionName;
