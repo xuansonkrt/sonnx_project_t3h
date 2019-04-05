@@ -1088,7 +1088,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 /*------------------------------------------------------------------
 [ in select ]*/
 .rs1-select2 .select2-container .select2-selection--single .select2-selection__rendered {
-  font-family: Poppins-Regular;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 13px;
   color: #555;
   line-height: 1.2;
@@ -2139,7 +2139,7 @@ input.num-product::-webkit-inner-spin-button {
 /*//////////////////////////////////////////////////////////////////
 [ S-Text 0 - 15 ]*/
 .stext-101 {
-  font-family: Poppins-Medium;
+  font-family: Arial, Baskerville, monospace;
   font-size: 15px;
   line-height: 1.466667;
   text-transform: uppercase;
@@ -2372,7 +2372,7 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .ltext-106 {
-  font-family: Poppins-Bold;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "NotoColorEmoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
   font-size: 36px;
   line-height: 1.2;
 }

@@ -6,6 +6,24 @@ public class ProductEntityVM {
     private String colorName;
     private String sizeName;
     private int productId;
+    private  int colorId;
+    private int sizeId;
+
+    public int getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(int colorId) {
+        this.colorId = colorId;
+    }
+
+    public int getSizeId() {
+        return sizeId;
+    }
+
+    public void setSizeId(int sizeId) {
+        this.sizeId = sizeId;
+    }
 
     public int getProductEntityId() {
         return productEntityId;

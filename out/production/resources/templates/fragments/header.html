@@ -5,7 +5,7 @@
 </head>
 <body>
 <!-- Header -->
-<header th:fragment="header">
+<header th:fragment="header" class="header-v4">
     <!-- Header desktop -->
     <div class="container-menu-desktop">
         <!-- Topbar -->
@@ -40,7 +40,7 @@
 
                 <!-- Logo desktop -->
                 <a href="/" class="logo">
-                    <img src="images/logo-small.png" alt="IMG-LOGO">
+                    <img th:src="@{/images/logo-small.png}" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
