@@ -85,7 +85,7 @@ public class HomeController {
         }
 
 
-        Pageable pageable = new PageRequest(page, size);
+        Pageable pageable = new PageRequest(page, 12);
 
         Page<Product> productPage = null;
 
@@ -138,6 +138,114 @@ public class HomeController {
         vm.setSupplyVMList(supplyVMList);
         model.addAttribute("vm",vm);
         return "/home";
+    }
+
+
+    @GetMapping(value = {"/store"})
+    public String store(Model model,
+                       @Valid @ModelAttribute("productname") ProductDTO productName,
+                        @RequestParam(name = "categoryId", required = false) Integer categoryId,
+                        @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                       @RequestParam(name = "size", required = false, defaultValue = "8") Integer size)
+    {
+        HomeVM vm = new HomeVM();
+        List<Category> categoryList = categoryService.getAll();
+        List<CategoryVM> categoryVMList = new ArrayList<>();
+
+        for(Category category : categoryList) {
+            CategoryVM categoryVM = new CategoryVM();
+            categoryVM.setId(category.getId());
+            categoryVM.setName(category.getName());
+            categoryVMList.add(categoryVM);
+        }
+
+        List<Supply> supplyList = supplyService.getAll();
+        List<SupplyVM> supplyVMList = new ArrayList<>();
+
+        for(Supply supply : supplyList) {
+            SupplyVM supplyVM = new SupplyVM();
+            supplyVM.setId(supply.getId());
+            supplyVM.setName(supply.getName());
+            supplyVMList.add(supplyVM);
+        }
+
+
+        List<Size> sizeList = sizeService.getAll();
+        List<SizeVM> sizeVMList = new ArrayList<>();
+
+        for(Size size2 : sizeList) {
+            SizeVM sizeVM = new SizeVM();
+            sizeVM.setId(size2.getId());
+            sizeVM.setName(size2.getName());
+            sizeVMList.add(sizeVM);
+        }
+
+        List<Color> colorList = colorService.getAll();
+        List<ColorVM> colorVMList = new ArrayList<>();
+
+        for(Color color : colorList) {
+            ColorVM colorVM = new ColorVM();
+            colorVM.setId(color.getId());
+            colorVM.setName(color.getName());
+            colorVMList.add(colorVM);
+        }
+
+
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<Product> productPage = null;
+
+        if (productName.getName() != null && !productName.getName().isEmpty()) {
+            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,categoryId,productName.getName().trim());
+            vm.setKeyWord("Find with key: " + productName.getName());
+        } else {
+            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,categoryId,null);
+        }
+
+
+        List<ProductVM> productVMList = new ArrayList<>();
+
+        for(Product product : productPage.getContent()) {
+            ProductVM productVM = new ProductVM();
+            if(product.getCategory() == null) {
+                productVM.setCategoryName("");
+            } else {
+                productVM.setCategoryName(product.getCategory().getName());
+            }
+
+            if(product.getSupply() == null) {
+                productVM.setSupplyName("");
+            } else {
+                productVM.setSupplyName(product.getSupply().getName());
+            }
+
+            if(product.getPromotion() == null) {
+                productVM.setPromotionName("");
+            } else {
+                productVM.setPromotionName(product.getPromotion().getName());
+            }
+            productVM.setId(product.getId());
+            productVM.setName(product.getName());
+            productVM.setMainImage(product.getMainImage());
+            productVM.setPrice(product.getPrice());
+            productVM.setShortDesc(product.getShortDesc());
+            productVM.setCreatedDate(product.getCreatedDate());
+            productVM.setCategoryId(product.getCategoryId());
+            productVMList.add(productVM);
+        }
+
+
+
+
+        vm.setCategoryVMList(categoryVMList);
+        vm.setColorVMList(colorVMList);
+        vm.setProductVMList(productVMList);
+        vm.setSizeVMList(sizeVMList);
+        vm.setSupplyVMList(supplyVMList);
+        model.addAttribute("vm",vm);
+        model.addAttribute("page",productPage);
+
+        return "/store";
     }
 
     @GetMapping(value = {"/demo"})

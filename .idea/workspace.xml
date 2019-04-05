@@ -2,27 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e6431be-84e3-4fa4-8366-6f43b08e6204" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/application/controller/web/ProductController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/application/model/viewmodel/ProductDetailVM.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/product-detail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product-detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/store.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/application/controller/web/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/application/controller/web/HomeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/application/model/viewmodel/ProductEntityVM.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/application/model/viewmodel/ProductEntityVM.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/static/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/static/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/static/js/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/admin/admin-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/admin/admin-product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/fragments/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/fragments/footer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/fragments/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/fragments/header.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/application/controller/web/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/controller/web/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/model/viewmodel/ProductEntityVM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/model/viewmodel/ProductEntityVM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/admin-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/admin-product.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/footer.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/header.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product-detail.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -123,10 +110,10 @@
           <entry key="cozastore" value="1" />
           <entry key="css" value="21" />
           <entry key="gradle" value="2" />
-          <entry key="html" value="57" />
-          <entry key="java" value="321" />
+          <entry key="html" value="60" />
+          <entry key="java" value="322" />
           <entry key="jpg" value="3" />
-          <entry key="js" value="52" />
+          <entry key="js" value="53" />
           <entry key="md" value="1" />
           <entry key="png" value="1" />
           <entry key="properties" value="3" />
@@ -137,10 +124,10 @@
           <entry key="CLASS" value="2" />
           <entry key="CSS" value="21" />
           <entry key="Groovy" value="2" />
-          <entry key="HTML" value="57" />
+          <entry key="HTML" value="60" />
           <entry key="Image" value="4" />
-          <entry key="JAVA" value="321" />
-          <entry key="JavaScript" value="52" />
+          <entry key="JAVA" value="322" />
+          <entry key="JavaScript" value="53" />
           <entry key="Markdown" value="1" />
           <entry key="Properties" value="3" />
           <entry key="UNKNOWN" value="1" />
@@ -148,21 +135,21 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="css" value="165" />
+          <entry key="css" value="167" />
           <entry key="dummy" value="5" />
           <entry key="gradle" value="2" />
-          <entry key="html" value="8855" />
-          <entry key="java" value="14423" />
+          <entry key="html" value="9132" />
+          <entry key="java" value="14479" />
           <entry key="js" value="5474" />
           <entry key="txt" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="166" />
+          <entry key="CSS" value="168" />
           <entry key="Groovy" value="2" />
-          <entry key="HTML" value="8855" />
-          <entry key="JAVA" value="14421" />
+          <entry key="HTML" value="9132" />
+          <entry key="JAVA" value="14477" />
           <entry key="JavaScript" value="5473" />
           <entry key="PLAIN_TEXT" value="14" />
           <entry key="Spring Data QL" value="2" />
@@ -175,8 +162,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="550" column="114" selection-start-line="550" selection-start-column="72" selection-end-line="550" selection-end-column="114" />
+            <state relative-caret-position="2529">
+              <caret line="197" column="43" selection-start-line="197" selection-start-column="43" selection-end-line="197" selection-end-column="43" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -190,14 +177,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/application/controller/web/ProductController.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/store.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="171" column="53" selection-start-line="171" selection-start-column="53" selection-end-line="171" selection-end-column="53" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="170">
+              <caret line="403" column="89" selection-start-line="403" selection-start-column="89" selection-end-line="403" selection-end-column="89" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/application/controller/web/HomeController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="87" column="52" selection-start-line="87" selection-start-column="52" selection-end-line="87" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/fragments/footer.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="30" column="53" selection-start-line="30" selection-start-column="53" selection-end-line="30" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -220,11 +222,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/fragments/header.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="53" column="19" lean-forward="true" selection-start-line="53" selection-start-column="19" selection-end-line="53" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/product-detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="492" column="107" selection-start-line="492" selection-start-column="107" selection-end-line="492" selection-end-column="107" />
+            <state relative-caret-position="364">
+              <caret line="138" selection-start-line="138" selection-end-line="138" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -235,8 +246,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
-              <caret line="2374" column="122" selection-start-line="2374" selection-start-column="122" selection-end-line="2374" selection-end-column="122" />
+            <state relative-caret-position="292">
+              <caret line="2191" column="43" selection-start-line="2191" selection-start-column="43" selection-end-line="2191" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -280,7 +291,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Esprit Ruffle Shirt</find>
       <find>input-product-supply</find>
       <find>Liên</find>
       <find>contact</find>
@@ -309,6 +319,7 @@
       <find>rs1-select2</find>
       <find>cate</find>
       <find>Related Products</find>
+      <find>productPage</find>
       <find>th:att</find>
     </findStrings>
     <replaceStrings>
@@ -666,7 +677,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/application/model/dto/ProductImageDTO.java" />
         <option value="$PROJECT_DIR$/src/main/java/application/model/viewmodel/ProductImageVM.java" />
         <option value="$PROJECT_DIR$/src/main/java/application/data/service/ProductImageService.java" />
         <option value="$PROJECT_DIR$/src/main/java/application/data/repository/ProductImageRepository.java" />
@@ -704,19 +714,20 @@
         <option value="$PROJECT_DIR$/src/main/java/application/model/viewmodel/HomeVM.java" />
         <option value="$PROJECT_DIR$/src/main/java/application/model/viewmodel/ProductVM.java" />
         <option value="$PROJECT_DIR$/src/main/java/application/controller/web/BaseController.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/home.html" />
         <option value="$PROJECT_DIR$/src/main/resources/static/js/home.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/fragments/header.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/fragments/footer.html" />
-        <option value="$PROJECT_DIR$/src/main/java/application/controller/web/HomeController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/admin/admin-product.html" />
         <option value="$PROJECT_DIR$/src/main/resources/static/js/admin-product.js" />
         <option value="$PROJECT_DIR$/src/main/java/application/model/viewmodel/ProductEntityVM.java" />
         <option value="$PROJECT_DIR$/src/main/java/application/model/viewmodel/ProductDetailVM.java" />
         <option value="$PROJECT_DIR$/src/main/java/application/controller/web/ProductController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/static/js/product-detail.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/css/main.css" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/fragments/header.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/product-detail.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/css/main.css" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/fragments/footer.html" />
+        <option value="$PROJECT_DIR$/src/main/java/application/controller/web/HomeController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/home.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/store.html" />
       </list>
     </option>
   </component>
@@ -912,7 +923,7 @@
     <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554477128148" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554482808930" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../hometest/hometest/ProjectT3h_Ljava1808e" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -925,11 +936,11 @@
       <recent name="https://colorlib.com/preview/theme/cozastore/?fbclid=IwAR1LYJq1mRT7OQHbNxkqRL-7-ZqeJ7f6fNs1ww_tEapjBjlRRe6eKIy2wZY" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\LapTrinhWeb\Back-End\ProjectSourceCode\sonnx_project_t3h\src\main\resources\templates" />
       <recent name="D:\LapTrinhWeb\Back-End\ProjectSourceCode\sonnx_project_t3h\src\main\java\application\model\viewmodel\Admin" />
       <recent name="D:\LapTrinhWeb\Back-End\ProjectSourceCode\sonnx_project_t3h\src\main\resources\static\js" />
       <recent name="D:\LapTrinhWeb\Back-End\ProjectSourceCode\sonnx_project_t3h\src\main\resources\static\css" />
       <recent name="D:\LapTrinhWeb\Back-End\ProjectSourceCode\sonnx_project_t3h\src\main\resources\static\plugin" />
-      <recent name="D:\LapTrinhWeb\Back-End\ProjectSourceCode\sonnx_project_t3h\src\main\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="application.controller.web" />
@@ -996,7 +1007,7 @@
       <workItem from="1554196024960" duration="5370000" />
       <workItem from="1554301621758" duration="13973000" />
       <workItem from="1554369177204" duration="9913000" />
-      <workItem from="1554452041949" duration="12148000" />
+      <workItem from="1554452041949" duration="17486000" />
     </task>
     <task id="LOCAL-00001" summary="add model">
       <created>1552927027806</created>
@@ -1016,13 +1027,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203743000" />
+    <option name="totallyTimeSpent" value="209081000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21140939" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21409395" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -1143,13 +1154,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/fragments/header-admin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/application/config/WebConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
@@ -1363,36 +1367,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/fragments/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="42" column="59" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/fragments/footer.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="118" column="65" selection-start-line="118" selection-start-column="65" selection-end-line="118" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/application/data/service/ProductImageService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/application/controller/web/HomeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="139" column="21" selection-start-line="139" selection-start-column="21" selection-end-line="139" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/js/main.js">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/js/admin-product.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1474,13 +1454,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="2374" column="122" selection-start-line="2374" selection-start-column="122" selection-end-line="2374" selection-end-column="122" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/admin/admin-product.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -1542,10 +1515,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/fragments/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="53" column="19" lean-forward="true" selection-start-line="53" selection-start-column="19" selection-end-line="53" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/js/main.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="2191" column="43" selection-start-line="2191" selection-start-column="43" selection-end-line="2191" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/product-detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="138" selection-start-line="138" selection-end-line="138" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/fragments/footer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="30" column="53" selection-start-line="30" selection-start-column="53" selection-end-line="30" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/application/controller/web/HomeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="87" column="52" selection-start-line="87" selection-start-column="52" selection-end-line="87" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="550" column="114" selection-start-line="550" selection-start-column="72" selection-end-line="550" selection-end-column="114" />
+        <state relative-caret-position="2529">
+          <caret line="197" column="43" selection-start-line="197" selection-start-column="43" selection-end-line="197" selection-end-column="43" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1558,13 +1572,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/product-detail.html">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/store.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="492" column="107" selection-start-line="492" selection-start-column="107" selection-end-line="492" selection-end-column="107" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="170">
+          <caret line="403" column="89" selection-start-line="403" selection-start-column="89" selection-end-line="403" selection-end-column="89" />
         </state>
       </provider>
     </entry>
