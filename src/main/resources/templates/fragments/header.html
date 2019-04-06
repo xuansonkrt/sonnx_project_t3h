@@ -5,7 +5,7 @@
 </head>
 <body>
 <!-- Header -->
-<header th:fragment="header" class="header-v4">
+<header th:fragment="header (vm)" class="header-v4">
     <!-- Header desktop -->
     <div class="container-menu-desktop">
         <!-- Topbar -->
@@ -15,7 +15,7 @@
                     Miễn phí vận chuyển cho hóa đơn trên 1.000.000 đồng
                 </div>
 
-                <div class="right-top-bar text-black-50 flex-w h-full">
+                <div sec:authorize="isAnonymous()"  class="right-top-bar text-black-50 flex-w h-full">
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         Kiểm tra hóa đơn
                     </a>
@@ -32,13 +32,35 @@
                             <span class="fa fa-sign-in mr-4">       Đăng nhập</span>
                         </a>
                     </div>
-                    <!--<a href="#" class="flex-c-m trans-04 p-lr-25">-->
-                    <!--EN-->
-                    <!--</a>-->
+                </div>
 
-                    <!--<a href="#" class="flex-c-m trans-04 p-lr-25">-->
-                    <!--USD-->
-                    <!--</a>-->
+                <div sec:authorize="isAuthenticated()"  class="right-top-bar text-black-50 flex-w h-full">
+                    <a href="#" class="flex-c-m trans-04 p-lr-25">
+                        Kiểm tra hóa đơn
+                    </a>
+
+
+                    <a  href="#" class="flex-c-m trans-04 p-lr-25 my-font" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"s>
+                        <!--<a class=" brand-logo" th:href="@{/admin}"><img th:src="${vm.getAvatar()}" alt="logo"/></a>-->
+                        <div  class="nav-profile-img">
+                            <img style="width: 20px"  th:src="${vm.getAvatar()}" class=" mr-3"  alt="image">
+                            <span class="availability-status online"></span>
+                        </div>
+                        <!--<img  th:src="${vm.getAvatar()}" class=" brand-logo mr-3" >-->
+                        <span th:text="${vm.getUserName()}"></span>
+                    </a>
+                    <div style=" z-index: 9999999999999999" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a style="color: black;" class="dropdown-item" th:href="@{/order/history}">
+                            <span class="fa fa-history mr-4">       Thông tin cá nhân</span>
+                        </a>
+                        <a style="color: black;" class="dropdown-item" th:href="@{/order/history}">
+                            <span class="fa fa-history mr-4">       Lịch sử mua hàng</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a style="color: black;" class="dropdown-item" th:href="@{/logout}">
+                            <span class="fa fa-sign-in mr-4">       Đăng xuất</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Đăng ký</title>
-
+    <link rel="icon" type="image/png" th:href="@{/images/logo-small.png}"/>
     <!-- Font Icon -->
     <link rel="stylesheet" th:href="@{/fonts/material-icon/css/material-design-iconic-font.min.css}">
 
     <!-- Main css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+
     <link rel="stylesheet" th:href="@{/css/style-signin.css}">
 </head>
 <body>
@@ -18,30 +20,39 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Đăng ký</h2>
-                        <form method="POST" class="register-form" id="register-form">
-                            <div class="form-group">
-                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Họ tên"/>
+                        <div th:if="${param.exit_username}">
+                            <div style="font-family: Arial, Helvetica, sans-serif" class="alert alert-danger">
+                                Tên đăng nhập không khả dụng!
                             </div>
+                        </div>
+                        <form th:action="@{/user/register}" th:object="${user}" method="POST" class="register-form" id="register-form">
+                            <div class="form-group">
+                                <label for="userName"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text"  th:field="*{userName}" name="userName" id="userName" placeholder="Tên tài khoản" required/>
+                            </div>
+                            <span style="color: red" id="checkUserName"></span>
+
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Email"/>
+                                <input type="email" th:field="*{email}" name="email" id="email" placeholder="Email" required/>
                             </div>
                             <div class="form-group">
-                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="pass" id="pass" placeholder="Mật khẩu"/>
+                                <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" th:field="*{password}" name="password" id="password" placeholder="Mật khẩu" required/>
                             </div>
                             <div class="form-group">
-                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_pass" id="re_pass" placeholder="Nhập lại mật khẩu"/>
+                                <label for="re_pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="re_pass" id="re_pass" placeholder="Nhập lại mật khẩu" required/>
                             </div>
+                            <span style="color: red" id="compare"></span>
+
                             <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                                <label for="agree-term" class="label-agree-term"><span><span></span></span>Đồng ý với  <a href="#" class="term-service">Điều khoản </a>của chúng tôi.</label>
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" checked required/>
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>Đồng ý với  <a href="#" class="term-service" style="color: #007bff">điều khoản </a>của chúng tôi.</label>
                             </div>
                             <div class="form-group form-button">
-                                <input  name="signup" id="signup" class="form-submit" value="Đăng ký"/>
-                                <input type="submit" name="signup" id="submit" class="form-submit" value="Đăng ký"/>
+                                <!--<input  name="signup" id="" class="form-submit" value="Đăng ký"/>-->
+                                <input type="submit" name="signup" id="signup" class="form-submit " value="Đăng ký" />
                             </div>
                         </form>
                     </div>
@@ -54,6 +65,46 @@
         </section>
     </div>
     <script th:src="@{/js/jquery.min.js}"></script>
+    <script>
+        $('#re_pass').on("keyup",function () {
+            var pass=$('#password').val();
+            var re_pass=$('#re_pass').val();
+            if(pass!=re_pass){
+                $('#signup').attr('disabled');
+                $('#compare').text("Mật khẩu không khớp");
+            } else{
+                $('#compare').text("");
 
+            }
+        });
+
+        // $('#userName').on("keyup",function () {
+        //     var userName=$('#userName').val();
+        //     var data={
+        //         userName:userName
+        //     };
+        //     console.log("data: ",data);
+        //     $.ajax({
+        //         url: '/api/user/check',
+        //         data: JSON.stringify(data),
+        //         type:"POST",
+        //         dataType:"json",
+        //         contentType: "application/json",
+        //         success: function (data) {
+        //             console.log("value: ",data);
+        //             if (data.success === true) {
+        //                 $('#checkUserName').text("");
+        //             }
+        //             else {
+        //                 $('#checkUserName').text("Tên đăng nhập đã tồn tại.");
+        //             }
+        //         }.bind(this),
+        //         error: function (e) {
+        //             console.log(e);
+        //         }
+        //
+        //     });
+        // });
+    </script>
 </body>
 </html>

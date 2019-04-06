@@ -14,12 +14,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class HomeController extends BaseController {
     @Autowired
     CategoryService categoryService;
 
@@ -40,8 +43,13 @@ public class HomeController {
     public String home(Model model,
                        @Valid @ModelAttribute("productname") ProductDTO productName,
                        @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-                       @RequestParam(name = "size", required = false, defaultValue = "8") Integer size)
+                       @RequestParam(name = "size", required = false, defaultValue = "8") Integer size,
+                       HttpServletResponse response,
+                       HttpServletRequest request,
+                       final Principal principal)
     {
+        this.checkCookie(response,request,principal);
+
         HomeVM vm = new HomeVM();
         List<Category> categoryList = categoryService.getAll();
         List<CategoryVM> categoryVMList = new ArrayList<>();
@@ -130,7 +138,7 @@ public class HomeController {
 
 
 
-
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         vm.setCategoryVMList(categoryVMList);
         vm.setColorVMList(colorVMList);
         vm.setProductVMList(productVMList);

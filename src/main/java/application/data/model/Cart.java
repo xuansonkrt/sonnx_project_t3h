@@ -16,8 +16,8 @@ public class Cart {
     @Column(name = "guid")
     private String guid;
 
-    @Column(name = "user_id")
-    private int user_id;
+    @Column(name = "user_name")
+    private String userName;
 
     @Column(name = "created_date")
     private Date createdDate;
@@ -41,12 +41,12 @@ public class Cart {
         this.guid = guid;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public List<CartProduct> getListCartProducts() {
