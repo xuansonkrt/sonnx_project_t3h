@@ -32,6 +32,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{/vendor/perfect-scrollbar/perfect-scrollbar.css}">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+    <!--<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-datetimepicker.min.css}">-->
+    <!--<link rel="stylesheet" type="text/css" th:href="@{/css/fullcalendar.min.css}">-->
+    <!--<link rel="stylesheet" type="text/css" th:href="@{/css/fullcalendar.print.min.css}">-->
+    <!--<link rel="stylesheet" type="text/css" th:href="@{/css/jquery.datetimepicker.css}">-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
     <!--===============================================================================================-->
 </head>
@@ -138,16 +142,16 @@
     <!--</div>-->
 <!--</div>-->
 
-<div class=" container">
+<div class=" container my-4">
     <form th:action="@{/user/update}" th:object="${user}" method="post" id="myForm">
         <fieldset>
             <div class="row">
                 <div class="col-5 col-md-5 col-sm-12 col-xs-12">
                     <div style="text-align: center">
-                        <img th:if="*{avatar}"th:src="*{avatar}" class="user-avatar">
+                        <img  style="max-width: 300px" th:if="*{avatar}"th:src="*{avatar}" class="user-avatar">
                     </div>
                     <div style="text-align: center">
-                        <img th:unless="*{avatar}" src="https://aets.org.es/wp-content/uploads/2014/12/omita-el-icono-del-perfil-avatar-placeholder-gris-de-la-foto-99724602.jpg" class="user-avatar">
+                        <img  style="max-width: 300px" th:unless="*{avatar}" src="https://aets.org.es/wp-content/uploads/2014/12/omita-el-icono-del-perfil-avatar-placeholder-gris-de-la-foto-99724602.jpg" class="user-avatar">
                     </div>
 
                     <div style="text-align: center; margin-top: 20px">
@@ -162,47 +166,52 @@
 
                     <div th:if="${param.updateSuccess}">
                         <div class="alert alert-primary">
-                            Update success !!
+                            Cập nhật thành công !!
                         </div>
                     </div>
 
                     <div th:if="${param.updateFail}">
                         <div class="alert alert-danger">
-                            Update fail !!
+                            Xảy ra lỗi !!
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Name:</label>
+                        <label>Họ tên:</label>
                         <input type="text" class="form-control" id="name" th:field="*{name}" name="name" />
                     </div>
                     <div class="form-group">
-                        <label for="email">Email address:</label>
+                        <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" th:field="*{email}" name="email" />
                     </div>
                     <div class="form-group">
-                        <label>Gender:</label>
+                        <label>Giới tính:</label>
                         <select th:field="*{gender}">
-                            <option value="0">Undefined </option>
-                            <option value="1">Male</option>
-                            <option value="2">Female</option>
+                            <option value="0">Không xác định </option>
+                            <option value="1">Nam</option>
+                            <option value="2">Nữ</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Address:</label>
+                        <label>Ngày sinh:</label>
+                        <input type="text" class="form-control " id="dateOfBirth" th:field="*{dateOfBirth}" name="dateOfBirth" />
+
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ:</label>
                         <input type="text" class="form-control" id="name" th:field="*{address}" name="address" />
                     </div>
                     <div class="form-group">
-                        <label>Phone number:</label>
+                        <label>Số điện thoại:</label>
                         <input type="text" class="form-control" id="name" th:field="*{phoneNumber}" name="phoneNumber" />
                     </div>
 
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6">
-                            <button class="btn btn-primary" type="submit">Update</button>
+                            <button class="btn btn-primary" type="submit">Cập nhật</button>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6">
-                            <a class="btn btn-success" th:href="@{'/user/change-password'}" role="button">Change password</a>
+                            <a class="btn btn-success" th:href="@{'/user/change-password'}" role="button">Đổi mật khẩu</a>
                         </div>
                     </div>
 
@@ -228,7 +237,7 @@
                     <!-- Block2 -->
                     <div class="block2">
                         <div class="block2-pic hov-img0">
-                            <img th:src="${product.getMainImage()}" alt="IMG-PRODUCT">
+                            <img  th:src="${product.getMainImage()}" alt="IMG-PRODUCT">
 
                             <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                                 Quick View
@@ -533,11 +542,41 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<!--<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>-->
+<!--<script th:src="@{/js/fullcalendar.min.js}"></script>-->
 <script th:src="@{/js/main.js}"></script>
 <script th:src="@{/js/script.js}"></script>
-<script th:src="@{/js/product-detail.js}"></script>
+<script th:src="@{/js/user-detail.js}"></script>
 <script th:inline="javascript">
     var vm = [[${vm}]];
+    // $('.date').datetimepicker({
+    //     format: 'DD/MM/YYYY',
+    //     keepInvalid: true
+    // });
+
+    $(function() {
+        // $('input[name="dateOfBirth"]').daterangepicker({
+        //     singleDatePicker: true,
+        //     format: 'DD/MM/YYYY',
+        //     showDropdowns: true,
+        //     minYear: 1901,
+        //     maxYear: parseInt(moment().format('YYYY'),10)
+        // }, function(start, end, label) {
+        //     var years = moment().diff(start, 'years');
+        //     //alert("You are " + years + " years old!");
+        // });
+        $('input[name="dateOfBirth"]').daterangepicker({
+           // autoUpdateInput: false,
+            singleDatePicker: true,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+
+        $('input[name="dateOfBirth"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY'));
+        });
+    });
 </script>
 
 </body>

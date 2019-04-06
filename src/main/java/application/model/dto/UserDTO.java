@@ -1,13 +1,12 @@
-package application.model.viewmodel;
+package application.model.dto;
 
-import application.extension.CustomDateDeserializer2;
+import application.extension.CustomDateSerializer;
 import application.extension.CustomDateSerializer2;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Date;
 
-public class UserVM {
+public class UserDTO {
     private int id;
     private String avatar;
     private String userName;
@@ -17,16 +16,9 @@ public class UserVM {
     private String phoneNumber;
     private int gender;
 
-  //  @JsonDeserialize(using = CustomDateDeserializer2.class)
-    private String dateOfBirth;
+    @JsonSerialize(using = CustomDateSerializer.class)
+    private Date dateOfBirth;
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
 
     public int getId() {
         return id;
@@ -90,5 +82,13 @@ public class UserVM {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

@@ -5,20 +5,22 @@ import application.data.model.Product;
 import application.data.model.User;
 import application.data.service.ProductService;
 import application.data.service.UserService;
-import application.model.viewmodel.ProductVM;
-import application.model.viewmodel.UserDetailVM;
-import application.model.viewmodel.UserVM;
+import application.model.dto.UserDTO;
+import application.model.viewmodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -29,6 +31,10 @@ public class UserController extends  BaseController{
 
     @Autowired
     ProductService productService;
+
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = {"/sign-in"})
     public String signIn(Model model)
@@ -70,7 +76,13 @@ public class UserController extends  BaseController{
         userVM.setGender(userEntity.getGender());
         userVM.setName(userEntity.getName());
         userVM.setPhoneNumber(userEntity.getPhoneNumber());
-        userVM.setDateOfBirth(userEntity.getDateOfBirth());
+        Date sn = userEntity.getDateOfBirth();
+        String pattern = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        if(sn!=null){
+            String date = simpleDateFormat.format(sn);
+            userVM.setDateOfBirth(date);
+        }
 
         Pageable pageable = new PageRequest(0, 50);
 
@@ -125,7 +137,7 @@ public class UserController extends  BaseController{
 
 
     @PostMapping("/update")
-    public String updateUser(@Valid @ModelAttribute("user")User user) {
+    public String updateUser(@Valid @ModelAttribute("user") UserDTO user) {
         try {
             String  username = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -145,5 +157,88 @@ public class UserController extends  BaseController{
 //            logger.error(e.getMessage());
         }
         return "redirect:/user/detail?updateFail";
+    }
+
+
+    @GetMapping("/change-password")
+    public String changePassWord(@Valid @ModelAttribute("productname") ProductVM productName,
+                                 Model model) {
+
+        ChangePasswordVM changePasswordVM = new ChangePasswordVM();
+        ChangePasswordVM2 vm = new ChangePasswordVM2();
+        Pageable pageable = new PageRequest(0, 50);
+
+        Page<Product> productPage = null;
+
+//        if (productName.getName() != null && !productName.getName().isEmpty()) {
+//            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,productName.getName().trim());
+//            vm.setKeyWord("Find with key: " + productName.getName());
+//        } else {
+        productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,null);
+//        }
+
+
+        List<ProductVM> productVMList = new ArrayList<>();
+
+        for(Product product : productPage.getContent()) {
+            ProductVM productVM = new ProductVM();
+            if(product.getCategory() == null) {
+                productVM.setCategoryName("");
+            } else {
+                productVM.setCategoryName(product.getCategory().getName());
+            }
+
+            if(product.getSupply() == null) {
+                productVM.setSupplyName("");
+            } else {
+                productVM.setSupplyName(product.getSupply().getName());
+            }
+
+            if(product.getPromotion() == null) {
+                productVM.setPromotionName("");
+            } else {
+                productVM.setPromotionName(product.getPromotion().getName());
+            }
+            productVM.setId(product.getId());
+            productVM.setName(product.getName());
+            productVM.setMainImage(product.getMainImage());
+            productVM.setPrice(product.getPrice());
+            productVM.setShortDesc(product.getShortDesc());
+            productVM.setCreatedDate(product.getCreatedDate());
+            productVM.setCategoryId(product.getCategoryId());
+            productVMList.add(productVM);
+        }
+
+        vm.setProductVMList(productVMList);
+        changePasswordVM.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+
+        model.addAttribute("changePassword", changePasswordVM);
+        model.addAttribute("vm", vm);
+        return "/change-password";
+    }
+
+
+    @PostMapping("change-password")
+    public String changePassWordPost(@Valid @ModelAttribute("changePassword") ChangePasswordVM password) {
+
+        try {
+            if(password.getCurrentPassword() != null && password.getNewPassword() != null && password.getConfirmPassword() != null) {
+                String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+                User userEntity = userService.findUserByUsername(username);
+
+                if(passwordEncoder.matches(password.getCurrentPassword(),userEntity.getPasswordHash()) == true) {
+                    if(password.getNewPassword().equals(password.getConfirmPassword())) {
+                        userEntity.setPasswordHash(passwordEncoder.encode(password.getNewPassword()));
+                        userService.updateUser(userEntity);
+                        return "redirect:/user/change-password?success";
+                    }
+                }
+            }
+        } catch (Exception e) {
+           // logger.error(e.getMessage());
+        }
+        return "redirect:/user/change-password?fail";
+
     }
 }

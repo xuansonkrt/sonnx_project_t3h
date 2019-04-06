@@ -93,7 +93,7 @@ public class UserService {
             // hash pass
             user.setPasswordHash(passwordEncoder.encode(user.getPassword()));
             user.setCreadedDate(new Date());
-
+            user.setAvatar("/link/avatar.jpg");
             // save user
             userRepository.save(user);
 
