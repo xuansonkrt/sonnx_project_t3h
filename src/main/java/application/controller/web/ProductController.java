@@ -21,7 +21,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path = "/product")
-public class ProductController {
+public class ProductController extends  BaseController{
 
     @Autowired
     CategoryService categoryService;
@@ -178,6 +178,7 @@ public class ProductController {
         vm.setProductVMList(productVMList);
         vm.setSizeVMList(sizeVMList);
         vm.setSupplyVMList(supplyVMList);
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         model.addAttribute("vm",vm);
         return "/product-detail";
     }

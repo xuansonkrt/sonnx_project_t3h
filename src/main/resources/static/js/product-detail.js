@@ -81,7 +81,7 @@ $(document).ready(function () {
             NProgress.done();
             if(res.data.success) {
                 swal(
-                    'Success',
+                    'Thành công',
                     res.data.message,
                     'success'
                 ).then(function() {
@@ -89,7 +89,7 @@ $(document).ready(function () {
                 });
             } else {
                 swal(
-                    'Fail',
+                    'Xảy ra lỗi',
                     res.data.message,
                     'error'
                 );

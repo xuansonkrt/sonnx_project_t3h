@@ -1,16 +1,11 @@
 package application.controller.api;
 
-import application.data.model.Cart;
-import application.data.model.CartProduct;
-import application.data.model.Product;
-import application.data.model.ProductEntity;
-import application.data.service.CartProductService;
-import application.data.service.CartService;
-import application.data.service.ProductEntityService;
-import application.data.service.ProductService;
+import application.data.model.*;
+import application.data.service.*;
 import application.model.api.BaseApiResult;
 import application.model.dto.CartProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,17 +28,26 @@ public class CartProductApiController {
     @Autowired
     private ProductEntityService productEntityService;
 
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/add")
     public BaseApiResult addToCart(@RequestBody CartProductDTO dto) {
         BaseApiResult result = new BaseApiResult();
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
 
         try {
             if(dto.getGuid() != null && dto.getAmount() > 0 && dto.getProductEntityId() > 0) {
-                Cart cartEntity = cartService.findFirstCartByGuid(dto.getGuid());
+                Cart cartEntity;
+                if(userEntity==null)
+                    cartEntity= cartService.findFirstCartByGuid(dto.getGuid());
+                else
+                    cartEntity= cartService.findByUserName(userEntity.getUserName());
+
                 ProductEntity productEntity = productEntityService.findOne(dto.getProductEntityId());
                 if(cartEntity != null && productEntity != null) {
-                    CartProduct cartProductEntity = cartProductService.findFirstCartProductByCartIdAndProductId(cartEntity.getId(),productEntity.getId());
+                    CartProduct cartProductEntity = cartProductService.findFirstCartProductByCartIdAndProductEntityId(cartEntity.getId(),productEntity.getId());
                     if(cartProductEntity != null) {
                         cartProductEntity.setAmount(cartProductEntity.getAmount() + dto.getAmount());
                         cartProductService.updateCartProduct(cartProductEntity);
@@ -58,11 +62,14 @@ public class CartProductApiController {
                     result.setSuccess(true);
                     return result;
                 } else {
+
                     cartEntity= new Cart();
+                    if(userEntity!=null)
+                        cartEntity.setUserName(userEntity.getUserName());
                     cartEntity.setGuid(dto.getGuid());
                     cartEntity.setCreatedDate(new Date());
                     cartService.addNewCart(cartEntity);
-                    CartProduct cartProductEntity = cartProductService.findFirstCartProductByCartIdAndProductId(cartEntity.getId(),productEntity.getId());
+                    CartProduct cartProductEntity = cartProductService.findFirstCartProductByCartIdAndProductEntityId(cartEntity.getId(),productEntity.getId());
                     if(cartProductEntity != null) {
                         cartProductEntity.setAmount(cartProductEntity.getAmount() + dto.getAmount());
                         cartProductService.updateCartProduct(cartProductEntity);

@@ -57,9 +57,9 @@ public class CartProductService {
         return false;
     }
 
-    public CartProduct findFirstCartProductByCartIdAndProductId(int cartId, int productId) {
+    public CartProduct findFirstCartProductByCartIdAndProductEntityId(int cartId, int productEntityId) {
         try {
-            return cartProductRepository.findFirstCartProductByCartIdAndProductId(cartId,productId);
+            return cartProductRepository.findFirstCartProductByCartIdAndProductEntityId(cartId,productEntityId);
         }catch (Exception e) {
             logger.error(e.getMessage());
         }
