@@ -134,7 +134,7 @@
             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>
 
-        <a href="product.html" class="stext-109 cl8 hov-cl1 trans-04" >
+        <a th:href="${'/store/?categoryId='+vm.getProductVM().getCategoryId()}" class="stext-109 cl8 hov-cl1 trans-04" >
             <span th:text="${vm.getProductVM().getCategoryName()}"> </span><!---->
 
             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
@@ -247,7 +247,9 @@
                                     </div>
                                 </div>
                                 <span style="color: red" id="warehouse"></span>
-                                <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04  add-to-cart"
+                                        th:attr="data-product=${vm.getProductVM().getId()}">
+                                    <!--js-addcart-detail-->
                                     Thêm vào giỏ
                                 </button>
                             </div>
@@ -374,7 +376,7 @@
                                     <!-- Review -->
                                     <div class="flex-w flex-t p-b-68">
                                         <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                                            <img src="images/avatar-01.jpg" alt="AVATAR">
+                                            <img th:src="@{/images/avatar-01.jpg}" alt="AVATAR">
                                         </div>
 
                                         <div class="size-207">
@@ -783,7 +785,11 @@
     });
 </script>
 <!--===============================================================================================-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
 <script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/script.js}"></script>
 <script th:src="@{/js/product-detail.js}"></script>
 <script th:inline="javascript">
     var vm = [[${vm}]];

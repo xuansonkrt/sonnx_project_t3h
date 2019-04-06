@@ -2,6 +2,7 @@ package application.data.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "dbo_cart")
@@ -17,6 +18,9 @@ public class Cart {
 
     @Column(name = "user_id")
     private int user_id;
+
+    @Column(name = "created_date")
+    private Date createdDate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private List<CartProduct> listCartProducts = new ArrayList<>();
@@ -51,5 +55,13 @@ public class Cart {
 
     public void setListCartProducts(List<CartProduct> listCartProducts) {
         this.listCartProducts = listCartProducts;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

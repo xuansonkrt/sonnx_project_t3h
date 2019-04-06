@@ -81,7 +81,7 @@ public class ProductController {
             entityVM.setProductId(item.getProductId());
             entityVM.setColorId(item.getColorId());
             entityVM.setSizeId(item.getSizeId());
-
+            entityVM.setProductEntityId(item.getId());
             productEntityVMList.add(entityVM);
         }
 
@@ -158,6 +158,7 @@ public class ProductController {
         productVM2.setShortDesc(product2.getShortDesc());
         productVM2.setMainImage(product2.getMainImage());
         productVM2.setCategoryName(product2.getCategory().getName());
+        productVM2.setCategoryId(product2.getCategoryId());
         List<ProductImage> productImageList= product2.getProductImageList();
 
         List<ProductImageVM> productImageVMList = new ArrayList<>();

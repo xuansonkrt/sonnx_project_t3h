@@ -248,12 +248,7 @@ public class HomeController {
         return "/store";
     }
 
-    @GetMapping(value = {"/demo"})
-    public String demo(Model model)
-    {
-        model.addAttribute("vm","Xuan Son");
-        return "/product-detail";
-    }
+
 
 
 }

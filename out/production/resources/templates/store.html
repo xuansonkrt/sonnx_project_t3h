@@ -139,15 +139,33 @@
 
         <div class="flex-w flex-sb-m p-b-52">
             <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-                <a class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1 my-fonts my-font"  th:href="${'/store'}">
+                <a class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5  my-fonts my-font"  th:href="${'/store'}">
                     <!--data-filter="*"-->
+                    <!--how-active1-->
                     Tất cả sản phẩm
                 </a>
 
-                <a th:each="category : ${vm.getCategoryVMList()}" class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 my-font" th:href="${'/store/?categoryId='+category.getId()}"   th:text="${category.getName()}">
+
+                <span th:each="category : ${vm.getCategoryVMList()}"  class="">
+
+                    <a th:if="${#strings.equals(param.categoryId, #strings.toString(category.getId()))}"
+                       class="stext-106 cl6 hov1  bor3 how-active1 trans-04 m-r-32 m-tb-5 my-font"
+                       th:href="${'/store/?categoryId='+category.getId()}"  th:text="${category.getName()}" ></a>
+
+                    <a th:unless="${#strings.equals(param.categoryId, #strings.toString(category.getId()))}"
+                          class="stext-106 cl6 hov1  bor3 trans-04 m-r-32 m-tb-5 my-font"
+                          th:href="${'/store/?categoryId='+category.getId()}"  th:text="${category.getName()}" ></a>
+
+
+
+
+
                     <!--th:attr="data-filter='.'+${category.getId()}"-->
-                    <!--Giày thể thao-->
-                </a>
+                           <!--Giày thể thao-->
+
+
+                </span>
+
 
                 <!--<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 my-font" data-filter=".7">-->
                     <!--Giày da-->
@@ -393,7 +411,7 @@
                                 Esprit Ruffle Shirt
                             </a>
 
-                            <span class="stext-105 cl3" th:text="${product.getPrice()}">
+                            <span class="stext-105 cl3" th:text="${product.getPrice()+' đ'}">
 									$16.64
 								</span>
                         </div>

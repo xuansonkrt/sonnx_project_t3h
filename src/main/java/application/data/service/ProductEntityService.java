@@ -27,7 +27,9 @@ public class ProductEntityService {
         return productEntityRepository.findByProductId(productId);
     }
 
-
+    public ProductEntity findOne(Integer productEntityId){
+        return productEntityRepository.findOne(productEntityId);
+    }
     public ProductEntity getByProductSizeColor(Integer productId,Integer colorId,Integer sizeId){
         return productEntityRepository.getByProductSizeColor(productId,colorId,sizeId);
     }

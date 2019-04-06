@@ -148,12 +148,22 @@
 
                 <span th:each="category : ${vm.getCategoryVMList()}"  class="">
 
-                       <a th:if="${(#httpServletRequest.getParameter('categoryId') == category.getId())}" class="stext-106 cl6 hov1 how-active1 bor3 trans-04 m-r-32 m-tb-5 my-font" th:href="${'/store/?categoryId='+category.getId()}"  th:text="${category.getName()}" >
-                       <a th:unless="${(#httpServletRequest.getParameter('categoryId') == category.getId())}" class="stext-106 cl6 hov1  bor3 trans-04 m-r-32 m-tb-5 my-font" th:href="${'/store/?categoryId='+category.getId()}"  th:text="${category.getName()}" >
+                    <a th:if="${#strings.equals(param.categoryId, #strings.toString(category.getId()))}"
+                       class="stext-106 cl6 hov1  bor3 how-active1 trans-04 m-r-32 m-tb-5 my-font"
+                       th:href="${'/store/?categoryId='+category.getId()}"  th:text="${category.getName()}" ></a>
+
+                    <a th:unless="${#strings.equals(param.categoryId, #strings.toString(category.getId()))}"
+                          class="stext-106 cl6 hov1  bor3 trans-04 m-r-32 m-tb-5 my-font"
+                          th:href="${'/store/?categoryId='+category.getId()}"  th:text="${category.getName()}" ></a>
+
+
+
+
+
                     <!--th:attr="data-filter='.'+${category.getId()}"-->
                            <!--Giày thể thao-->
 
-                </a>
+
                 </span>
 
 
