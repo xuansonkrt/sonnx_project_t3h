@@ -39,16 +39,26 @@
                         Kiểm tra hóa đơn
                     </a>
 
-                    <a th:text="${vm.getUserName()}" href="#" class="flex-c-m trans-04 p-lr-25 my-font" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"s>
-                        Tài khoản
+
+                    <a  href="#" class="flex-c-m trans-04 p-lr-25 my-font" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"s>
+                        <!--<a class=" brand-logo" th:href="@{/admin}"><img th:src="${vm.getAvatar()}" alt="logo"/></a>-->
+                        <div  class="nav-profile-img">
+                            <img style="width: 20px"  th:src="${vm.getAvatar()}" class=" mr-3"  alt="image">
+                            <span class="availability-status online"></span>
+                        </div>
+                        <!--<img  th:src="${vm.getAvatar()}" class=" brand-logo mr-3" >-->
+                        <span th:text="${vm.getUserName()}"></span>
                     </a>
                     <div style=" z-index: 9999999999999999" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a style="color: black;" class="dropdown-item" th:href="@{/order/history}">
+                            <span class="fa fa-history mr-4">       Thông tin cá nhân</span>
+                        </a>
                         <a style="color: black;" class="dropdown-item" th:href="@{/order/history}">
                             <span class="fa fa-history mr-4">       Lịch sử mua hàng</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a style="color: black;" class="dropdown-item" th:href="@{/user/sign-in}">
-                            <span class="fa fa-sign-in mr-4">       Đăng nhập</span>
+                        <a style="color: black;" class="dropdown-item" th:href="@{/logout}">
+                            <span class="fa fa-sign-in mr-4">       Đăng xuất</span>
                         </a>
                     </div>
                 </div>
