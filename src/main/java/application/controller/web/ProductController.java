@@ -8,14 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,10 +47,19 @@ public class ProductController extends  BaseController{
     @Autowired
     ProductEntityService productEntityService;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    CartService cartService;
+
     @GetMapping(value = {"/{productId}"})
     public String home(Model model,
                        @Valid @ModelAttribute("productname") ProductDTO productName,
-                       @PathVariable("productId") Integer productId)
+                       @PathVariable("productId") Integer productId,
+                       HttpServletResponse response,
+                       HttpServletRequest request,
+                       final Principal principal)
     {
         ProductDetailVM vm = new ProductDetailVM();
         List<Category> categoryList = categoryService.getAll();
@@ -170,6 +182,55 @@ public class ProductController extends  BaseController{
             productImageVMList.add(productImageVM);
         }
 
+
+        int productAmount = 0;
+        double totalPrice = 0;
+        List<CartProductVM> cartProductVMS = new ArrayList<>();
+
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        String guid = getGuid(request);
+
+        DecimalFormat df = new DecimalFormat("####0.00");
+
+        try {
+            if(guid != null) {
+                Cart cartEntity;
+                if(userEntity==null)
+                    cartEntity= cartService.findFirstCartByGuid(guid);
+                else
+                    cartEntity= cartService.findByUserName(userEntity.getUserName());
+
+                if(cartEntity != null) {
+                    productAmount = cartEntity.getListCartProducts().size();
+                    for(CartProduct cartProduct : cartEntity.getListCartProducts()) {
+                        CartProductVM cartProductVM = new CartProductVM();
+                        cartProductVM.setId(cartProduct.getId());
+                        cartProductVM.setName(cartProduct.getProductEntity().getProduct().getName());
+                        cartProductVM.setProductId(cartProduct.getProductEntity().getId());
+                        cartProductVM.setProductName(cartProduct.getProductEntity().getProduct().getName());
+                        cartProductVM.setMainImage(cartProduct.getProductEntity().getProduct().getMainImage());
+                        cartProductVM.setAmount(cartProduct.getAmount());
+                        cartProductVM.setColorName(cartProduct.getProductEntity().getColor().getName());
+                        cartProductVM.setSizeName(cartProduct.getProductEntity().getSize().getName());
+                        cartProductVM.setProductEntityId(cartProduct.getProductEntityId());
+                        double price = cartProduct.getAmount()*cartProduct.getProductEntity().getProduct().getPrice();
+                        cartProductVM.setPrice(cartProduct.getProductEntity().getProduct().getPrice());
+                        totalPrice += price;
+                        cartProductVMS.add(cartProductVM);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            //logger.error(e.getMessage());
+        }
+
+        vm.setCartProductVMList(cartProductVMS);
+        vm.setProductAmount(productAmount);
+        vm.setTotalPrice(totalPrice);
+
+
+
         vm.setProductEntityVMList(productEntityVMList);
         vm.setProductImageVMList(productImageVMList);
         vm.setProductVM(productVM2);
@@ -181,5 +242,17 @@ public class ProductController extends  BaseController{
         vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         model.addAttribute("vm",vm);
         return "/product-detail";
+    }
+
+
+    public String getGuid(HttpServletRequest request) {
+        Cookie cookie[] = request.getCookies();
+
+        if(cookie!=null) {
+            for(Cookie c :cookie) {
+                if(c.getName().equals("guid"))  return c.getValue();
+            }
+        }
+        return null;
     }
 }

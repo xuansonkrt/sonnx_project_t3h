@@ -1,8 +1,12 @@
 package application.controller.web;
 
 import application.constant.StatusRegisterUserEnum;
+import application.data.model.Cart;
+import application.data.model.CartProduct;
 import application.data.model.Product;
 import application.data.model.User;
+import application.data.service.CartProductService;
+import application.data.service.CartService;
 import application.data.service.ProductService;
 import application.data.service.UserService;
 import application.model.dto.UserDTO;
@@ -17,7 +21,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.security.Principal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +41,11 @@ public class UserController extends  BaseController{
     @Autowired
     ProductService productService;
 
+    @Autowired
+    CartProductService cartProductService;
+
+   @Autowired
+    CartService cartService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -61,7 +75,10 @@ public class UserController extends  BaseController{
     }
 
     @GetMapping(value = {"/detail"})
-    public String detail(Model model)
+    public String detail(Model model,
+                         HttpServletResponse response,
+                         HttpServletRequest request,
+                         final Principal principal)
     {
         UserDetailVM vm = new UserDetailVM();
         UserVM userVM = new UserVM();
@@ -127,6 +144,51 @@ public class UserController extends  BaseController{
             productVMList.add(productVM);
         }
 
+        int productAmount = 0;
+        double totalPrice = 0;
+        List<CartProductVM> cartProductVMS = new ArrayList<>();
+
+        String  username2 = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity2 = userService.findUserByUsername(username2);
+        String guid = getGuid(request);
+
+        DecimalFormat df = new DecimalFormat("####0.00");
+
+        try {
+            if(guid != null) {
+                Cart cartEntity;
+                if(userEntity2==null)
+                    cartEntity= cartService.findFirstCartByGuid(guid);
+                else
+                    cartEntity= cartService.findByUserName(userEntity2.getUserName());
+
+                if(cartEntity != null) {
+                    productAmount = cartEntity.getListCartProducts().size();
+                    for(CartProduct cartProduct : cartEntity.getListCartProducts()) {
+                        CartProductVM cartProductVM = new CartProductVM();
+                        cartProductVM.setId(cartProduct.getId());
+                        cartProductVM.setName(cartProduct.getProductEntity().getProduct().getName());
+                        cartProductVM.setProductId(cartProduct.getProductEntity().getId());
+                        cartProductVM.setProductName(cartProduct.getProductEntity().getProduct().getName());
+                        cartProductVM.setMainImage(cartProduct.getProductEntity().getProduct().getMainImage());
+                        cartProductVM.setAmount(cartProduct.getAmount());
+                        cartProductVM.setColorName(cartProduct.getProductEntity().getColor().getName());
+                        cartProductVM.setSizeName(cartProduct.getProductEntity().getSize().getName());
+                        cartProductVM.setProductEntityId(cartProduct.getProductEntityId());
+                        double price = cartProduct.getAmount()*cartProduct.getProductEntity().getProduct().getPrice();
+                        cartProductVM.setPrice(cartProduct.getProductEntity().getProduct().getPrice());
+                        totalPrice += price;
+                        cartProductVMS.add(cartProductVM);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            //logger.error(e.getMessage());
+        }
+
+        vm.setCartProductVMList(cartProductVMS);
+        vm.setProductAmount(productAmount);
+        vm.setTotalPrice(totalPrice);
         vm.setProductVMList(productVMList);
         vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
 
@@ -162,7 +224,10 @@ public class UserController extends  BaseController{
 
     @GetMapping("/change-password")
     public String changePassWord(@Valid @ModelAttribute("productname") ProductVM productName,
-                                 Model model) {
+                                 Model model,
+                                 HttpServletResponse response,
+                                 HttpServletRequest request,
+                                 final Principal principal) {
 
         ChangePasswordVM changePasswordVM = new ChangePasswordVM();
         ChangePasswordVM2 vm = new ChangePasswordVM2();
@@ -209,8 +274,55 @@ public class UserController extends  BaseController{
             productVMList.add(productVM);
         }
 
+
+        int productAmount = 0;
+        double totalPrice = 0;
+        List<CartProductVM> cartProductVMS = new ArrayList<>();
+
+        String  username2 = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity2 = userService.findUserByUsername(username2);
+        String guid = getGuid(request);
+
+        DecimalFormat df = new DecimalFormat("####0.00");
+
+        try {
+            if(guid != null) {
+                Cart cartEntity;
+                if(userEntity2==null)
+                    cartEntity= cartService.findFirstCartByGuid(guid);
+                else
+                    cartEntity= cartService.findByUserName(userEntity2.getUserName());
+
+                if(cartEntity != null) {
+                    productAmount = cartEntity.getListCartProducts().size();
+                    for(CartProduct cartProduct : cartEntity.getListCartProducts()) {
+                        CartProductVM cartProductVM = new CartProductVM();
+                        cartProductVM.setId(cartProduct.getId());
+                        cartProductVM.setName(cartProduct.getProductEntity().getProduct().getName());
+                        cartProductVM.setProductId(cartProduct.getProductEntity().getId());
+                        cartProductVM.setProductName(cartProduct.getProductEntity().getProduct().getName());
+                        cartProductVM.setMainImage(cartProduct.getProductEntity().getProduct().getMainImage());
+                        cartProductVM.setAmount(cartProduct.getAmount());
+                        cartProductVM.setColorName(cartProduct.getProductEntity().getColor().getName());
+                        cartProductVM.setSizeName(cartProduct.getProductEntity().getSize().getName());
+                        cartProductVM.setProductEntityId(cartProduct.getProductEntityId());
+                        double price = cartProduct.getAmount()*cartProduct.getProductEntity().getProduct().getPrice();
+                        cartProductVM.setPrice(cartProduct.getProductEntity().getProduct().getPrice());
+                        totalPrice += price;
+                        cartProductVMS.add(cartProductVM);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            //logger.error(e.getMessage());
+        }
+
+        vm.setCartProductVMList(cartProductVMS);
+        vm.setProductAmount(productAmount);
+        vm.setTotalPrice(totalPrice);
+
         vm.setProductVMList(productVMList);
-        changePasswordVM.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
 
         model.addAttribute("changePassword", changePasswordVM);
         model.addAttribute("vm", vm);
@@ -241,4 +353,17 @@ public class UserController extends  BaseController{
         return "redirect:/user/change-password?fail";
 
     }
+
+
+    public String getGuid(HttpServletRequest request) {
+        Cookie cookie[] = request.getCookies();
+
+        if(cookie!=null) {
+            for(Cookie c :cookie) {
+                if(c.getName().equals("guid"))  return c.getValue();
+            }
+        }
+        return null;
+    }
+
 }

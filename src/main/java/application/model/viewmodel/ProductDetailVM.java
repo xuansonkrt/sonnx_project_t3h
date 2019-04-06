@@ -18,6 +18,33 @@ public class ProductDetailVM {
     private List<ProductImageVM> productImageVMList;
     private List<ProductEntityVM> productEntityVMList;
     private LayoutHeaderAdminVM layoutHeaderAdminVM;
+    private List<CartProductVM> cartProductVMList;
+    private double totalPrice;
+    private int productAmount;
+
+    public List<CartProductVM> getCartProductVMList() {
+        return cartProductVMList;
+    }
+
+    public void setCartProductVMList(List<CartProductVM> cartProductVMList) {
+        this.cartProductVMList = cartProductVMList;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public int getProductAmount() {
+        return productAmount;
+    }
+
+    public void setProductAmount(int productAmount) {
+        this.productAmount = productAmount;
+    }
 
     public LayoutHeaderAdminVM getLayoutHeaderAdminVM() {
         return layoutHeaderAdminVM;

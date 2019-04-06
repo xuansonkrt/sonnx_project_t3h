@@ -8,6 +8,34 @@ public class UserDetailVM {
     private LayoutHeaderAdminVM layoutHeaderAdminVM;
     private List<ProductVM> productVMList;
     private UserVM userVM;
+    private List<CartProductVM> cartProductVMList;
+    private double totalPrice;
+    private int productAmount;
+
+
+    public List<CartProductVM> getCartProductVMList() {
+        return cartProductVMList;
+    }
+
+    public void setCartProductVMList(List<CartProductVM> cartProductVMList) {
+        this.cartProductVMList = cartProductVMList;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public int getProductAmount() {
+        return productAmount;
+    }
+
+    public void setProductAmount(int productAmount) {
+        this.productAmount = productAmount;
+    }
 
     public LayoutHeaderAdminVM getLayoutHeaderAdminVM() {
         return layoutHeaderAdminVM;

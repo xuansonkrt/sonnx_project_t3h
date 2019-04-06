@@ -4,7 +4,10 @@ $(document).ready(function () {
         console.log("product: ",productId);
     });
 
-
+    $(".showCart").on("click",function () {
+       var list = vm.cartProductVMList;
+       console.log("data: ",list);
+    });
     // $(".showProductDetail").on("click",function () {
     //     var productId = $(this).data("product");
     //     console.log("product: ",productId);

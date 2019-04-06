@@ -15,6 +15,33 @@ public  class HomeVM {
     private LayoutHeaderVM layoutHeaderVM;
     private String keyWord;
     private LayoutHeaderAdminVM layoutHeaderAdminVM;
+    private List<CartProductVM> cartProductVMList;
+    private double totalPrice;
+    private int productAmount;
+
+    public int getProductAmount() {
+        return productAmount;
+    }
+
+    public void setProductAmount(int productAmount) {
+        this.productAmount = productAmount;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public List<CartProductVM> getCartProductVMList() {
+        return cartProductVMList;
+    }
+
+    public void setCartProductVMList(List<CartProductVM> cartProductVMList) {
+        this.cartProductVMList = cartProductVMList;
+    }
 
     public LayoutHeaderAdminVM getLayoutHeaderAdminVM() {
         return layoutHeaderAdminVM;

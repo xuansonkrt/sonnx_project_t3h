@@ -2,12 +2,12 @@ package application.model.viewmodel;
 
 import application.model.viewmodel.Admin.LayoutHeaderAdminVM;
 
+import java.util.List;
+
 public class ChangePasswordVM {
     private String currentPassword;
     private String newPassword;
     private String confirmPassword;
-    private LayoutHeaderAdminVM layoutHeaderAdminVM;
-
 
     public String getCurrentPassword() {
         return currentPassword;
@@ -33,11 +33,5 @@ public class ChangePasswordVM {
         this.confirmPassword = confirmPassword;
     }
 
-    public LayoutHeaderAdminVM getLayoutHeaderAdminVM() {
-        return layoutHeaderAdminVM;
-    }
 
-    public void setLayoutHeaderAdminVM(LayoutHeaderAdminVM layoutHeaderAdminVM) {
-        this.layoutHeaderAdminVM = layoutHeaderAdminVM;
-    }
 }
