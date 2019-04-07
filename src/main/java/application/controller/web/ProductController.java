@@ -207,7 +207,7 @@ public class ProductController extends  BaseController{
                         CartProductVM cartProductVM = new CartProductVM();
                         cartProductVM.setId(cartProduct.getId());
                         cartProductVM.setName(cartProduct.getProductEntity().getProduct().getName());
-                        cartProductVM.setProductId(cartProduct.getProductEntity().getId());
+                        cartProductVM.setProductId(cartProduct.getProductEntity().getProductId());
                         cartProductVM.setProductName(cartProduct.getProductEntity().getProduct().getName());
                         cartProductVM.setMainImage(cartProduct.getProductEntity().getProduct().getMainImage());
                         cartProductVM.setAmount(cartProduct.getAmount());
