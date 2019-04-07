@@ -39,6 +39,9 @@ public class Product {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<ProductImage> productImageList = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<Rate> rateList = new ArrayList<>();
+
     @Column(name = "name")
     private String name;
 
@@ -53,6 +56,14 @@ public class Product {
 
     @Column(name = "created_date")
     private Date createdDate;
+
+    public List<Rate> getRateList() {
+        return rateList;
+    }
+
+    public void setRateList(List<Rate> rateList) {
+        this.rateList = rateList;
+    }
 
     public int getId() {
         return id;

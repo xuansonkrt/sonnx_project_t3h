@@ -13,7 +13,7 @@ public class Rate {
     @Column(name = "star")
     private int star;
 
-    @Column(name = "commnet")
+    @Column(name = "comment")
     private String comment;
 
     @Column(name = "created_date")

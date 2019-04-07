@@ -13,7 +13,7 @@ public class User {
     @Id
     private int id;
 
-    @Column(name = "username")
+    @Column(name = "user_name")
     private String userName;
 
     @Column(name = "email")
@@ -40,7 +40,7 @@ public class User {
     @Column(name = "created_date")
     private Date creadedDate;
 
-    @Column(name="dateOfBirth")
+    @Column(name="date_of_birth")
     private Date dateOfBirth;
 
     @Transient

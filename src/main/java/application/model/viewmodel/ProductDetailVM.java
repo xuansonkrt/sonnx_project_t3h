@@ -21,6 +21,24 @@ public class ProductDetailVM {
     private List<CartProductVM> cartProductVMList;
     private double totalPrice;
     private int productAmount;
+    private List<RateVM> rateVMList;
+    private int totalRate;
+
+    public int getTotalRate() {
+        return totalRate;
+    }
+
+    public void setTotalRate(int totalRate) {
+        this.totalRate = totalRate;
+    }
+
+    public List<RateVM> getRateVMList() {
+        return rateVMList;
+    }
+
+    public void setRateVMList(List<RateVM> rateVMList) {
+        this.rateVMList = rateVMList;
+    }
 
     public List<CartProductVM> getCartProductVMList() {
         return cartProductVMList;

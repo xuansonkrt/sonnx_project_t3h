@@ -119,15 +119,53 @@ public class ProductController extends  BaseController{
         }
 
 
+        Product product2= productService.findOne(productId);
+        ProductVM productVM2 = new ProductVM();
+        productVM2.setId(product2.getId());
+        productVM2.setName(product2.getName());
+        productVM2.setPrice(product2.getPrice());
+        productVM2.setShortDesc(product2.getShortDesc());
+        productVM2.setMainImage(product2.getMainImage());
+        productVM2.setCategoryName(product2.getCategory().getName());
+        productVM2.setCategoryId(product2.getCategoryId());
+        List<ProductImage> productImageList= product2.getProductImageList();
+        List<Rate> rateList = product2.getRateList();
+        int totalRate = rateList.size();
+        List<ProductImageVM> productImageVMList = new ArrayList<>();
+        for(ProductImage img : productImageList){
+            ProductImageVM productImageVM= new ProductImageVM();
+            productImageVM.setId(img.getId());
+            productImageVM.setLink(img.getLink());
+            productImageVM.setTitle(img.getTitle());
+            productImageVMList.add(productImageVM);
+        }
+
+
+        List<RateVM> rateVMList = new ArrayList<>();
+        for(Rate rate : rateList){
+            RateVM rateVM= new RateVM();
+            rateVM.setAvatar(rate.getUser().getAvatar());
+            rateVM.setComment(rate.getComment());
+            rateVM.setCreatedDate(rate.getCreatedDate());
+            rateVM.setStar(rate.getStar());
+            if(rate.getUser().getName()==null)
+                rateVM.setUserName(rate.getUser().getUserName());
+            else
+                rateVM.setUserName(rate.getUser().getName());
+
+            rateVMList.add(rateVM);
+
+        }
+
         Pageable pageable = new PageRequest(0, 50);
 
         Page<Product> productPage = null;
 
         if (productName.getName() != null && !productName.getName().isEmpty()) {
-            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,productName.getName().trim());
+            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,product2.getCategory().getId(),productName.getName().trim());
             vm.setKeyWord("Find with key: " + productName.getName());
         } else {
-            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,null);
+            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,product2.getCategory().getId(),null);
         }
 
 
@@ -160,26 +198,6 @@ public class ProductController extends  BaseController{
             productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
             productVMList.add(productVM);
-        }
-
-        Product product2= productService.findOne(productId);
-        ProductVM productVM2 = new ProductVM();
-        productVM2.setId(product2.getId());
-        productVM2.setName(product2.getName());
-        productVM2.setPrice(product2.getPrice());
-        productVM2.setShortDesc(product2.getShortDesc());
-        productVM2.setMainImage(product2.getMainImage());
-        productVM2.setCategoryName(product2.getCategory().getName());
-        productVM2.setCategoryId(product2.getCategoryId());
-        List<ProductImage> productImageList= product2.getProductImageList();
-
-        List<ProductImageVM> productImageVMList = new ArrayList<>();
-        for(ProductImage img : productImageList){
-            ProductImageVM productImageVM= new ProductImageVM();
-            productImageVM.setId(img.getId());
-            productImageVM.setLink(img.getLink());
-            productImageVM.setTitle(img.getTitle());
-            productImageVMList.add(productImageVM);
         }
 
 
@@ -229,8 +247,8 @@ public class ProductController extends  BaseController{
         vm.setProductAmount(productAmount);
         vm.setTotalPrice(totalPrice);
 
-
-
+        vm.setTotalRate(totalRate);
+        vm.setRateVMList(rateVMList);
         vm.setProductEntityVMList(productEntityVMList);
         vm.setProductImageVMList(productImageVMList);
         vm.setProductVM(productVM2);
