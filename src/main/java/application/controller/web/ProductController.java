@@ -98,25 +98,7 @@ public class ProductController extends  BaseController{
         }
 
 
-        List<Size> sizeList = sizeService.getAll();
-        List<SizeVM> sizeVMList = new ArrayList<>();
 
-        for(Size size2 : sizeList) {
-            SizeVM sizeVM = new SizeVM();
-            sizeVM.setId(size2.getId());
-            sizeVM.setName(size2.getName());
-            sizeVMList.add(sizeVM);
-        }
-
-        List<Color> colorList = colorService.getAll();
-        List<ColorVM> colorVMList = new ArrayList<>();
-
-        for(Color color : colorList) {
-            ColorVM colorVM = new ColorVM();
-            colorVM.setId(color.getId());
-            colorVM.setName(color.getName());
-            colorVMList.add(colorVM);
-        }
 
 
         Product product2= productService.findOne(productId);
@@ -140,6 +122,27 @@ public class ProductController extends  BaseController{
             productImageVMList.add(productImageVM);
         }
 
+
+        List<Size> sizeList = sizeService.getAll();
+        List<SizeVM> sizeVMList = new ArrayList<>();
+
+        for(Size size2 : sizeList) {
+            SizeVM sizeVM = new SizeVM();
+            sizeVM.setId(size2.getId());
+            sizeVM.setName(size2.getName());
+            sizeVMList.add(sizeVM);
+        }
+
+//        List<Color> colorList = productService.getListColorProduct(productId);
+        List<Color> colorList = colorService.getAll();
+        List<ColorVM> colorVMList = new ArrayList<>();
+
+        for(Color color : colorList) {
+            ColorVM colorVM = new ColorVM();
+            colorVM.setId(color.getId());
+            colorVM.setName(color.getName());
+            colorVMList.add(colorVM);
+        }
 
         List<RateVM> rateVMList = new ArrayList<>();
         for(Rate rate : rateList){

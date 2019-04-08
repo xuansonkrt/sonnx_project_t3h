@@ -1,5 +1,6 @@
  package application.data.service;
 
+import application.data.model.Color;
 import application.data.model.Product;
 import application.data.repository.ProductRepository;
 import org.apache.logging.log4j.LogManager;
@@ -7,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,5 +79,9 @@ import java.util.List;
     public List<Product> getListProductByName(String productName){
          return productRepository.getListProductByName(productName);
     }
+//
+//     public List<Color> getListColorProduct(Integer productId){
+//         return productRepository.getListColorProduct(productId);
+//     }
 
  }

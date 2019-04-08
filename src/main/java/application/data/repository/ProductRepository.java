@@ -1,5 +1,6 @@
 package application.data.repository;
 
+import application.data.model.Color;
 import application.data.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,5 +24,11 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     @Query("SELECT p FROM dbo_product p " +
             "WHERE  ( UPPER(p.name) LIKE CONCAT('%',UPPER(:productName),'%'))")
     List<Product> getListProductByName(@Param("productName") String productName);
+
+    @Query(value = "SELECT c.* FROM dbo_product p " +
+            "inner join dbo_product_entity pe on(p.product_id = pe.product_id) " +
+            "inner join dbo_color c on (c.color_id = pe.color_id) " +
+            "WHERE  p.product_id=:productId", nativeQuery = true)
+    List<Color> getListColorProduct(@Param("productId") Integer productId);
 
 }
