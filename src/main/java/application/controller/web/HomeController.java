@@ -50,6 +50,9 @@ public class HomeController extends BaseController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    RateService rateService;
+
     @GetMapping(value = {"/","home"})
     public String home(Model model,
                        @Valid @ModelAttribute("productname") ProductDTO productName,
@@ -142,6 +145,7 @@ public class HomeController extends BaseController {
             productVM.setMainImage(product.getMainImage());
             productVM.setPrice(product.getPrice());
             productVM.setShortDesc(product.getShortDesc());
+            productVM.setRateAvg(Math.round(rateService.getRateAvg(product.getId())));
             productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
             productVMList.add(productVM);
@@ -294,6 +298,7 @@ public class HomeController extends BaseController {
             productVM.setName(product.getName());
             productVM.setMainImage(product.getMainImage());
             productVM.setPrice(product.getPrice());
+            productVM.setRateAvg(Math.round(rateService.getRateAvg(product.getId())));
             productVM.setShortDesc(product.getShortDesc());
             productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());

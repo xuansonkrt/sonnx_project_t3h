@@ -187,6 +187,7 @@ public class CartController extends  BaseController{
                         cartProductVM.setSizeName(cartProduct.getProductEntity().getSize().getName());
                         cartProductVM.setProductEntityId(cartProduct.getProductEntityId());
                         double price = cartProduct.getAmount()*cartProduct.getProductEntity().getProduct().getPrice();
+                        cartProductVM.setTotalPrice(price);
                         cartProductVM.setPrice(cartProduct.getProductEntity().getProduct().getPrice());
                         totalPrice += price;
                         cartProductVMS.add(cartProductVM);

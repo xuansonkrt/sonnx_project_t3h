@@ -13,4 +13,10 @@ public class RateService {
     public void addRate(Rate rate){
         rateRepository.save(rate);
     }
+    public float getRateAvg(int productId){
+        Float a=rateRepository.getRateAvg(productId);
+        if(a==null)
+            return 0;
+        return a;
+    }
 }

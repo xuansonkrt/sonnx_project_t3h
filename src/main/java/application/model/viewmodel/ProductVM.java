@@ -9,12 +9,21 @@ public class ProductVM {
     private String name;
     private String shortDesc;
     private String mainImage;
-    private Double price;
+    private String price;
     private Date createdDate;
     private List<ProductImageVM> productImageVMS;
     private String supplyName;
     private String promotionName;
     private int categoryId;
+    private int rateAvg;
+
+    public int getRateAvg() {
+        return rateAvg;
+    }
+
+    public void setRateAvg(int rateAvg) {
+        this.rateAvg = rateAvg;
+    }
 
     public int getCategoryId() {
         return categoryId;
@@ -80,12 +89,27 @@ public class ProductVM {
         this.mainImage = mainImage;
     }
 
-    public Double getPrice() {
+    public String getPrice() {
         return price;
     }
 
     public void setPrice(Double price) {
-        this.price = price;
+        String temp="";
+        temp=Double.toString(price);
+        temp=temp.substring(0,temp.indexOf('.'));
+        int n=temp.length()/3;
+        int length=temp.length();
+        String result="";
+        for (int i=0; i<=n;i++){
+            if(i==0){
+                result=result.concat(temp.substring(0,length-3*n));
+            } else{
+                if(!result.equals(""))
+                    result=result.concat(".");
+                result=result.concat(temp.substring(length-3*n+(i-1)*3,length-3*n+i*3));
+            }
+        }
+        this.price = result;
     }
 
     public Date getCreatedDate() {

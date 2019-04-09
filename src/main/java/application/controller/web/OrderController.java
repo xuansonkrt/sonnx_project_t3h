@@ -2,7 +2,6 @@ package application.controller.web;
 
 import application.data.model.*;
 import application.data.service.*;
-import application.model.dto.ProductDTO;
 import application.model.viewmodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/product")
-public class ProductController extends  BaseController{
-
+@RequestMapping(path = "/order")
+public class OrderController extends BaseController {
     @Autowired
     CategoryService categoryService;
 
@@ -55,14 +55,14 @@ public class ProductController extends  BaseController{
 
     @Autowired
     RateService rateService;
-    @GetMapping(value = {"/{productId}"})
-    public String home(Model model,
-                       @Valid @ModelAttribute("productname") ProductDTO productName,
-                       @PathVariable("productId") Integer productId,
-                       HttpServletResponse response,
-                       HttpServletRequest request,
-                       final Principal principal)
-    {
+
+    @GetMapping("/checkout")
+    public String checkout(Model model,
+                           @Valid @ModelAttribute("productname") ProductVM productName,
+
+                           HttpServletResponse response,
+                           HttpServletRequest request,
+                           final Principal principal) {
         ProductDetailVM vm = new ProductDetailVM();
         List<Category> categoryList = categoryService.getAll();
         List<CategoryVM> categoryVMList = new ArrayList<>();
@@ -84,46 +84,6 @@ public class ProductController extends  BaseController{
             supplyVMList.add(supplyVM);
         }
 
-
-        List<ProductEntity> productEntityList = productEntityService.findByProductId(productId);
-        List<ProductEntityVM> productEntityVMList = new ArrayList<>();
-        for(ProductEntity item : productEntityList){
-            ProductEntityVM entityVM = new ProductEntityVM();
-            entityVM.setColorName(item.getColor().getName());
-            entityVM.setSizeName(item.getSize().getName());
-            entityVM.setAmount(item.getAmount());
-            entityVM.setProductId(item.getProductId());
-            entityVM.setColorId(item.getColorId());
-            entityVM.setSizeId(item.getSizeId());
-            entityVM.setProductEntityId(item.getId());
-            productEntityVMList.add(entityVM);
-        }
-
-
-
-
-
-        Product product2= productService.findOne(productId);
-        ProductVM productVM2 = new ProductVM();
-        productVM2.setId(product2.getId());
-        productVM2.setName(product2.getName());
-        productVM2.setPrice(product2.getPrice());
-        productVM2.setShortDesc(product2.getShortDesc());
-        productVM2.setMainImage(product2.getMainImage());
-        productVM2.setCategoryName(product2.getCategory().getName());
-        productVM2.setCategoryId(product2.getCategoryId());
-        List<Rate> rateList = product2.getRateList();
-        int totalRate = rateList.size();
-
-        List<ProductImage> productImageList= product2.getProductImageList();
-        List<ProductImageVM> productImageVMList = new ArrayList<>();
-        for(ProductImage img : productImageList){
-            ProductImageVM productImageVM= new ProductImageVM();
-            productImageVM.setId(img.getId());
-            productImageVM.setLink(img.getLink());
-            productImageVM.setTitle(img.getTitle());
-            productImageVMList.add(productImageVM);
-        }
 
 
         List<Size> sizeList = sizeService.getAll();
@@ -148,21 +108,7 @@ public class ProductController extends  BaseController{
         }
         int totalStar=0, amountStar=0;
         List<RateVM> rateVMList = new ArrayList<>();
-        for(Rate rate : rateList){
-            RateVM rateVM= new RateVM();
-            rateVM.setAvatar(rate.getUser().getAvatar());
-            rateVM.setComment(rate.getComment());
-            rateVM.setCreatedDate(rate.getCreatedDate());
-            rateVM.setStar(rate.getStar());
-            totalStar+=rate.getStar();
-            amountStar++;
-            if(rate.getUser().getName()==null)
-                rateVM.setUserName(rate.getUser().getUserName());
-            else
-                rateVM.setUserName(rate.getUser().getName());
 
-            rateVMList.add(rateVM);
-        }
         if(amountStar==0)
             vm.setTotalRate(0);
         else
@@ -172,10 +118,10 @@ public class ProductController extends  BaseController{
         Page<Product> productPage = null;
 
         if (productName.getName() != null && !productName.getName().isEmpty()) {
-            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,product2.getCategory().getId(),productName.getName().trim());
+            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,productName.getName().trim());
             vm.setKeyWord("Find with key: " + productName.getName());
         } else {
-            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,product2.getCategory().getId(),null);
+            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,null);
         }
 
 
@@ -258,11 +204,8 @@ public class ProductController extends  BaseController{
         vm.setProductAmount(productAmount);
         vm.setTotalPrice(totalPrice);
 
-        vm.setTotalRate(totalRate);
         vm.setRateVMList(rateVMList);
-        vm.setProductEntityVMList(productEntityVMList);
-        vm.setProductImageVMList(productImageVMList);
-        vm.setProductVM(productVM2);
+
         vm.setCategoryVMList(categoryVMList);
         vm.setColorVMList(colorVMList);
         vm.setProductVMList(productVMList);
@@ -270,7 +213,50 @@ public class ProductController extends  BaseController{
         vm.setSupplyVMList(supplyVMList);
         vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         model.addAttribute("vm",vm);
-        return "/product-detail";
+//        CheckoutVM vm = new CheckoutVM();
+//        int productAmount = 0;
+//
+//        List<CartProductVM> cartProductVMS = new ArrayList<>();
+//
+//        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+//        User userEntity = userService.findUserByUsername(username);
+//        String guid = getGuid(request);
+//
+//        DecimalFormat df = new DecimalFormat("####0.00");
+//
+//        try {
+//            if(guid != null) {
+//                Cart cartEntity;
+//                if(userEntity==null)
+//                    cartEntity= cartService.findFirstCartByGuid(guid);
+//                else
+//                    cartEntity= cartService.findByUserName(userEntity.getUserName());
+//
+//                if(cartEntity != null) {
+//                    productAmount = cartEntity.getListCartProducts().size();
+//                    for(CartProduct cartProduct : cartEntity.getListCartProducts()) {
+//                        CartProductVM cartProductVM = new CartProductVM();
+//                        cartProductVM.setId(cartProduct.getId());
+//                        cartProductVM.setName(cartProduct.getProductEntity().getProduct().getName());
+//                        cartProductVM.setProductId(cartProduct.getProductEntity().getProductId());
+//                        cartProductVM.setProductName(cartProduct.getProductEntity().getProduct().getName());
+//                        cartProductVM.setMainImage(cartProduct.getProductEntity().getProduct().getMainImage());
+//                        cartProductVM.setAmount(cartProduct.getAmount());
+//                        cartProductVM.setColorName(cartProduct.getProductEntity().getColor().getName());
+//                        cartProductVM.setSizeName(cartProduct.getProductEntity().getSize().getName());
+//                        cartProductVM.setProductEntityId(cartProduct.getProductEntityId());
+//                        cartProductVM.setPrice(cartProduct.getProductEntity().getProduct().getPrice());
+//                        cartProductVMS.add(cartProductVM);
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            //logger.error(e.getMessage());
+//        }
+//        vm.setProductAmount(productAmount);
+//        vm.setCartProductVMList(cartProductVMS);
+//        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+        return "/checkout";
     }
 
 

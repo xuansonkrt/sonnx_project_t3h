@@ -1,15 +1,11 @@
 package application.controller.api;
 
-import application.data.model.Category;
-import application.data.model.Product;
-import application.data.model.ProductEntity;
-import application.data.model.Promotion;
+import application.data.model.*;
 import application.data.service.*;
 import application.model.api.BaseApiResult;
 import application.model.api.DataApiResult;
 import application.model.dto.ProductDTO;
-import application.model.viewmodel.ProductEntityVM;
-import application.model.viewmodel.ProductVM;
+import application.model.viewmodel.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +39,12 @@ public class ProductApiController {
     @Autowired
     private ProductEntityService productEntityService;
 
+    @Autowired
+    private ColorService colorService;
+
+    @Autowired
+    private SizeService sizeService;
+
     @PostMapping(value = "/create")
     public BaseApiResult createProduct(@RequestBody ProductDTO dto){
         DataApiResult result = new DataApiResult();
@@ -63,6 +65,81 @@ public class ProductApiController {
             productService.addNewProduct(product);
             result.setData(product.getId());
             result.setMessage("Save product successfully: " + product.getId());
+            result.setSuccess(true);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
+    }
+
+    @PostMapping(value = "/quick-view")
+    public DataApiResult quickView(@RequestBody int productId){
+        DataApiResult result = new DataApiResult();
+        ProductQuickViewVM data= new ProductQuickViewVM();
+        try {
+            Product product=productService.findOne(productId);
+            if(product==null){
+                result.setSuccess(false);
+                result.setMessage("Không tìm thấy sản phẩm");
+                return result;
+            }
+//            ProductQuickViewVM productVM= new ProductQuickViewVM();
+            data.setId(product.getId());
+            data.setName(product.getName());
+            data.setMainImage(product.getMainImage());
+            data.setPrice(product.getPrice());
+            data.setShortDesc(product.getShortDesc());
+
+
+            List<Size> sizeList = sizeService.getAll();
+            List<SizeVM> sizeVMList = new ArrayList<>();
+            for(Size size2 : sizeList) {
+                SizeVM sizeVM = new SizeVM();
+                sizeVM.setId(size2.getId());
+                sizeVM.setName(size2.getName());
+                sizeVMList.add(sizeVM);
+            }
+            data.setSizeVMList(sizeVMList);
+
+            List<Color> colorList = colorService.getAll();
+            List<ColorVM> colorVMList = new ArrayList<>();
+            for(Color color : colorList) {
+                ColorVM colorVM = new ColorVM();
+                colorVM.setId(color.getId());
+                colorVM.setName(color.getName());
+                colorVMList.add(colorVM);
+            }
+            data.setColorVMList(colorVMList);
+
+            List<ProductEntity> productEntityList = productEntityService.findByProductId(productId);
+            List<ProductEntityVM> productEntityVMList = new ArrayList<>();
+            for(ProductEntity item : productEntityList){
+                ProductEntityVM entityVM = new ProductEntityVM();
+                entityVM.setColorName(item.getColor().getName());
+                entityVM.setSizeName(item.getSize().getName());
+                entityVM.setAmount(item.getAmount());
+                entityVM.setProductId(item.getProductId());
+                entityVM.setColorId(item.getColorId());
+                entityVM.setSizeId(item.getSizeId());
+                entityVM.setProductEntityId(item.getId());
+                productEntityVMList.add(entityVM);
+            }
+            data.setProductEntityVMList(productEntityVMList);
+
+            List<ProductImage> productImageList= product.getProductImageList();
+            List<ProductImageVM> productImageVMList = new ArrayList<>();
+            for(ProductImage img : productImageList){
+                ProductImageVM productImageVM= new ProductImageVM();
+                productImageVM.setId(img.getId());
+                productImageVM.setLink(img.getLink());
+                productImageVM.setTitle(img.getTitle());
+                productImageVMList.add(productImageVM);
+            }
+            data.setProductImageVMList(productImageVMList);
+
+            result.setData(data);
+            result.setMessage("OK");
             result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);

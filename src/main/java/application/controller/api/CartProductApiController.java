@@ -6,10 +6,7 @@ import application.model.api.BaseApiResult;
 import application.model.dto.CartProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -93,4 +90,49 @@ public class CartProductApiController {
         return result;
     }
 
+    @PostMapping("/update")
+    public BaseApiResult updateCartProduct(@RequestBody CartProductDTO dto) {
+        BaseApiResult result = new BaseApiResult();
+
+        try {
+            if(dto.getId()>0 && dto.getAmount() > 0) {
+                CartProduct cartProductEntity = cartProductService.findOne(dto.getId());
+
+                if(cartProductEntity != null) {
+                    cartProductEntity.setAmount(dto.getAmount());
+                    cartProductService.updateCartProduct(cartProductEntity);
+                    result.setMessage("Cập nhật thành công!");
+                    result.setSuccess(true);
+                    return result;
+                }
+            }
+        } catch (Exception e) {
+           // logger.error(e.getMessage());
+        }
+        if(dto.getAmount() == 0)
+            result.setMessage("Số lượng phải lớn hơn 0!");
+        else
+            result.setMessage("Cập nhật thất bại!");
+
+        result.setSuccess(false);
+        return result;
+    }
+
+    @GetMapping("/delete/{cartProductId}")
+    public BaseApiResult deleteCartProduct(@PathVariable int cartProductId) {
+        BaseApiResult result = new BaseApiResult();
+
+        try {
+            if(cartProductService.deleteCartProduct(cartProductId) == true) {
+                result.setMessage("Xóa thành công");
+                result.setSuccess(true);
+                return result;
+            }
+        } catch (Exception e) {
+            //logger.error(e.getMessage());
+        }
+        result.setSuccess(false);
+        result.setMessage("Xảy ra lỗi!");
+        return result;
+    }
 }
