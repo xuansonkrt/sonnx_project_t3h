@@ -30,5 +30,14 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
             "inner join dbo_color c on (c.color_id = pe.color_id) " +
             "WHERE  p.product_id=:productId", nativeQuery = true)
     List<Color> getListColorProduct(@Param("productId") Integer productId);
+	
+	 @Query( value = "select p.* " +
+            "from dbo_product p " +
+            "inner join dbo_product_entity pe on(p.product_id=pe.product_id) " +
+            "inner join dbo_order_product op on(op.product_entity_id=pe.product_entity_id) " +
+            "group by p.product_id " +
+            "order by sum(pe.amount) desc " +
+            "limit 20;", nativeQuery = true)
+    List<Product> getHotProduct();
 
 }

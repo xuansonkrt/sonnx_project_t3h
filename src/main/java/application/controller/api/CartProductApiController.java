@@ -59,7 +59,6 @@ public class CartProductApiController {
                     result.setSuccess(true);
                     return result;
                 } else {
-
                     cartEntity= new Cart();
                     if(userEntity!=null)
                         cartEntity.setUserName(userEntity.getUserName());

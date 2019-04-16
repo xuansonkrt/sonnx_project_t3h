@@ -1,6 +1,5 @@
 package application.controller.web;
 
-
 import application.data.model.*;
 import application.data.service.*;
 import application.model.dto.ProductDTO;
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,14 +26,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/cart")
-public class CartController extends  BaseController{
-
+@RequestMapping(path = "/hot-product")
+public class HotProductController extends BaseController {
     @Autowired
     CategoryService categoryService;
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    CartService cartService;
 
     @Autowired
     SizeService sizeService;
@@ -46,28 +47,29 @@ public class CartController extends  BaseController{
     SupplyService supplyService;
 
     @Autowired
-    ProductImageService productImageService;
-
-    @Autowired
-    ProductEntityService productEntityService;
+    CartProductService cartProductService;
 
     @Autowired
     UserService userService;
 
     @Autowired
-    CartService cartService;
+    RateService rateService;
 
-
-    @GetMapping(value = {"/shoping-cart"})
-    public String cart(Model model,
+    @GetMapping("")
+    public String home(Model model,
                        @Valid @ModelAttribute("productname") ProductDTO productName,
+                       @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                       @RequestParam(name = "size", required = false, defaultValue = "8") Integer size,
                        HttpServletResponse response,
                        HttpServletRequest request,
                        final Principal principal)
     {
-        CartVM vm = new CartVM();
+        this.checkCookie(response,request,principal);
+
+        HomeVM vm = new HomeVM();
         List<Category> categoryList = categoryService.getAll();
         List<CategoryVM> categoryVMList = new ArrayList<>();
+
         for(Category category : categoryList) {
             CategoryVM categoryVM = new CategoryVM();
             categoryVM.setId(category.getId());
@@ -86,7 +88,6 @@ public class CartController extends  BaseController{
         }
 
 
-
         List<Size> sizeList = sizeService.getAll();
         List<SizeVM> sizeVMList = new ArrayList<>();
 
@@ -97,7 +98,6 @@ public class CartController extends  BaseController{
             sizeVMList.add(sizeVM);
         }
 
-//        List<Color> colorList = productService.getListColorProduct(productId);
         List<Color> colorList = colorService.getAll();
         List<ColorVM> colorVMList = new ArrayList<>();
 
@@ -109,49 +109,50 @@ public class CartController extends  BaseController{
         }
 
 
+        Pageable pageable = new PageRequest(page, 12);
 
-//        Pageable pageable = new PageRequest(0, 50);
-//
-//        Page<Product> productPage = null;
-//
-//        if (productName.getName() != null && !productName.getName().isEmpty()) {
-//            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,product2.getCategory().getId(),productName.getName().trim());
-//            vm.setKeyWord("Find with key: " + productName.getName());
-//        } else {
-//            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,product2.getCategory().getId(),null);
-//        }
-//
-//
-//        List<ProductVM> productVMList = new ArrayList<>();
-//
-//        for(Product product : productPage.getContent()) {
-//            ProductVM productVM = new ProductVM();
-//            if(product.getCategory() == null) {
-//                productVM.setCategoryName("");
-//            } else {
-//                productVM.setCategoryName(product.getCategory().getName());
-//            }
-//
-//            if(product.getSupply() == null) {
-//                productVM.setSupplyName("");
-//            } else {
-//                productVM.setSupplyName(product.getSupply().getName());
-//            }
-//
-//            if(product.getPromotion() == null) {
-//                productVM.setPromotionName("");
-//            } else {
-//                productVM.setPromotionName(product.getPromotion().getName());
-//            }
-//            productVM.setId(product.getId());
-//            productVM.setName(product.getName());
-//            productVM.setMainImage(product.getMainImage());
-//            productVM.setPrice(product.getPrice());
-//            productVM.setShortDesc(product.getShortDesc());
-//            productVM.setCreatedDate(product.getCreatedDate());
-//            productVM.setCategoryId(product.getCategoryId());
-//            productVMList.add(productVM);
-//        }
+        Page<Product> productPage = null;
+
+        if (productName.getName() != null && !productName.getName().isEmpty()) {
+            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,productName.getName().trim());
+            vm.setKeyWord("Find with key: " + productName.getName());
+        } else {
+            productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,null);
+        }
+
+        List<Product> productList= productService.getHotProduct();
+
+        List<ProductVM> productVMList = new ArrayList<>();
+
+        for(Product product : productList) {
+            ProductVM productVM = new ProductVM();
+            if(product.getCategory() == null) {
+                productVM.setCategoryName("");
+            } else {
+                productVM.setCategoryName(product.getCategory().getName());
+            }
+
+            if(product.getSupply() == null) {
+                productVM.setSupplyName("");
+            } else {
+                productVM.setSupplyName(product.getSupply().getName());
+            }
+
+            if(product.getPromotion() == null) {
+                productVM.setPromotionName("");
+            } else {
+                productVM.setPromotionName(product.getPromotion().getName());
+            }
+            productVM.setId(product.getId());
+            productVM.setName(product.getName());
+            productVM.setMainImage(product.getMainImage());
+            productVM.setPrice(product.getPrice());
+            productVM.setShortDesc(product.getShortDesc());
+            productVM.setRateAvg(Math.round(rateService.getRateAvg(product.getId())));
+            productVM.setCreatedDate(product.getCreatedDate());
+            productVM.setCategoryId(product.getCategoryId());
+            productVMList.add(productVM);
+        }
 
 
         int productAmount = 0;
@@ -161,16 +162,7 @@ public class CartController extends  BaseController{
         String  username = SecurityContextHolder.getContext().getAuthentication().getName();
         User userEntity = userService.findUserByUsername(username);
         String guid = getGuid(request);
-        Order order = new Order();
-        if(principal!= null) {
 
-            if(userEntity!= null) {
-                order.setAddress(userEntity.getAddress());
-                order.setCustomerName(userEntity.getName());
-                order.setPhoneNumber(userEntity.getPhoneNumber());
-                order.setEmail(userEntity.getEmail());
-            }
-        }
         DecimalFormat df = new DecimalFormat("####0.00");
 
         try {
@@ -195,7 +187,6 @@ public class CartController extends  BaseController{
                         cartProductVM.setSizeName(cartProduct.getProductEntity().getSize().getName());
                         cartProductVM.setProductEntityId(cartProduct.getProductEntityId());
                         double price = cartProduct.getAmount()*cartProduct.getProductEntity().getProduct().getPrice();
-                        cartProductVM.setTotalPrice(price);
                         cartProductVM.setPrice(cartProduct.getProductEntity().getProduct().getPrice());
                         totalPrice += price;
                         cartProductVMS.add(cartProductVM);
@@ -209,25 +200,15 @@ public class CartController extends  BaseController{
         vm.setCartProductVMList(cartProductVMS);
         vm.setProductAmount(productAmount);
         vm.setTotalPrice(totalPrice);
-        if(totalPrice>1000000){
-            vm.setShipPrice(0);
-            vm.setTotal(totalPrice);
-        } else {
-            vm.setShipPrice(49500);
-            vm.setTotal(totalPrice+49500);
-        }
-
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         vm.setCategoryVMList(categoryVMList);
         vm.setColorVMList(colorVMList);
+        vm.setProductVMList(productVMList);
         vm.setSizeVMList(sizeVMList);
         vm.setSupplyVMList(supplyVMList);
-        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
-//        vm.setOrderVM(order);
-        model.addAttribute("order",order);
         model.addAttribute("vm",vm);
-        return "/cart";
+        return "/hot-product";
     }
-
     public String getGuid(HttpServletRequest request) {
         Cookie cookie[] = request.getCookies();
 

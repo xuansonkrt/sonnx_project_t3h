@@ -83,5 +83,7 @@ import java.util.List;
 //     public List<Color> getListColorProduct(Integer productId){
 //         return productRepository.getListColorProduct(productId);
 //     }
-
+ public List<Product> getHotProduct(){
+         return productRepository.getHotProduct();
+     }
  }

@@ -80,5 +80,40 @@ $(document).ready(function () {
         }
         });
 
+
+
+
     });
+
+
+    // $('#checkout-sonnx').on("click", function () {
+    //     alert("ahihi");
+    //     var order ={};
+    //     order.customerName=$("#input-name").val();
+    //     order.email=$("#input-email").val();
+    //     order.phoneNumber=$("#input-phone-number").val();
+    //     order.address=$("#input-address").val();
+    //     console.log("data: ", order);
+    //
+    //     NProgress.start();
+    //
+    //     var linkPost = "/order/checkout";
+    //     axios.post(linkPost, order).then(function(res){
+    //         NProgress.done();
+    //         if(res.data.success) {
+    //             console.log("data: ", res.data);
+    //          //   location.reload();
+    //             window.location.href = '/order/history';
+    //         } else {
+    //
+    //         }
+    //     }, function(err){
+    //         NProgress.done();
+    //         swal(
+    //             'Error',
+    //             'Fail',
+    //             'error'
+    //         );
+    //     });
+    // });
 });

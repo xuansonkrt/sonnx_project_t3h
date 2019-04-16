@@ -2,6 +2,7 @@ package application.controller.web;
 
 import application.data.model.*;
 import application.data.service.*;
+import application.model.api.DataApiResult;
 import application.model.viewmodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,17 +11,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.xml.crypto.Data;
 import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -56,8 +57,11 @@ public class OrderController extends BaseController {
     @Autowired
     RateService rateService;
 
+    @Autowired
+    OrderService orderService;
+
     @GetMapping("/checkout")
-    public String checkout(Model model,
+    public String checkoutA(Model model,
                            @Valid @ModelAttribute("productname") ProductVM productName,
 
                            HttpServletResponse response,
@@ -66,7 +70,7 @@ public class OrderController extends BaseController {
         ProductDetailVM vm = new ProductDetailVM();
         List<Category> categoryList = categoryService.getAll();
         List<CategoryVM> categoryVMList = new ArrayList<>();
-
+        OrderVM order= new OrderVM();
         for(Category category : categoryList) {
             CategoryVM categoryVM = new CategoryVM();
             categoryVM.setId(category.getId());
@@ -212,6 +216,7 @@ public class OrderController extends BaseController {
         vm.setSizeVMList(sizeVMList);
         vm.setSupplyVMList(supplyVMList);
         vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+        model.addAttribute("order",order);
         model.addAttribute("vm",vm);
 //        CheckoutVM vm = new CheckoutVM();
 //        int productAmount = 0;
@@ -257,6 +262,191 @@ public class OrderController extends BaseController {
 //        vm.setCartProductVMList(cartProductVMS);
 //        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         return "/checkout";
+    }
+    @PostMapping("/checkout")
+    public String checkout(//@Valid @ModelAttribute("order") OrderVM orderVM,
+                                  @Valid @ModelAttribute("productname") ProductVM productName,
+                                  @Valid @RequestBody OrderVM orderVM,
+                                  HttpServletResponse response,
+                                  HttpServletRequest request,
+                                  final Principal principal) {
+        Order order = new Order();
+        DataApiResult data = new DataApiResult();
+
+        boolean flag = false;
+
+        Cookie cookie[] = request.getCookies();
+
+        String guid = null;
+
+        if(cookie!=null) {
+            for(Cookie c : cookie) {
+                if(c.getName().equals("guid")) {
+                    flag = true;
+                    guid = c.getValue();
+                }
+            }
+        }
+
+        if(flag == true) {
+
+            double totalPrice = 0;
+
+            if(principal != null) {
+                String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+                order.setUserName(username);
+            }
+
+            order.setGuid(guid);
+            order.setAddress(orderVM.getAddress());
+            order.setEmail(orderVM.getEmail());
+            order.setPhoneNumber(orderVM.getPhoneNumber());
+            order.setCustomerName(orderVM.getCustomerName());
+            order.setCreatedDate(new Date());
+
+
+            Cart cartEntity = cartService.findFirstCartByGuid(guid);
+            if(cartEntity != null) {
+                List<OrderProduct> orderProducts = new ArrayList<>();
+                for (CartProduct cartProduct : cartEntity.getListCartProducts()) {
+                    OrderProduct orderProduct = new OrderProduct();
+                    orderProduct.setOrder(order);
+                    orderProduct.setProductEntity(cartProduct.getProductEntity());
+                    orderProduct.setAmount(cartProduct.getAmount());
+
+                    double price = cartProduct.getAmount() * cartProduct.getProductEntity().getProduct().getPrice();
+                    totalPrice += price;
+
+                    orderProduct.setPrice(price);
+
+                    orderProducts.add(orderProduct);
+                }
+
+                order.setListProductOrders(orderProducts);
+                order.setPrice(totalPrice);
+
+                orderService.addNewOrder(order);
+
+                cartService.deleteCart(cartEntity.getId());
+            }
+            data.setMessage("OK");
+            data.setSuccess(true);
+            return "redirect:/order/history";
+
+        }
+        data.setMessage("Fail");
+        data.setSuccess(false);
+//        return data;
+        return "redirect:/order/history";
+    }
+
+
+    @GetMapping("/history")
+    public String orderHistory(Model model,
+                               @Valid @ModelAttribute("productname") ProductVM productName,
+                               HttpServletResponse response,
+                               HttpServletRequest request,
+                               final Principal principal) {
+
+        OrderHistoryVM vm = new OrderHistoryVM();
+
+
+        List<Category> categoryList = categoryService.getAll();
+        List<CategoryVM> categoryVMList = new ArrayList<>();
+        for(Category category : categoryList) {
+            CategoryVM categoryVM = new CategoryVM();
+            categoryVM.setId(category.getId());
+            categoryVM.setName(category.getName());
+            categoryVMList.add(categoryVM);
+        }
+        List<OrderVM> orderVMS = new ArrayList<>();
+
+        Cookie[] cookie = request.getCookies();
+
+        String guid = null;
+        boolean flag = false;
+        DecimalFormat df = new DecimalFormat("####0.00");
+
+        List<Order> orderEntityList = null;
+
+        if(principal != null) {
+            String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+            orderEntityList = orderService.findOrderByGuidOrUserName(null,username);
+        } else {
+            if(cookie != null) {
+                for(Cookie c : cookie) {
+                    if(c.getName().equals("guid")) {
+                        flag = true;
+                        guid = c.getValue();
+                    }
+                }
+                if(flag == true) {
+                    orderEntityList = orderService.findOrderByGuidOrUserName(guid,null);
+                }
+            }
+        }
+
+        if(orderEntityList != null) {
+            for(Order order : orderEntityList) {
+                OrderVM orderVM = new OrderVM();
+                orderVM.setId(order.getId());
+                orderVM.setCustomerName(order.getCustomerName());
+                orderVM.setEmail(order.getEmail());
+                orderVM.setAddress(order.getAddress());
+                orderVM.setPhoneNumber(order.getPhoneNumber());
+                orderVM.setPrice(df.format(order.getPrice()));
+                orderVM.setCreatedDate(order.getCreatedDate());
+
+                orderVMS.add(orderVM);
+            }
+        }
+        int productAmount = 0;
+        double totalPrice = 0;
+        List<CartProductVM> cartProductVMS = new ArrayList<>();
+
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+
+
+        try {
+            if(guid != null ||userEntity!=null ) {
+                Cart cartEntity;
+                if(userEntity==null)
+                    cartEntity= cartService.findFirstCartByGuid(guid);
+                else
+                    cartEntity= cartService.findByUserName(userEntity.getUserName());
+
+                if(cartEntity != null) {
+                    productAmount = cartEntity.getListCartProducts().size();
+                    for(CartProduct cartProduct : cartEntity.getListCartProducts()) {
+                        CartProductVM cartProductVM = new CartProductVM();
+                        cartProductVM.setId(cartProduct.getId());
+                        cartProductVM.setName(cartProduct.getProductEntity().getProduct().getName());
+                        cartProductVM.setProductId(cartProduct.getProductEntity().getProductId());
+                        cartProductVM.setProductName(cartProduct.getProductEntity().getProduct().getName());
+                        cartProductVM.setMainImage(cartProduct.getProductEntity().getProduct().getMainImage());
+                        cartProductVM.setAmount(cartProduct.getAmount());
+                        cartProductVM.setColorName(cartProduct.getProductEntity().getColor().getName());
+                        cartProductVM.setSizeName(cartProduct.getProductEntity().getSize().getName());
+                        cartProductVM.setProductEntityId(cartProduct.getProductEntityId());
+                        double price = cartProduct.getAmount()*cartProduct.getProductEntity().getProduct().getPrice();
+                        cartProductVM.setTotalPrice(price);
+                        cartProductVM.setPrice(cartProduct.getProductEntity().getProduct().getPrice());
+                        totalPrice += price;
+                        cartProductVMS.add(cartProductVM);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            //logger.error(e.getMessage());
+        }
+
+        vm.setProductAmount(productAmount);
+        vm.setCartProductVMList(cartProductVMS);
+        vm.setOrderVMList(orderVMS);
+        vm.setCategoryVMList(categoryVMList);
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+        return "/order-history";
     }
 
 
