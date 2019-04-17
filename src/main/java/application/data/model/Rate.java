@@ -1,7 +1,9 @@
 package application.data.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "dbo_rate")
 public class Rate {
@@ -26,6 +28,29 @@ public class Rate {
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Rate rate;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rate")
+    private List<Rate> rateList = new ArrayList<>();
+
+    public Rate getRate() {
+        return rate;
+    }
+
+    public void setRate(Rate rate) {
+        this.rate = rate;
+    }
+
+    public List<Rate> getRateList() {
+        return rateList;
+    }
+
+    public void setRateList(List<Rate> rateList) {
+        this.rateList = rateList;
+    }
 
     public int getId() {
         return id;

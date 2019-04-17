@@ -4,6 +4,15 @@ public class RateDTO {
     private int productId;
     private int star;
     private String comment;
+    private int parentId;
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
 
     public int getProductId() {
         return productId;

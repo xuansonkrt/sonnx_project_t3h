@@ -19,4 +19,7 @@ public class RateService {
             return 0;
         return a;
     }
+    public Rate findOne(Integer rateId){
+        return rateRepository.findOne(rateId);
+    }
 }

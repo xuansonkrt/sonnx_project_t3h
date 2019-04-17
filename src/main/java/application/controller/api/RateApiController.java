@@ -42,6 +42,7 @@ public class RateApiController {
             rate.setStar(dto.getStar());
             rate.setProduct(productService.findOne(dto.getProductId()));
             rate.setUser(userEntity);
+            rate.setRate(rateService.findOne(dto.getParentId()));
             rateService.addRate(rate);
             result.setMessage("Đánh giá thành công!");
             result.setSuccess(true);

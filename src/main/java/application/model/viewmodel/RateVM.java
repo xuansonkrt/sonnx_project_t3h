@@ -1,6 +1,7 @@
 package application.model.viewmodel;
 
 import java.util.Date;
+import java.util.List;
 
 public class RateVM {
     private int id;
@@ -10,6 +11,24 @@ public class RateVM {
     private String avatar;
     private String userName;
     private Date createdDate;
+    private  int parentId;
+    private List<RateVM> rateVMList;
+
+    public List<RateVM> getRateVMList() {
+        return rateVMList;
+    }
+
+    public void setRateVMList(List<RateVM> rateVMList) {
+        this.rateVMList = rateVMList;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
 
     public Date getCreatedDate() {
         return createdDate;

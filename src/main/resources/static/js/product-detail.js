@@ -163,4 +163,65 @@ $(document).ready(function () {
 
         return result;
     }
+
+    $(".reply").on("click", function () {
+        var rateId=$(this).data("rate");
+        $("#"+rateId+"_reply").attr("hidden",false);
+    });
+
+    $(".rateReply").on("click", function () {
+        alert("ahihi");
+        var rateId=$(this).data("rate");
+
+        var data={};
+        data.star= 0;
+        data.comment=$("#"+rateId+"_reviewreply").val();
+        data.productId=0;
+        data.parentId=$(this).data("rate");
+        if(data.comment==0){
+            swal(
+                'Xảy ra lỗi',
+                'Bạn chưa viết bình luận',
+                'error'
+            );
+            $("#review").focus();
+            return;
+        }
+
+        NProgress.start();
+
+        var linkPost = "/api/rate/add";
+
+        axios.post(linkPost, data).then(function(res){
+            NProgress.done();
+            if(res.data.success) {
+                location.reload();
+                // swal({
+                //         title: 'Thành công',
+                //         text:  res.data.message,
+                //         type:'success' ,
+                //         timer:1500
+                //     }
+                //
+                // ).then(function() {
+                //     location.reload();
+                // });
+            } else {
+                swal(
+                    'Xảy ra lỗi',
+                    res.data.message,
+                    'error'
+                );
+            }
+        }, function(err){
+            NProgress.done();
+            swal(
+                'Error',
+                'Fail',
+                'error'
+            );
+        });
+
+    });
+
 });

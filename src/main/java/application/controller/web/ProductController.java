@@ -154,13 +154,31 @@ public class ProductController extends  BaseController{
             rateVM.setComment(rate.getComment());
             rateVM.setCreatedDate(rate.getCreatedDate());
             rateVM.setStar(rate.getStar());
+            rateVM.setId(rate.getId());
             totalStar+=rate.getStar();
             amountStar++;
             if(rate.getUser().getName()==null)
                 rateVM.setUserName(rate.getUser().getUserName());
             else
                 rateVM.setUserName(rate.getUser().getName());
-
+            List<Rate> chilRate = rate.getRateList();
+            if(chilRate!=null){
+                List<RateVM> rateVMListChil = new ArrayList<>();
+                for(Rate item : chilRate){
+                    RateVM rateVM2= new RateVM();
+                    rateVM2.setAvatar(item.getUser().getAvatar());
+                    rateVM2.setComment(item.getComment());
+                    rateVM2.setCreatedDate(item.getCreatedDate());
+                    rateVM2.setId(item.getId());
+                    rateVM2.setParentId(item.getRate().getId());
+                    if(item.getUser().getName()==null)
+                        rateVM2.setUserName(item.getUser().getUserName());
+                    else
+                        rateVM2.setUserName(item.getUser().getName());
+                    rateVMListChil.add(rateVM2);
+                }
+                rateVM.setRateVMList(rateVMListChil);
+            }
             rateVMList.add(rateVM);
         }
         if(amountStar==0)
