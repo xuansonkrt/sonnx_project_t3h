@@ -264,9 +264,8 @@ public class OrderController extends BaseController {
         return "/checkout";
     }
     @PostMapping("/checkout")
-    public String checkout(//@Valid @ModelAttribute("order") OrderVM orderVM,
+    public String checkout(@Valid @ModelAttribute("order") OrderVM orderVM,
                                   @Valid @ModelAttribute("productname") ProductVM productName,
-                                  @Valid @RequestBody OrderVM orderVM,
                                   HttpServletResponse response,
                                   HttpServletRequest request,
                                   final Principal principal) {
@@ -394,7 +393,7 @@ public class OrderController extends BaseController {
                 orderVM.setEmail(order.getEmail());
                 orderVM.setAddress(order.getAddress());
                 orderVM.setPhoneNumber(order.getPhoneNumber());
-                orderVM.setPrice(df.format(order.getPrice()));
+                orderVM.setPrice((order.getPrice()));
                 orderVM.setCreatedDate(order.getCreatedDate());
 
                 orderVMS.add(orderVM);
@@ -440,15 +439,137 @@ public class OrderController extends BaseController {
         } catch (Exception e) {
             //logger.error(e.getMessage());
         }
-
+        vm.setTotalPrice(totalPrice);
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         vm.setProductAmount(productAmount);
         vm.setCartProductVMList(cartProductVMS);
         vm.setOrderVMList(orderVMS);
         vm.setCategoryVMList(categoryVMList);
-        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+        model.addAttribute("vm",vm);
         return "/order-history";
     }
 
+
+    @GetMapping("/history/{orderId}")
+    public String getOrderDetail(Model model,
+                                 @Valid @ModelAttribute("productname") ProductVM productName,
+                                 @PathVariable("orderId") int orderId,
+                                 HttpServletResponse response,
+                                 HttpServletRequest request,
+                                 final Principal principal) {
+
+        OrderDetailVM vm = new OrderDetailVM();
+
+        DecimalFormat df = new DecimalFormat("####0.00");
+
+        double totalPriceOrder = 0;
+
+        List<OrderProductVM> orderProductVMS = new ArrayList<>();
+
+        Order orderEntity = orderService.findOne(orderId);
+
+        if(orderEntity != null) {
+            for(OrderProduct orderProduct : orderEntity.getListProductOrders()) {
+                OrderProductVM orderProductVM = new OrderProductVM();
+
+                orderProductVM.setProductId(orderProduct.getProductEntity().getProduct().getId());
+                orderProductVM.setMainImage(orderProduct.getProductEntity().getProduct().getMainImage());
+                orderProductVM.setAmount(orderProduct.getAmount());
+                orderProductVM.setName(orderProduct.getProductEntity().getProduct().getName());
+                orderProductVM.setColorName(orderProduct.getProductEntity().getColor().getName());
+                orderProductVM.setSizeName(orderProduct.getProductEntity().getSize().getName());
+                orderProductVM.setPrice((orderProduct.getProductEntity().getProduct().getPrice()));
+                orderProductVM.setTotalPrice(orderProduct.getProductEntity().getProduct().getPrice()*orderProduct.getAmount());
+                totalPriceOrder += orderProduct.getPrice();
+
+                orderProductVMS.add(orderProductVM);
+            }
+        }
+        int productAmount = 0;
+        double totalPrice = 0;
+        List<CartProductVM> cartProductVMS = new ArrayList<>();
+
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        String guid = getGuid(request);
+        try {
+            if(guid != null) {
+                Cart cartEntity;
+                if(userEntity==null)
+                    cartEntity= cartService.findFirstCartByGuid(guid);
+                else
+                    cartEntity= cartService.findByUserName(userEntity.getUserName());
+
+                if(cartEntity != null) {
+                    productAmount = cartEntity.getListCartProducts().size();
+                    for(CartProduct cartProduct : cartEntity.getListCartProducts()) {
+                        CartProductVM cartProductVM = new CartProductVM();
+                        cartProductVM.setId(cartProduct.getId());
+                        cartProductVM.setName(cartProduct.getProductEntity().getProduct().getName());
+                        cartProductVM.setProductId(cartProduct.getProductEntity().getProductId());
+                        cartProductVM.setProductName(cartProduct.getProductEntity().getProduct().getName());
+                        cartProductVM.setMainImage(cartProduct.getProductEntity().getProduct().getMainImage());
+                        cartProductVM.setAmount(cartProduct.getAmount());
+                        cartProductVM.setColorName(cartProduct.getProductEntity().getColor().getName());
+                        cartProductVM.setSizeName(cartProduct.getProductEntity().getSize().getName());
+                        cartProductVM.setProductEntityId(cartProduct.getProductEntityId());
+                        double price = cartProduct.getAmount()*cartProduct.getProductEntity().getProduct().getPrice();
+                        cartProductVM.setPrice(cartProduct.getProductEntity().getProduct().getPrice());
+                        totalPrice += price;
+                        cartProductVMS.add(cartProductVM);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            //logger.error(e.getMessage());
+        }
+
+        List<Product> productList = productService.getHotProduct();
+        List<ProductVM> productVMList = new ArrayList<>();
+
+        for(Product product : productList) {
+            ProductVM productVM = new ProductVM();
+            if(product.getCategory() == null) {
+                productVM.setCategoryName("");
+            } else {
+                productVM.setCategoryName(product.getCategory().getName());
+            }
+
+            if(product.getSupply() == null) {
+                productVM.setSupplyName("");
+            } else {
+                productVM.setSupplyName(product.getSupply().getName());
+            }
+
+            if(product.getPromotion() == null) {
+                productVM.setPromotionName("");
+            } else {
+                productVM.setPromotionName(product.getPromotion().getName());
+            }
+            productVM.setId(product.getId());
+            productVM.setRateAvg(Math.round(rateService.getRateAvg(product.getId())));
+            productVM.setName(product.getName());
+            productVM.setMainImage(product.getMainImage());
+            productVM.setPrice(product.getPrice());
+            productVM.setShortDesc(product.getShortDesc());
+            productVM.setCreatedDate(product.getCreatedDate());
+            productVM.setCategoryId(product.getCategoryId());
+            productVMList.add(productVM);
+        }
+
+        vm.setProductVMList(productVMList);
+        vm.setProductAmount(productAmount);
+        vm.setTotalPrice(totalPrice);
+        vm.setCartProductVMList(cartProductVMS);
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+        vm.setOrderProductVMS(orderProductVMS);
+        vm.setTotalPriceOrder((totalPriceOrder));
+        vm.setTotalProduct(orderProductVMS.size());
+
+        model.addAttribute("vm",vm);
+
+        return "/order-detail";
+    }
 
     public String getGuid(HttpServletRequest request) {
         Cookie cookie[] = request.getCookies();

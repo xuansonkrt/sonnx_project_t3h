@@ -11,6 +11,8 @@ public class LayoutHeaderAdminVM {
     }
 
     public LayoutHeaderAdminVM() {
+        this.userName = "anonymous";
+        this.avatar = "/link/avatar.jpg";
     }
 
     public String getUserName() {

@@ -9,6 +9,7 @@ import application.data.service.CartProductService;
 import application.data.service.CartService;
 import application.data.service.ProductService;
 import application.data.service.UserService;
+import application.model.dto.ProductDTO;
 import application.model.dto.UserDTO;
 import application.model.viewmodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,7 @@ public class UserController extends  BaseController{
     public String detail(Model model,
                          HttpServletResponse response,
                          HttpServletRequest request,
+                         @Valid @ModelAttribute("productname") ProductDTO productName,
                          final Principal principal)
     {
         UserDetailVM vm = new UserDetailVM();

@@ -113,7 +113,7 @@
 
 
 <!-- Shoping Cart -->
-<form class="bg0 p-t-75 p-b-85">
+<div class="bg0 p-t-75 p-b-85">
     <div class="container">
         <div class="row">
             <div class="col-lg-10 col-xl-8 m-lr-auto m-b-50">
@@ -213,7 +213,7 @@
                                     <!--th:action="@{/order/checkout}"   method="post" th:object="${order}"-->
                                     <div class="form-group">
                                         <label>Họ và tên</label>
-                                        <input type="text" class="form-control" id="input-name" th:field="*{customerName}" >
+                                        <input type="text" class="form-control" id="input-name" th:field="*{customerName}">
                                     </div>
                                     <div class="form-group">
                                         <label>Email</label>
@@ -233,7 +233,7 @@
                                             Tạm tính:
                                         </div>
                                         <div class="col-7 text-bold" th:text="${vm.getTotalPrice() +' đ'}" style="text-align: right">
-                                            adfàd
+                                            0
                                         </div>
                                     </div>
 
@@ -242,7 +242,7 @@
                                             Phí giao hàng:
                                         </div>
                                         <div class="col-6 text-bold" th:text="${vm.getShipPrice() +' đ'}"  style="text-align: right">
-                                            adfàd
+                                            0
                                         </div>
                                     </div>
                                     <div class="row">
@@ -250,13 +250,12 @@
                                             Tổng tiền:
                                         </div>
                                         <div class="col-6 text-bold" th:text="${vm.getTotal() +' đ'}" style="text-align: right">
-                                            adfàd
+                                            0
                                         </div>
                                     </div>
 
                                     <div style="text-align: right">
                                         <!--<button class="btn btn-primary mt-2" type="submit" id="checkout-sonnx" style="background-color: #6c7ae0" >Thanh toán</button>-->
-
                                         <input type="submit" value="Thanh toán" class="btn btn-primary mt-2" style="background-color: #6c7ae0">
                                     </div>
                                 </fieldset>
@@ -266,7 +265,7 @@
             </div>
         </div>
     </div>
-</form>
+</div>
 
 
 

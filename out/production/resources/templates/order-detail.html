@@ -48,7 +48,7 @@
     <div class="header-cart flex-col-l p-l-65 p-r-25">
         <div class="header-cart-title flex-w flex-sb-m p-b-8">
 				<span class="mtext-103 cl2">
-					Giỏ hàng
+					Lịch sử mua hàng
 				</span>
 
             <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
@@ -106,7 +106,7 @@
         </a>
 
         <span class="stext-109 cl4">
-				Giỏ hàng
+				Lịch sử mua hàng
 			</span>
     </div>
 </div>
@@ -116,7 +116,7 @@
 <div class="bg0 p-t-75 p-b-85">
     <div class="container">
         <div class="row">
-            <div class="col-lg-10 col-xl-8 m-lr-auto m-b-50">
+            <div class="col-lg-12 col-xl-12 m-lr-auto m-b-50">
                 <div class=" m-r--38 m-lr-0-xl">
                     <!--<span class="mb-3"><i>(Click vào hình ảnh sản phẩm để loại bỏ khỏi giỏ hàng)</i></span>-->
 
@@ -130,9 +130,9 @@
                                 <th class="column-5">Tổng</th>
                             </tr>
                             <tbody>
-                            <tr th:each="product: ${vm.getCartProductVMList()}" class="table_row">
+                            <tr th:each="product: ${vm.getOrderProductVMS()}" class="table_row">
                                 <td class="column-1">
-                                    <div class="how-itemcart1 deleteCartProduct"  th:attr="data-id=${product.getId()}"  >
+                                    <div class="how-itemcart1 deleteCartProduct"  th:attr="data-id=${product.getProductId()}"  >
                                         <img th:src="${product.getMainImage()}" alt="IMG">
                                     </div>
                                 </td>
@@ -141,27 +141,25 @@
                                        th:href="${'/product/'+product.getProductId()}"
                                        class="header-cart-item-name m-b-18 hov-cl1 trans-04"
                                        ></a>
-                                    <a  th:attr="data-id=${product.getId()}"  class="deleteCartProduct">
-                                        <i style="color: #6c7ae0; font-size: 25px" class="fa fa-trash icon-del"></i>
-                                    </a>
+
                                 </td>
 
                                 <td th:text="${product.getPrice()+' đ'}" class="column-3">$ 36.00</td>
-                                <td class="column-4">
-                                    <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                            <i class="fs-16 zmdi zmdi-minus"></i>
-                                        </div>
+                                <td class="column-4"  th:text="${product.getAmount()}" style="text-align: center">
+                                    <!--<div class="wrap-num-product flex-w m-l-auto m-r-0">-->
+                                        <!--<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">-->
+                                            <!--<i class="fs-16 zmdi zmdi-minus"></i>-->
+                                        <!--</div>-->
 
-                                        <input th:attr="data-id=${product.getId()}"
-                                               class="mtext-104 cl3 txt-center num-product change-product-amount"
-                                               type="number" th:value="${product.getAmount()}">
+                                        <!--<input th:attr="data-id=${product.getProductId()}"-->
+                                               <!--class="mtext-104 cl3 txt-center num-product change-product-amount"-->
+                                               <!--type="number" th:value="${product.getAmount()}">-->
 
                                         <!--name="num-product1"-->
-                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                            <i class="fs-16 zmdi zmdi-plus"></i>
-                                        </div>
-                                    </div>
+                                        <!--<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">-->
+                                            <!--<i class="fs-16 zmdi zmdi-plus"></i>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                 </td>
                                 <td class="column-5" th:text="${product.getTotalPrice()+' đ'}"></td>
                             </tr>
@@ -174,7 +172,7 @@
 
                     <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
                         <div class="flex-w flex-m m-r-20 m-tb-5">
-                            <p style="font-weight: bolder; font-size: 30px" th:text="${'Tạm tính: '+vm.getTotalPrice()+' đ'}"></p>
+                            <p style="font-weight: bolder; font-size: 30px" th:text="${'Tổng: '+vm.getTotalPriceOrder()+' đ'}"></p>
                             <!--<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">-->
 
                             <!--<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">-->
@@ -200,73 +198,65 @@
 
                 <!--</div>-->
 
-                <div class="  p-b-40 m-l-63 m-lr-0-xl p-lr-15-sm card"  style="border-top-width: 0px;">
-                    <h5 class="card-header table_head "
-                        style="height: 50px; background-color: #6c7ae0; color: white">
-                        <span class="my-auto" style="position: relative; top: 5px;">Thanh toán</span>
-                    </h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Thông tin giao hàng</h5>
-                        <hr>
-                            <form th:action="@{/order/checkout}" method="post" th:object="${order}">
-                                <fieldset>
-                                    <!--th:action="@{/order/checkout}"   method="post" th:object="${order}"-->
-                                    <div class="form-group">
-                                        <label>Họ và tên</label>
-                                        <input type="text" class="form-control" id="input-name" th:field="*{customerName}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="email" class="form-control" name="email" id="input-email" th:value="${order.email}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Địa chỉ</label>
-                                        <textarea rows="4" type="text" class="form-control" name="address" id="input-address" th:text="${order.address}"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Số điện thọai</label>
-                                        <input type="text" class="form-control" name="phoneNumber" id="input-phone-number" th:value="${order.phoneNumber}">
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-5">
-                                            Tạm tính:
-                                        </div>
-                                        <div class="col-7 text-bold" th:text="${vm.getTotalPrice() +' đ'}" style="text-align: right">
-                                            0
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-6">
-                                            Phí giao hàng:
-                                        </div>
-                                        <div class="col-6 text-bold" th:text="${vm.getShipPrice() +' đ'}"  style="text-align: right">
-                                            0
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            Tổng tiền:
-                                        </div>
-                                        <div class="col-6 text-bold" th:text="${vm.getTotal() +' đ'}" style="text-align: right">
-                                            0
-                                        </div>
-                                    </div>
-
-                                    <div style="text-align: right">
-                                        <!--<button class="btn btn-primary mt-2" type="submit" id="checkout-sonnx" style="background-color: #6c7ae0" >Thanh toán</button>-->
-                                        <input type="submit" value="Thanh toán" class="btn btn-primary mt-2" style="background-color: #6c7ae0">
-                                    </div>
-                                </fieldset>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
+
+
+<!-- Related Products -->
+<section class="sec-relate-product bg0 p-t-45 p-b-105">
+    <div class="container">
+        <div class="p-b-45">
+            <h3 class="ltext-106 cl5 txt-center">
+                Sản phẩm bán chạy
+            </h3>
+        </div>
+
+        <!-- Slide2 -->
+        <div class="wrap-slick2">
+            <div class="slick2">
+                <div th:each="product:${vm.getProductVMList()}" class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+                    <!-- Block2 -->
+                    <div class="block2">
+                        <div class="block2-pic hov-img0">
+                            <img th:src="${product.getMainImage()}" alt="IMG-PRODUCT">
+
+                            <a th:attr="data-id=${product.getId()}" href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1 quickView">
+                                Quick View
+                            </a>
+                        </div>
+
+                        <div class="block2-txt flex-w flex-t p-t-14">
+                            <div class="block2-txt-child1 flex-col-l ">
+                                <a th:text="${product.getName()}" th:href="${'/product/'+product.getId()}"  class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                    Esprit Ruffle Shirt
+                                </a>
+                                <span  class=" fs-18 cl11">
+						    <i th:each="i: ${#numbers.sequence(1,5)}" th:if="${product.getRateAvg()>= i}" class="zmdi zmdi-star"></i>
+					        <i th:each="i: ${#numbers.sequence(1,5)}" th:unless="${product.getRateAvg()>= i}" class="item-rating pointer zmdi zmdi-star-outline"></i>
+                        </span>
+                                <span th:text="${product.getPrice()+' đ'}"  class="stext-105 cl3">
+										$16.64
+									</span>
+                            </div>
+
+                            <div class="block2-txt-child2 flex-r p-t-3">
+                                <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                    <img class="icon-heart1 dis-block trans-04" th:src="@{/images/icons/icon-heart-01.png}" alt="ICON">
+                                    <img class="icon-heart2 dis-block trans-04 ab-t-l" th:src="@{/images/icons/icon-heart-02.png}" alt="ICON">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
 
 
 <!-- footer -->
