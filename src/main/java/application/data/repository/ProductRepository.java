@@ -40,4 +40,22 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
             "limit 20;", nativeQuery = true)
     List<Product> getHotProduct();
 
+//
+//    @Query(value = "select p.* from dbo_product p " +
+//            " inner join dbo_product_entity pe on ( p.product_id=pe.product_id) " +
+//            " where p.category_id =:categoryId and p.supply_id=:supplyId and pe.color_id=:colorId " +
+//            " and pe.size_id=:sizeId and upper(:productName) like concat('%',UPPER(p.name),'%')", nativeQuery = true)
+
+    @Query("SELECT p FROM dbo_product p " +
+            "INNER JOIN p.productEntityList pe " +
+            "WHERE (:categoryId IS NULL OR (p.categoryId = :categoryId)) " +
+            "AND (:colorId IS NULL OR (pe.colorId = :colorId)) " +
+            "AND (:sizeId IS NULL OR (pe.sizeId = :sizeId)) " +
+            "AND (:supplyId IS NULL OR (p.supplyId = :supplyId)) " +
+            "AND (:productName IS NULL OR UPPER(p.name) LIKE CONCAT('%',UPPER(:productName),'%'))")
+    Page<Product> getListProduct(Pageable pageable, @Param("categoryId") Integer categoryId
+                                , @Param("productName") String productName
+            , @Param("colorId") Integer colorId
+            , @Param("sizeId") Integer sizeId
+            , @Param("supplyId") Integer supplyId );
 }

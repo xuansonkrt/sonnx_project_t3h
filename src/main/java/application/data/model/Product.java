@@ -40,7 +40,18 @@ public class Product {
     private List<ProductImage> productImageList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<ProductEntity> productEntityList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<Rate> rateList = new ArrayList<>();
+
+    public List<ProductEntity> getProductEntityList() {
+        return productEntityList;
+    }
+
+    public void setProductEntityList(List<ProductEntity> productEntityList) {
+        this.productEntityList = productEntityList;
+    }
 
     @Column(name = "name")
     private String name;

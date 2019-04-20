@@ -374,19 +374,19 @@
                                             </p>
                                             <span style="color: #0d6aad" class="pointer reply" th:attr="data-rate=${rate.getId()}" >Trả lời</span>
 <!--sub review-->
-                                            <div th:each="rate-sub:${rate.getRateVMList()}" class="flex-w flex-t p-b-30">
+                                            <div th:each="sub:${rate.getRateVMList()}" class="flex-w flex-t p-b-30">
                                                 <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                                                    <img th:src="${rate-sub.getAvatar()}" alt="AVATAR">
+                                                    <img th:src="${sub.getAvatar()}" alt="AVATAR">
                                                 </div>
 
                                                 <div class="size-207">
                                                     <div class="flex-w flex-sb-m p-b-17">
-													<span th:text="${rate-sub.getUserName()}" class="mtext-107 cl2 p-r-20">
+													<span th:text="${sub.getUserName()}" class="mtext-107 cl2 p-r-20">
 														Ariana Grande
 													</span>
                                                     </div>
 
-                                                    <p th:text="${rate-sub.getComment()}" class="stext-102 cl6">
+                                                    <p th:text="${sub.getComment()}" class="stext-102 cl6">
                                                         Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
                                                     </p>
 
@@ -416,14 +416,14 @@
                                                         <div class="row p-b-25">
                                                             <div class="col-12 p-b-5">
                                                                 <!--<label class="stext-102 cl3" for="review">Bình luận</label>-->
-                                                                <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review-reply" name="review-reply"></textarea>
+                                                                <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" th:id="${rate.getId()+'_reviewreply'}" name="review-reply"></textarea>
                                                             </div>
 
 
                                                         </div>
 
-                                                        <input type="button" th:attr="data-rate=${rate.getId()},data-product=${vm.getProductVM().getId()}" value=" Trả lời"  id="rateReply"
-                                                               class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04">
+                                                        <input type="button" th:attr="data-rate=${rate.getId()},data-product=${vm.getProductVM().getId()}" value=" Trả lời"
+                                                               class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 rateReply">
 
                                                         <!--</input>-->
                                                     </form>

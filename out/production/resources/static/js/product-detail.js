@@ -169,11 +169,13 @@ $(document).ready(function () {
         $("#"+rateId+"_reply").attr("hidden",false);
     });
 
-    $("#rateReply").on("click", function () {
+    $(".rateReply").on("click", function () {
         alert("ahihi");
+        var rateId=$(this).data("rate");
+
         var data={};
         data.star= 0;
-        data.comment=$("#review-reply").val();
+        data.comment=$("#"+rateId+"_reviewreply").val();
         data.productId=0;
         data.parentId=$(this).data("rate");
         if(data.comment==0){
