@@ -34,6 +34,9 @@ public class ProductEntityService {
         return productEntityRepository.getByProductSizeColor(productId,colorId,sizeId);
     }
 
+    public  List<ProductEntity> getAll(){
+        return productEntityRepository.getAll();
+    }
 //    public boolean update(ProductEntity productEntity) {
 //        try {
 //            productEntityRepository.save(productEntity);

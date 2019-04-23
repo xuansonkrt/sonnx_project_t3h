@@ -1,8 +1,10 @@
 package application.data.service;
 
 import application.data.model.Color;
+import application.data.model.Size;
 import application.data.repository.ColorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -33,5 +35,10 @@ public class ColorService {
     public List<Color> getListColorByName(String ColorName){
         return colorRepository.getListColorByName(ColorName);
     }
+
+    public List<Color> getListColorByProductId (Integer productId){
+        return  colorRepository.getListColorByProductId(productId);
+    }
+
 
 }

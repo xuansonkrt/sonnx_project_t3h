@@ -54,6 +54,12 @@ public class HomeController extends BaseController {
     @Autowired
     RateService rateService;
 
+    @Autowired
+    FavouriteService favouriteService;
+
+    @Autowired
+    ProductEntityService productEntityService;
+
     @GetMapping(value = {"/","home"})
     public String home(Model model,
                        @Valid @ModelAttribute("productname") ProductDTO productName,
@@ -64,6 +70,9 @@ public class HomeController extends BaseController {
                        final Principal principal)
     {
         this.checkCookie(response,request,principal);
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        String guid = getGuid(request);
 
         HomeVM vm = new HomeVM();
         List<Category> categoryList = categoryService.getAll();
@@ -107,6 +116,12 @@ public class HomeController extends BaseController {
             colorVMList.add(colorVM);
         }
 
+        List<Product> favouriteProductList = new ArrayList<>();
+        if(userEntity!=null){
+            favouriteProductList= favouriteService.getProductFavouriteByUserName(userEntity.getUserName());
+        } else{
+            favouriteProductList= favouriteService.getProductFavouriteByGuid(guid);
+        }
 
         Pageable pageable = new PageRequest(page, 12);
 
@@ -149,17 +164,35 @@ public class HomeController extends BaseController {
             productVM.setRateAvg(Math.round(rateService.getRateAvg(product.getId())));
             productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
+            productVM.setSizeVMList(toSizeVMList(sizeService.getListSizeByProductId(product.getId())));
+            productVM.setColorVMList(toColorVMList(colorService.getListColorByProductId(product.getId())));
+            productVM.setProductImageVMList(toProductImageVMList(product.getProductImageList()));
+            if(isContainer(favouriteProductList, product.getId()))
+                productVM.setFavourite(1);
+            else
+                productVM.setFavourite(0);
             productVMList.add(productVM);
         }
 
+        List<ProductEntity> productEntityList = productEntityService.getAll();
+        List<ProductEntityVM> productEntityVMList = new ArrayList<>();
+        for(ProductEntity item : productEntityList){
+            ProductEntityVM entityVM = new ProductEntityVM();
+            entityVM.setColorName(item.getColor().getName());
+            entityVM.setSizeName(item.getSize().getName());
+            entityVM.setAmount(item.getAmount());
+            entityVM.setProductId(item.getProductId());
+            entityVM.setColorId(item.getColorId());
+            entityVM.setSizeId(item.getSizeId());
+            entityVM.setProductEntityId(item.getId());
+            productEntityVMList.add(entityVM);
+        }
 
         int productAmount = 0;
         double totalPrice = 0;
         List<CartProductVM> cartProductVMS = new ArrayList<>();
 
-        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User userEntity = userService.findUserByUsername(username);
-        String guid = getGuid(request);
+
 
         DecimalFormat df = new DecimalFormat("####0.00");
 
@@ -194,7 +227,7 @@ public class HomeController extends BaseController {
         } catch (Exception e) {
             //logger.error(e.getMessage());
         }
-
+        vm.setProductEntityVMList(productEntityVMList);
         vm.setCartProductVMList(cartProductVMS);
         vm.setProductAmount(productAmount);
         vm.setTotalPrice(totalPrice);
@@ -315,6 +348,7 @@ public class HomeController extends BaseController {
             productVM.setShortDesc(product.getShortDesc());
             productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
+
             productVMList.add(productVM);
         }
 
@@ -364,7 +398,6 @@ public class HomeController extends BaseController {
         vm.setProductAmount(productAmount);
         vm.setTotalPrice(totalPrice);
 
-
         vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         vm.setCategoryVMList(categoryVMList);
         vm.setColorVMList(colorVMList);
@@ -388,5 +421,45 @@ public class HomeController extends BaseController {
         }
         return null;
     }
+    public boolean isContainer(List<Product> productList, int id){
+        for(Product product: productList){
+            if (product.getId()==id)
+                return true;
+        }
+        return false;
+    }
 
+    public List<SizeVM> toSizeVMList(List<Size> sizeList){
+        List<SizeVM> sizeVMList = new ArrayList<>();
+        for(Size size2 : sizeList) {
+            SizeVM sizeVM = new SizeVM();
+            sizeVM.setId(size2.getId());
+            sizeVM.setName(size2.getName());
+            sizeVMList.add(sizeVM);
+        }
+        return sizeVMList;
+    }
+
+    public List<ColorVM> toColorVMList(List<Color> colorList){
+        List<ColorVM> colorVMList = new ArrayList<>();
+        for(Color color : colorList) {
+            ColorVM colorVM = new ColorVM();
+            colorVM.setId(color.getId());
+            colorVM.setName(color.getName());
+            colorVMList.add(colorVM);
+        }
+        return colorVMList;
+    }
+
+    public List<ProductImageVM> toProductImageVMList(List<ProductImage> productImageList){
+        List<ProductImageVM> productImageVMList = new ArrayList<>();
+        for(ProductImage img : productImageList){
+            ProductImageVM productImageVM= new ProductImageVM();
+            productImageVM.setId(img.getId());
+            productImageVM.setLink(img.getLink());
+            productImageVM.setTitle(img.getTitle());
+            productImageVMList.add(productImageVM);
+        }
+        return productImageVMList;
+    }
 }

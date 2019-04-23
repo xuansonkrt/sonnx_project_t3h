@@ -18,6 +18,15 @@ public  class HomeVM {
     private List<CartProductVM> cartProductVMList;
     private String totalPrice;
     private int productAmount;
+    private List<ProductEntityVM> productEntityVMList;
+
+    public List<ProductEntityVM> getProductEntityVMList() {
+        return productEntityVMList;
+    }
+
+    public void setProductEntityVMList(List<ProductEntityVM> productEntityVMList) {
+        this.productEntityVMList = productEntityVMList;
+    }
 
     public int getProductAmount() {
         return productAmount;

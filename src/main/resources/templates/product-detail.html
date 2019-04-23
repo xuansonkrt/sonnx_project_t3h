@@ -130,16 +130,19 @@
                             <div class="item-slick3" th:attr="data-thumb=${vm.getProductVM().getMainImage()}">
                                 <div class="wrap-pic-w pos-relative">
                                     <img th:src="${vm.getProductVM().getMainImage()}" alt="IMG-PRODUCT">
-                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" th:href="${vm.getProductVM().getMainImage()}">
+                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+                                       th:href="${vm.getProductVM().getMainImage()}">
                                         <i class="fa fa-expand"></i>
                                     </a>
                                 </div>
                             </div>
 
-                            <div th:each="image:${vm.getProductImageVMList()}" class="item-slick3" th:attr="data-thumb=${image.getLink()}">
+                            <div th:each="image:${vm.getProductImageVMList()}" class="item-slick3"
+                                 th:attr="data-thumb=${image.getLink()}">
                                 <div class="wrap-pic-w pos-relative">
                                     <img th:src="${image.getLink()}" th:alt="${image.getTitle()}">
-                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" th:href="${image.getLink()}">
+                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+                                       th:href="${image.getLink()}">
                                         <i class="fa fa-expand"></i>
                                     </a>
                                 </div>
@@ -599,7 +602,7 @@
 
                             <!--list image-->
                             <div class="slick3 gallery-lb" id="qv-image">
-                         <!--image-->
+                                <!--image-->
                             </div>
                         </div>
                     </div>

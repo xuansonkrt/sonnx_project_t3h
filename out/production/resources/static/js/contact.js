@@ -3,7 +3,7 @@ $(document).ready(function () {
        var data={};
        data.email=$("#email").val();
        data.title=$("#title").val();
-       data.content=$("#content").text();
+       data.content=$("#content").val();
         console.log("data: ", data);
        $.ajax({
            url:"/api/contact/add",
@@ -14,10 +14,11 @@ $(document).ready(function () {
            success: function (data) {
                if (data.success === true) {
                    swal({
-                           title: 'Thành công',
-                           text:  data.data.message,
-                           type:'success' ,
-                           timer:1500
+                       title:'Thành công',
+                       text:data.message,
+                       type:'success',
+                       showCancelButton: false,
+                       timer:1500
                        }
                    ).then(function() {
                        location.replace("/");
@@ -25,7 +26,7 @@ $(document).ready(function () {
                } else{
                    swal(
                        'Xảy ra lỗi',
-                       data.data.message,
+                       data.message,
                        'error'
                    );
                }

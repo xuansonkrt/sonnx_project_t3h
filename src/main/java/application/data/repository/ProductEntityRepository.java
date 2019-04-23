@@ -10,6 +10,9 @@ import java.util.List;
 public interface ProductEntityRepository extends JpaRepository<ProductEntity,Integer> {
     List<ProductEntity> findByProductId(Integer productId);
 
+    @Query("SELECT p FROM dbo_product_entity p ")
+    List<ProductEntity> getAll();
+
     @Query("SELECT p FROM dbo_product_entity p " +
             "WHERE (:productId IS NULL OR (p.productId = :productId))" +
             "AND (:colorId IS NULL OR (p.colorId = :colorId)) " +

@@ -126,7 +126,7 @@ public class ProductController extends  BaseController{
         }
 
 
-        List<Size> sizeList = sizeService.getAll();
+        List<Size> sizeList = sizeService.getListSizeByProductId(productId);
         List<SizeVM> sizeVMList = new ArrayList<>();
 
         for(Size size2 : sizeList) {
@@ -137,7 +137,7 @@ public class ProductController extends  BaseController{
         }
 
 //        List<Color> colorList = productService.getListColorProduct(productId);
-        List<Color> colorList = colorService.getAll();
+        List<Color> colorList = colorService.getListColorByProductId(productId);
         List<ColorVM> colorVMList = new ArrayList<>();
 
         for(Color color : colorList) {

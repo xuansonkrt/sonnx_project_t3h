@@ -3,7 +3,7 @@ package application.model.viewmodel;
 import java.util.Date;
 import java.util.List;
 
-public class ProductVM {
+public class    ProductVM {
     private int id;
     private String categoryName;
     private String name;
@@ -16,6 +16,51 @@ public class ProductVM {
     private String promotionName;
     private int categoryId;
     private int rateAvg;
+    private int favourite;
+    private List<ColorVM> colorVMList;
+    private  List <SizeVM> sizeVMList;
+    private List<ProductEntityVM> productEntityVMList;
+    private List<ProductImageVM> productImageVMList;
+
+    public List<ProductImageVM> getProductImageVMList() {
+        return productImageVMList;
+    }
+
+    public void setProductImageVMList(List<ProductImageVM> productImageVMList) {
+        this.productImageVMList = productImageVMList;
+    }
+
+    public List<ProductEntityVM> getProductEntityVMList() {
+        return productEntityVMList;
+    }
+
+    public void setProductEntityVMList(List<ProductEntityVM> productEntityVMList) {
+        this.productEntityVMList = productEntityVMList;
+    }
+
+    public List<ColorVM> getColorVMList() {
+        return colorVMList;
+    }
+
+    public void setColorVMList(List<ColorVM> colorVMList) {
+        this.colorVMList = colorVMList;
+    }
+
+    public List<SizeVM> getSizeVMList() {
+        return sizeVMList;
+    }
+
+    public void setSizeVMList(List<SizeVM> sizeVMList) {
+        this.sizeVMList = sizeVMList;
+    }
+
+    public int getFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(int favourite) {
+        this.favourite = favourite;
+    }
 
     public int getRateAvg() {
         return rateAvg;

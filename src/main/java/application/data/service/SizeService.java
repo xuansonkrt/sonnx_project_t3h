@@ -3,6 +3,7 @@ package application.data.service;
 import application.data.model.Size;
 import application.data.repository.SizeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,6 +33,10 @@ public class SizeService {
 
     public List<Size> getListSizeByName(String SizeName){
         return sizeRepository.getListSizeByName(SizeName);
+    }
+
+    public List<Size> getListSizeByProductId (Integer productId){
+        return sizeRepository.getListSizeByProductId(productId);
     }
 
 }

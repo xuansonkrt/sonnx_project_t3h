@@ -493,12 +493,23 @@
 								</span>
                         </div>
 
-                        <div class="block2-txt-child2 flex-r p-t-3">
-                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
-                                <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
-                            </a>
-                        </div>
+                        <!--<div class="block2-txt-child2 flex-r p-t-3">-->
+                            <!--&lt;!&ndash;<a th:attr="data-product=${product.getId()}" href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">&ndash;&gt;-->
+                            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                            <!--<a th:attr="data-product=${product.getId()}" th:if="${product.getFavourite()==1}" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">-->
+
+                                <!--<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">-->
+                                <!--&lt;!&ndash;<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">&ndash;&gt;-->
+                            <!--</a>-->
+
+                            <!--<a th:attr="data-product=${product.getId()}" th:unless="${product.getFavourite()==1}" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">-->
+                                <!--&lt;!&ndash;<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">&ndash;&gt;-->
+                                <!--<img class="icon-heart1 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">-->
+
+                            <!--</a>-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
@@ -529,7 +540,7 @@
 </div>
 
 <!-- Modal1 -->
-<div class="wrap-modal1 js-modal1 p-t-60 p-b-20 ">
+<div th:each="product: ${vm.getProductVMList()}" class="wrap-modal1 js-modal1 p-t-60 p-b-20 ">
     <div class="overlay-modal1 js-hide-modal1"></div>
 
     <div class="container">
@@ -537,7 +548,6 @@
             <button class="how-pos3 hov3 trans-04 js-hide-modal1">
                 <img src="images/icons/icon-close.png" alt="CLOSE">
             </button>
-
             <div class="row">
                 <div class="col-md-6 col-lg-7 p-b-30">
                     <div class="p-l-25 p-r-30 p-lr-0-lg">
@@ -545,37 +555,28 @@
                             <div class="wrap-slick3-dots"></div>
                             <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
-                            <!--list image-->
                             <div class="slick3 gallery-lb">
-                                <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
+                                <div class="item-slick3" th:attr="data-thumb=${product.getMainImage()}">
                                     <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-01.jpg" alt="IMG-PRODUCT">
-
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.jpg">
+                                        <img th:src="${product.getMainImage()}" alt="IMG-PRODUCT">
+                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+                                           th:href="${product.getMainImage()}">
                                             <i class="fa fa-expand"></i>
                                         </a>
                                     </div>
                                 </div>
 
-                                <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
+                                <div th:each="image:${product.getProductImageVMList()}" class="item-slick3"
+                                     th:attr="data-thumb=${image.getLink()}">
                                     <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">
-
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-02.jpg">
+                                        <img th:src="${image.getLink()}" th:alt="${image.getTitle()}">
+                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+                                           th:href="${image.getLink()}">
                                             <i class="fa fa-expand"></i>
                                         </a>
                                     </div>
                                 </div>
 
-                                <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
-                                    <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
-
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-03.jpg">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -583,16 +584,21 @@
 
                 <div class="col-md-6 col-lg-5 p-b-30">
                     <div class="p-r-50 p-t-5 p-lr-0-lg">
-                        <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                            Lightweight Jacket
+                        <h4 class="mtext-105 cl2 js-name-detail p-b-14" th:text="${product.getName()}">
+                            Tên sản phẩm
                         </h4>
 
-                        <span class="mtext-106 cl2">
-								$58.79
-							</span>
+                        <span  class=" mb-5 fs-18 cl11">
 
-                        <p class="stext-102 cl3 p-t-23">
-                            Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
+						<i th:each="i: ${#numbers.sequence(1,5)}" th:if="${product.getRateAvg()>= i}" class="zmdi zmdi-star"></i>
+					    <i th:each="i: ${#numbers.sequence(1,5)}" th:unless="${product.getRateAvg()>= i}" class="item-rating pointer zmdi zmdi-star-outline"></i>
+                    </span> <br>
+                        <span class="mtext-106 cl2" th:text="${product.getPrice()+' đ'}">
+							Giá
+						</span>
+
+                        <p class="stext-102 cl3 p-t-23"  th:text="${product.getShortDesc()}">
+                            Mô tả.
                         </p>
 
                         <!--  -->
@@ -604,12 +610,9 @@
 
                                 <div class="size-204 respon6-next">
                                     <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2" name="time">
-                                            <option>Choose an option</option>
-                                            <option>Size S</option>
-                                            <option>Size M</option>
-                                            <option>Size L</option>
-                                            <option>Size XL</option>
+                                        <select class="js-select2" id="selectSize"  placeholder="Chọn size">
+                                            <option value="0">Chọn size</option>
+                                            <option th:each="size : ${product.getSizeVMList()}" th:value="${size.getId()}" th:text="${size.getName()}"></option>
                                         </select>
                                         <div class="dropDownSelect2"></div>
                                     </div>
@@ -618,18 +621,18 @@
 
                             <div class="flex-w flex-r-m p-b-10">
                                 <div class="size-203 flex-c-m respon6">
-                                    Color
+                                    Màu sắc
                                 </div>
 
                                 <div class="size-204 respon6-next">
                                     <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2" name="time">
-                                            <option>Choose an option</option>
-                                            <option>Red</option>
-                                            <option>Blue</option>
-                                            <option>White</option>
-                                            <option>Grey</option>
+
+                                        <select class="js-select2" id="selectColor"  placeholder="Chọn màu">
+                                            <option value="0">Chọn màu</option>
+                                            <option th:each="color : ${product.getColorVMList()}" th:value="${color.getId()}" th:text="${color.getName()}"></option>
                                         </select>
+
+
                                         <div class="dropDownSelect2"></div>
                                     </div>
                                 </div>
@@ -644,13 +647,16 @@
 
                                         <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
 
+
                                         <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                             <i class="fs-16 zmdi zmdi-plus"></i>
                                         </div>
                                     </div>
-
-                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                                        Add to cart
+                                    <span style="color: red" id="warehouse"></span>
+                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04  add-to-cart"
+                                            th:attr="data-product=${product.getId()}">
+                                        <!--js-addcart-detail-->
+                                        Thêm vào giỏ
                                     </button>
                                 </div>
                             </div>
@@ -730,19 +736,7 @@
 <!--===============================================================================================-->
 <script th:src="@{/vendor/sweetalert/sweetalert.min.js}" type="e5d6ee6a7978d5070e084177-text/javascript"></script>
 <script type="e5d6ee6a7978d5070e084177-text/javascript">
-		$('.js-addwish-b2').on('click', function(e){
-			e.preventDefault();
-		});
 
-		$('.js-addwish-b2').each(function(){
-			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-
-				$(this).addClass('js-addedwish-b2');
-				$(this).off('click');
-			});
-		});
 
 		$('.js-addwish-detail').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
@@ -796,9 +790,15 @@
 
 <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js" data-cf-settings="e5d6ee6a7978d5070e084177-|49" defer=""></script></body>
 <!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/favourite.js}"></script>
 <script th:inline="javascript">
     var vm = [[${vm}]];
+    console.log("vm: ", vm);
 </script>
 </html>
