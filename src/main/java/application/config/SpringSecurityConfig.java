@@ -60,7 +60,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         logger.info("-----configure(WebSecurity web)");
         web.ignoring()
-                .antMatchers("/css/**", "/js/**","/images/**","/vendors/**");
+                .antMatchers("/css/**", "/js/**","/images/**","/assets/**","/vendors/**");
     }
 
     @Autowired

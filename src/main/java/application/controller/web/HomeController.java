@@ -2,6 +2,7 @@ package application.controller.web;
 
 import application.data.model.*;
 import application.data.service.*;
+import application.extension.MyFunction;
 import application.model.dto.ProductDTO;
 import application.model.viewmodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ public class HomeController extends BaseController {
         this.checkCookie(response,request,principal);
         String  username = SecurityContextHolder.getContext().getAuthentication().getName();
         User userEntity = userService.findUserByUsername(username);
-        String guid = getGuid(request);
+        String guid = MyFunction.getGuid(request);
 
         HomeVM vm = new HomeVM();
         List<Category> categoryList = categoryService.getAll();
@@ -97,24 +98,10 @@ public class HomeController extends BaseController {
 
 
         List<Size> sizeList = sizeService.getAll();
-        List<SizeVM> sizeVMList = new ArrayList<>();
-
-        for(Size size2 : sizeList) {
-            SizeVM sizeVM = new SizeVM();
-            sizeVM.setId(size2.getId());
-            sizeVM.setName(size2.getName());
-            sizeVMList.add(sizeVM);
-        }
+        List<SizeVM> sizeVMList = MyFunction.toSizeVMList(sizeList);
 
         List<Color> colorList = colorService.getAll();
-        List<ColorVM> colorVMList = new ArrayList<>();
-
-        for(Color color : colorList) {
-            ColorVM colorVM = new ColorVM();
-            colorVM.setId(color.getId());
-            colorVM.setName(color.getName());
-            colorVMList.add(colorVM);
-        }
+        List<ColorVM> colorVMList = MyFunction.toColorVMList(colorList);
 
         List<Product> favouriteProductList = new ArrayList<>();
         if(userEntity!=null){
@@ -164,10 +151,10 @@ public class HomeController extends BaseController {
             productVM.setRateAvg(Math.round(rateService.getRateAvg(product.getId())));
             productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
-            productVM.setSizeVMList(toSizeVMList(sizeService.getListSizeByProductId(product.getId())));
-            productVM.setColorVMList(toColorVMList(colorService.getListColorByProductId(product.getId())));
-            productVM.setProductImageVMList(toProductImageVMList(product.getProductImageList()));
-            if(isContainer(favouriteProductList, product.getId()))
+            productVM.setSizeVMList(MyFunction.toSizeVMList(sizeService.getListSizeByProductId(product.getId())));
+            productVM.setColorVMList(MyFunction.toColorVMList(colorService.getListColorByProductId(product.getId())));
+            productVM.setProductImageVMList(MyFunction.toProductImageVMList(product.getProductImageList()));
+            if(MyFunction.isContainer(favouriteProductList, product.getId()))
                 productVM.setFavourite(1);
             else
                 productVM.setFavourite(0);
@@ -279,24 +266,10 @@ public class HomeController extends BaseController {
 
 
         List<Size> sizeList = sizeService.getAll();
-        List<SizeVM> sizeVMList = new ArrayList<>();
-
-        for(Size size2 : sizeList) {
-            SizeVM sizeVM = new SizeVM();
-            sizeVM.setId(size2.getId());
-            sizeVM.setName(size2.getName());
-            sizeVMList.add(sizeVM);
-        }
+        List<SizeVM> sizeVMList = MyFunction.toSizeVMList(sizeList);
 
         List<Color> colorList = colorService.getAll();
-        List<ColorVM> colorVMList = new ArrayList<>();
-
-        for(Color color : colorList) {
-            ColorVM colorVM = new ColorVM();
-            colorVM.setId(color.getId());
-            colorVM.setName(color.getName());
-            colorVMList.add(colorVM);
-        }
+        List<ColorVM> colorVMList = MyFunction.toColorVMList(colorList);
 
         Sort sortable = new Sort(Sort.Direction.ASC,"id");
         if(sort != null) {
@@ -348,7 +321,9 @@ public class HomeController extends BaseController {
             productVM.setShortDesc(product.getShortDesc());
             productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
-
+            productVM.setSizeVMList(MyFunction.toSizeVMList(sizeService.getListSizeByProductId(product.getId())));
+            productVM.setColorVMList(MyFunction.toColorVMList(colorService.getListColorByProductId(product.getId())));
+            productVM.setProductImageVMList(MyFunction.toProductImageVMList(product.getProductImageList()));
             productVMList.add(productVM);
         }
 
@@ -358,7 +333,7 @@ public class HomeController extends BaseController {
 
         String  username = SecurityContextHolder.getContext().getAuthentication().getName();
         User userEntity = userService.findUserByUsername(username);
-        String guid = getGuid(request);
+        String guid = MyFunction.getGuid(request);
 
         DecimalFormat df = new DecimalFormat("####0.00");
 
@@ -411,55 +386,7 @@ public class HomeController extends BaseController {
     }
 
 
-    public String getGuid(HttpServletRequest request) {
-        Cookie cookie[] = request.getCookies();
 
-        if(cookie!=null) {
-            for(Cookie c :cookie) {
-                if(c.getName().equals("guid"))  return c.getValue();
-            }
-        }
-        return null;
-    }
-    public boolean isContainer(List<Product> productList, int id){
-        for(Product product: productList){
-            if (product.getId()==id)
-                return true;
-        }
-        return false;
-    }
 
-    public List<SizeVM> toSizeVMList(List<Size> sizeList){
-        List<SizeVM> sizeVMList = new ArrayList<>();
-        for(Size size2 : sizeList) {
-            SizeVM sizeVM = new SizeVM();
-            sizeVM.setId(size2.getId());
-            sizeVM.setName(size2.getName());
-            sizeVMList.add(sizeVM);
-        }
-        return sizeVMList;
-    }
 
-    public List<ColorVM> toColorVMList(List<Color> colorList){
-        List<ColorVM> colorVMList = new ArrayList<>();
-        for(Color color : colorList) {
-            ColorVM colorVM = new ColorVM();
-            colorVM.setId(color.getId());
-            colorVM.setName(color.getName());
-            colorVMList.add(colorVM);
-        }
-        return colorVMList;
-    }
-
-    public List<ProductImageVM> toProductImageVMList(List<ProductImage> productImageList){
-        List<ProductImageVM> productImageVMList = new ArrayList<>();
-        for(ProductImage img : productImageList){
-            ProductImageVM productImageVM= new ProductImageVM();
-            productImageVM.setId(img.getId());
-            productImageVM.setLink(img.getLink());
-            productImageVM.setTitle(img.getTitle());
-            productImageVMList.add(productImageVM);
-        }
-        return productImageVMList;
-    }
 }

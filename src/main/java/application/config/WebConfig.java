@@ -49,6 +49,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 "/static/css/**",
                 "/static/vendor/**",
                 "/static/fonts/**",
+                "/static/assets/**",
                 "/static/js/**",
                 "/static/plugin/**",
                 "/templates/**")
@@ -59,6 +60,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                         "classpath:/static/vendor/",
                         "classpath:/static/fonts/",
                         "classpath:/static/js/",
+                        "classpath:/static/assets/",
                         "classpath:/static/plugin/",
                         "classpath:/templates/");
     }
