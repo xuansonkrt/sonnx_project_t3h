@@ -2,12 +2,15 @@ package application.controller.web;
 
 import application.data.model.*;
 import application.data.service.*;
+import application.extension.DELIVERYSTATUS;
 import application.model.api.DataApiResult;
+import application.model.dto.OrderDTO;
 import application.model.viewmodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +63,14 @@ public class OrderController extends BaseController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    DeliveryStatusService deliveryStatusService;
+
+    @Autowired
+    OrderDeliveryStatusService orderDeliveryStatusService;
+
+    @Autowired
+    MessageService messageService;
     @GetMapping("/checkout")
     public String checkoutA(Model model,
                            @Valid @ModelAttribute("productname") ProductVM productName,
@@ -302,6 +313,7 @@ public class OrderController extends BaseController {
             order.setPhoneNumber(orderVM.getPhoneNumber());
             order.setCustomerName(orderVM.getCustomerName());
             order.setCreatedDate(new Date());
+            order.setDeliveryStatusId(1);
 
 
             Cart cartEntity = cartService.findFirstCartByGuid(guid);
@@ -312,7 +324,19 @@ public class OrderController extends BaseController {
                     orderProduct.setOrder(order);
                     orderProduct.setProductEntity(cartProduct.getProductEntity());
                     orderProduct.setAmount(cartProduct.getAmount());
-
+                    ProductEntity current = productEntityService.findOne(cartProduct.getProductEntity().getId());
+                    if(cartProduct.getAmount()>current.getAmount()){
+                        Message message = new Message();
+                        message.setEmail("system");
+                        message.setStatus(1);
+                        message.setCreatedDate(new Date());
+                        message.setTitle("Không đủ số lượng");
+                        message.setContent(order.toString());
+                        messageService.update(message);
+                    } else{
+                        current.setAmount(current.getAmount()-cartProduct.getAmount());
+                    }
+                    productEntityService.update(current);
                     double price = cartProduct.getAmount() * cartProduct.getProductEntity().getProduct().getPrice();
                     totalPrice += price;
 
@@ -323,8 +347,17 @@ public class OrderController extends BaseController {
 
                 order.setListProductOrders(orderProducts);
                 order.setPrice(totalPrice);
-
+                if(totalPrice>1000000){
+                    order.setShipPrice(0);
+                } else{
+                    order.setShipPrice(49500);
+                }
                 orderService.addNewOrder(order);
+                OrderDeliveryStatus orderDeliveryStatus = new OrderDeliveryStatus();
+                orderDeliveryStatus.setCreatedDate(new Date());
+                orderDeliveryStatus.setOrder(order);
+                orderDeliveryStatus.setDeliveryStatus(deliveryStatusService.findOne(DELIVERYSTATUS.PROCESSING));
+                orderDeliveryStatusService.add(orderDeliveryStatus);
 
                 cartService.deleteCart(cartEntity.getId());
             }
@@ -581,4 +614,36 @@ public class OrderController extends BaseController {
         }
         return null;
     }
+
+    @PostMapping(value="/changeStatus")
+    public @ResponseBody DataApiResult changeStatus(@Valid @RequestBody OrderDTO dto
+                                                    ){
+        DataApiResult result = new DataApiResult();
+        Order order = orderService.findOne(dto.getId());
+        if(order!=null){
+            if(order.getDeliveryStatusId()== DELIVERYSTATUS.SHIPPED ||
+                    order.getDeliveryStatusId()== DELIVERYSTATUS.CANCEL||
+                    order.getDeliveryStatusId()>dto.getStatus()){
+                result.setMessage("Cập nhật không thành công");
+                result.setSuccess(false);
+                return result;
+            }
+            order.setDeliveryStatusId(dto.getStatus());
+            orderService.update(order);
+
+            OrderDeliveryStatus orderDeliveryStatus = new OrderDeliveryStatus();
+            orderDeliveryStatus.setOrder(order);
+            orderDeliveryStatus.setDeliveryStatus(deliveryStatusService.findOne(dto.getStatus()));
+            orderDeliveryStatus.setCreatedDate(new Date());
+
+            orderDeliveryStatusService.add(orderDeliveryStatus);
+            result.setMessage("Cập nhật trạng thái thành công");
+            result.setSuccess(true);
+            return result;
+        }
+        result.setMessage("Không tìm thấy đơn hàng");
+        result.setSuccess(false);
+        return result;
+    }
+
 }

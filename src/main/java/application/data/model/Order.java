@@ -35,8 +35,14 @@ public class Order {
     @Column(name = "price")
     private double price;
 
+    @Column(name = "ship_price")
+    private double shipPrice;
+
     @Column (name = "created_date")
     private Date createdDate;
+
+    @Column(name = "delivery_status_id")
+    private int deliveryStatusId;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private List<OrderProduct> listProductOrders = new ArrayList<>();
@@ -130,5 +136,33 @@ public class Order {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getDeliveryStatusId() {
+        return deliveryStatusId;
+    }
+
+    public void setDeliveryStatusId(int deliveryStatusId) {
+        this.deliveryStatusId = deliveryStatusId;
+    }
+
+    public double getShipPrice() {
+        return shipPrice;
+    }
+
+    public void setShipPrice(double shipPrice) {
+        this.shipPrice = shipPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Đơn đặt hàng không đủ số lượng trong kho{" +
+                "Mã đơn hàng: " + id +
+                ", Tên khách hàng:'" + customerName + '\'' +
+                ", Địa chỉ: " + address + '\'' +
+                ", Số điện thoại: " + phoneNumber + '\'' +
+                ", Email: " + email + '\'' +
+                ", Ngày đặt hàng: " + createdDate +
+                '}';
     }
 }

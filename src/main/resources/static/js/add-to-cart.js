@@ -30,8 +30,34 @@ $(document).ready(function () {
         }
         getAmount();
     });
+    $("#selectColor").on("change",function () {
+        console.log("color");
+        if($('#selectSize :selected').val()=="0"){
+            return;
+        }
+        getAmount();
+    });
 
+    $('.selectColor2').on('change',function () {
+        alert("size");
+        if($('#selectColor :selected').val()=="0"){
+            return;
+        }
+        getAmount();
+    });
+
+    function changeSize(that) {
+
+        alert("size");
+       // var id= $(that).val();
+        //alert(id);
+        if($('#selectColor :selected').val()=="0"){
+            return;
+        }
+        getAmount();
+    };
     function getAmount() {
+        console.log(" get vm: ",vm.productEntityVMList);
         var size=$('#selectSize :selected').val();
         var color=$('#selectColor :selected').val();
         var amount=0;

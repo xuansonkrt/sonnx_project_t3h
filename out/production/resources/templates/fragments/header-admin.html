@@ -77,8 +77,8 @@
             </ul>
         </li>
         <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <img th:src="${vm.getAvatar()}" >
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 5px">
+                <img th:src="${vm.getAvatar()}" style="max-width: 40px">
                 <span th:text="${vm.getUserName()}"></span> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu dropdown-user">
@@ -112,6 +112,27 @@
                     <a href="tables.html"><i class="fa fa-bar-chart-o fa-fw"></i> Thống kê</a>
                 </li>
                 <li>
+                    <a href="#"><i class="fa fa-envelope-o fa-fw"></i> Mail<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/admin/mail">Hộp thư đến</a>
+                        </li>
+                        <!--<li>-->
+                            <!--<a href="/admin/category">Đã gửi</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="/admin/category">Quan trọng</a>-->
+                        <!--</li>-->
+                        <li>
+                            <a href="/admin/promotion">Thùng rác</a>
+                        </li>
+
+                        <!--<li>-->
+                        <!--<a href="#">Đơn hàng</a>-->
+                        <!--</li>-->
+                    </ul>
+                </li>
+                <li>
                     <a href="#"><i class="fa fa-dashboard fa-fw"></i> Quản lý chung<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -132,11 +153,14 @@
                         <li>
                             <a href="/admin/color">Màu sắc</a>
                         </li>
-                        <li>
-                            <a href="#">Đơn hàng</a>
-                        </li>
+                        <!--<li>-->
+                            <!--<a href="#">Đơn hàng</a>-->
+                        <!--</li>-->
                     </ul>
                     <!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <a href="/admin/order"><i class="fa fa-print"></i> Đơn hàng</a>
                 </li>
                 <li>
                     <a href="/admin/ware-house"><i class="fa fa-industry fa-fw"></i> Kho</a>

@@ -5,6 +5,9 @@ import application.data.repository.OrderRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,9 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    public void update(Order order){
+        orderRepository.save(order);
+    }
     public void addNewOrder(Order order) {
         orderRepository.save(order);
     }
@@ -29,4 +35,7 @@ public class OrderService {
         return orderRepository.findOrderByGuidOrUserName(guid,userName);
     }
 
+    public  Page<Order> getListOrderByCustomerName(Pageable pageable, String customerName){
+        return  orderRepository.getListOrderByCustomerName(pageable,customerName);
+    }
 }

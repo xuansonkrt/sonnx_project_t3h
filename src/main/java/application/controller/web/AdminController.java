@@ -3,7 +3,6 @@ package application.controller.web;
 import application.data.model.*;
 import application.data.service.*;
 import application.model.dto.ProductDTO;
-import application.model.dto.ProductDTO2;
 import application.model.viewmodel.*;
 import application.model.viewmodel.Admin.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -23,7 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path = "/admin")
-public class AdminController {
+public class AdminController extends  BaseController {
 
     @Autowired
     private SupplyService supplyService;
@@ -43,6 +39,19 @@ public class AdminController {
     @Autowired
     private ColorService colorService;
 
+    @Autowired
+    private  OrderService orderService;
+
+    @Autowired
+    private  DeliveryStatusService deliveryStatusService;
+
+
+    @Autowired
+    private OrderDeliveryStatusService orderDeliveryStatusService;
+
+    @Autowired
+    private MessageService messageService;
+
     @GetMapping("")
     public String admin(Model model) {
 
@@ -58,7 +67,7 @@ public class AdminController {
         List<Supply> supplyList;
         if (supplyName.getName() != null) {
             supplyList = supplyService.getListSupplyByName(supplyName.getName());
-            vm.setKeyWord("Find with key: "+supplyName.getName());
+            vm.setKeyWord("Tìm kiếm: "+supplyName.getName());
         } else {
             supplyList = supplyService.getAll();
             vm.setKeyWord("");
@@ -77,7 +86,7 @@ public class AdminController {
             }
         }
 
-        LayoutHeaderAdminVM layoutHeaderAdminVM=new LayoutHeaderAdminVM("Xuan Son","#");
+        LayoutHeaderAdminVM layoutHeaderAdminVM=this.getLayoutHeaderAdminVM();
         vm.setLayoutHeaderAdminVM( layoutHeaderAdminVM);
         vm.setSupplyVMList(supplyVMList);
         model.addAttribute("vm", vm);
@@ -91,7 +100,7 @@ public class AdminController {
         List<Category> categoryList;
         if (categoryName.getName() != null) {
             categoryList = categoryService.getListCategoryByName(categoryName.getName());
-            vm.setKeyWord("Find with key: "+categoryName.getName());
+            vm.setKeyWord("Tìm kiếm: "+categoryName.getName());
         } else {
             categoryList = categoryService.getAll();
             vm.setKeyWord("");
@@ -110,7 +119,7 @@ public class AdminController {
                 categoryVMList.add(categoryVM);
             }
         }
-        LayoutHeaderAdminVM layoutHeaderAdminVM=new LayoutHeaderAdminVM("Xuan Son","#");
+        LayoutHeaderAdminVM layoutHeaderAdminVM=this.getLayoutHeaderAdminVM();
         vm.setLayoutHeaderAdminVM( layoutHeaderAdminVM);
         vm.setCategoryVMList(categoryVMList);
         model.addAttribute("vm", vm);
@@ -127,7 +136,7 @@ public class AdminController {
         List<Promotion> promotionList;
         if (promotionName.getName() != null) {
             promotionList = promotionService.getListSupplyByName(promotionName.getName());
-            vm.setKeyWord("Find with key: "+promotionName.getName());
+            vm.setKeyWord("Tìm kiếm: "+promotionName.getName());
         } else {
             promotionList = promotionService.getAll();
             vm.setKeyWord("");
@@ -149,7 +158,7 @@ public class AdminController {
                 promotionVMList.add(promotionVM);
             }
         }
-        LayoutHeaderAdminVM layoutHeaderAdminVM=new LayoutHeaderAdminVM("Xuan Son","#");
+        LayoutHeaderAdminVM layoutHeaderAdminVM=this.getLayoutHeaderAdminVM();
         vm.setLayoutHeaderAdminVM( layoutHeaderAdminVM);
         vm.setPromotionVMList(promotionVMList);
         model.addAttribute("vm", vm);
@@ -165,7 +174,7 @@ public class AdminController {
         List<Size> sizeList;
         if (sizeName.getName() != null) {
             sizeList = sizeService.getListSizeByName(sizeName.getName());
-            vm.setKeyWord("Find with key: "+sizeName.getName());
+            vm.setKeyWord("Tìm kiếm: "+sizeName.getName());
         } else {
             sizeList = sizeService.getAll();
             vm.setKeyWord("");
@@ -184,7 +193,7 @@ public class AdminController {
             }
         }
 
-        LayoutHeaderAdminVM layoutHeaderAdminVM=new LayoutHeaderAdminVM("Xuan Son","#");
+        LayoutHeaderAdminVM layoutHeaderAdminVM=this.getLayoutHeaderAdminVM();
         vm.setLayoutHeaderAdminVM( layoutHeaderAdminVM);
         vm.setSizeVMList(sizeVMList);
         model.addAttribute("vm", vm);
@@ -199,7 +208,7 @@ public class AdminController {
         List<Color> colorList;
         if (colorName.getName() != null) {
             colorList = colorService.getListColorByName(colorName.getName());
-            vm.setKeyWord("Find with key: "+colorName.getName());
+            vm.setKeyWord("Tìm kiếm: "+colorName.getName());
         } else {
             colorList = colorService.getAll();
             vm.setKeyWord("");
@@ -218,7 +227,7 @@ public class AdminController {
             }
         }
 
-        LayoutHeaderAdminVM layoutHeaderAdminVM=new LayoutHeaderAdminVM("Xuan Son","#");
+        LayoutHeaderAdminVM layoutHeaderAdminVM=this.getLayoutHeaderAdminVM();
         vm.setLayoutHeaderAdminVM( layoutHeaderAdminVM);
         vm.setColorVMList(colorVMList);
         model.addAttribute("vm", vm);
@@ -277,7 +286,7 @@ public class AdminController {
 
         if (productName.getName() != null && !productName.getName().isEmpty()) {
             productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,productName.getName().trim());
-            vm.setKeyWord("Find with key: " + productName.getName());
+            vm.setKeyWord("Tìm kiếm: " + productName.getName());
         } else {
             productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,null);
         }
@@ -313,7 +322,7 @@ public class AdminController {
 
             productVMList.add(productVM);
         }
-        LayoutHeaderAdminVM layoutHeaderAdminVM= new LayoutHeaderAdminVM("Xuan Son","#");
+        LayoutHeaderAdminVM layoutHeaderAdminVM= this.getLayoutHeaderAdminVM();
         vm.setLayoutHeaderAdminVM(layoutHeaderAdminVM);
         vm.setCategoryVMList(categoryVMList);
         vm.setProductVMList(productVMList);
@@ -389,7 +398,7 @@ public class AdminController {
 
         if (productName.getName() != null && !productName.getName().isEmpty()) {
             productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,productName.getName().trim());
-            vm.setKeyWord("Find with key: " + productName.getName());
+            vm.setKeyWord("Tìm kiếm: " + productName.getName());
         } else {
             productPage = productService.getListProductByCategoryOrProductNameContaining(pageable,null,null);
         }
@@ -410,7 +419,7 @@ public class AdminController {
                 wareHouseVM.setAmount(x);
             wareHouseVMSList.add(wareHouseVM);
         }
-        LayoutHeaderAdminVM layoutHeaderAdminVM= new LayoutHeaderAdminVM("Xuan Son","#");
+        LayoutHeaderAdminVM layoutHeaderAdminVM= this.getLayoutHeaderAdminVM();
         vm.setLayoutHeaderAdminVM(layoutHeaderAdminVM);
         vm.setCategoryVMList(categoryVMList);
         //vm.setProductVMList(productVMList);
@@ -427,5 +436,218 @@ public class AdminController {
         model.addAttribute("page",productPage);
 
         return "/admin/admin-warehouse";
+    }
+
+    @GetMapping("/order")
+    public String order(Model model,
+                         @Valid @ModelAttribute("customerName") OrderVM customerName,
+                        @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                        @RequestParam(name = "size", required = false, defaultValue = "8") Integer size) {
+        AdminOrderVM vm= new AdminOrderVM();
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<Order> orderPage = null;
+
+        if (customerName.getCustomerName() != null && !customerName.getCustomerName().isEmpty()) {
+            orderPage = orderService.getListOrderByCustomerName(pageable,customerName.getCustomerName().trim());
+            vm.setKeyWord("Tìm kiếm: " + customerName.getCustomerName());
+        } else {
+            orderPage = orderService.getListOrderByCustomerName(pageable,null);
+        }
+
+
+        List<OrderVM> orderVMList = new ArrayList<>();
+
+        for(Order order : orderPage.getContent()) {
+            OrderVM orderVM = new OrderVM();
+            DeliveryStatus deliveryStatus = deliveryStatusService.findOne(order.getDeliveryStatusId());
+            if(deliveryStatus!=null){
+                orderVM.setDeliveryStatus(deliveryStatus.getName());
+            }
+            orderVM.setCreatedDate(order.getCreatedDate());
+            orderVM.setCustomerName(order.getCustomerName());
+            orderVM.setPrice(order.getPrice());
+            orderVM.setId(order.getId());
+            orderVM.setDeliveryStatusId(order.getDeliveryStatusId());
+            orderVMList.add(orderVM);
+        }
+
+        List<DeliveryStatusVM> deliveryStatusVMList= new ArrayList<>();
+        for (DeliveryStatus deliveryStatus: deliveryStatusService.getAll()) {
+            DeliveryStatusVM deliveryStatusVM = new DeliveryStatusVM();
+            deliveryStatusVM.setId(deliveryStatus.getId());
+            deliveryStatusVM.setName(deliveryStatus.getName());
+            deliveryStatusVMList.add(deliveryStatusVM);
+        }
+
+        LayoutHeaderAdminVM layoutHeaderAdminVM=this.getLayoutHeaderAdminVM();
+        vm.setLayoutHeaderAdminVM( layoutHeaderAdminVM);
+        vm.setOrderVMList(orderVMList);
+        vm.setDeliveryStatusVMS(deliveryStatusVMList);
+        model.addAttribute("vm", vm);
+        model.addAttribute("page",orderPage);
+        return "/admin/admin-order";
+    }
+
+    @GetMapping("/order/{orderId}")
+    public String orderDetail(Model model,
+                              @PathVariable("orderId") Integer orderId) {
+        AdminInvoiceVM vm= new AdminInvoiceVM();
+        Order order = orderService.findOne(orderId);
+        double totalPriceOrder=0;
+        if(order!=null){
+
+            List<OrderProductVM> orderProductVMS = new ArrayList<>();
+            for(OrderProduct orderProduct : order.getListProductOrders()) {
+                OrderProductVM orderProductVM = new OrderProductVM();
+
+                orderProductVM.setProductId(orderProduct.getProductEntity().getProduct().getId());
+                orderProductVM.setMainImage(orderProduct.getProductEntity().getProduct().getMainImage());
+                orderProductVM.setAmount(orderProduct.getAmount());
+                orderProductVM.setName(orderProduct.getProductEntity().getProduct().getName());
+                orderProductVM.setColorName(orderProduct.getProductEntity().getColor().getName());
+                orderProductVM.setSizeName(orderProduct.getProductEntity().getSize().getName());
+                orderProductVM.setPrice((orderProduct.getProductEntity().getProduct().getPrice()));
+                orderProductVM.setTotalPrice(orderProduct.getProductEntity().getProduct().getPrice()*orderProduct.getAmount());
+                totalPriceOrder += orderProduct.getPrice();
+
+                orderProductVMS.add(orderProductVM);
+                vm.setOrderProductVMList(orderProductVMS);
+
+            }
+
+            OrderVM orderVM = new OrderVM();
+            orderVM.setId(order.getId());
+            orderVM.setCustomerName(order.getCustomerName());
+            orderVM.setEmail(order.getEmail());
+            orderVM.setAddress(order.getAddress());
+            orderVM.setPrice(order.getPrice());
+            orderVM.setPhoneNumber(order.getPhoneNumber());
+            orderVM.setShipPrice(order.getShipPrice());
+            orderVM.setCreatedDate(order.getCreatedDate());
+            vm.setOrderVM(orderVM);
+        }
+        vm.setTotalPrice(order.getPrice()+order.getShipPrice());
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+        model.addAttribute("vm", vm);
+        return "/admin/admin-invoice";
+    }
+
+
+    @GetMapping("/invoice-print/{orderId}")
+    public String invoicePrint(Model model,
+                              @PathVariable("orderId") Integer orderId) {
+        AdminInvoiceVM vm= new AdminInvoiceVM();
+        Order order = orderService.findOne(orderId);
+        double totalPriceOrder=0;
+        if(order!=null){
+
+            List<OrderProductVM> orderProductVMS = new ArrayList<>();
+            for(OrderProduct orderProduct : order.getListProductOrders()) {
+                OrderProductVM orderProductVM = new OrderProductVM();
+
+                orderProductVM.setProductId(orderProduct.getProductEntity().getProduct().getId());
+                orderProductVM.setMainImage(orderProduct.getProductEntity().getProduct().getMainImage());
+                orderProductVM.setAmount(orderProduct.getAmount());
+                orderProductVM.setName(orderProduct.getProductEntity().getProduct().getName());
+                orderProductVM.setColorName(orderProduct.getProductEntity().getColor().getName());
+                orderProductVM.setSizeName(orderProduct.getProductEntity().getSize().getName());
+                orderProductVM.setPrice((orderProduct.getProductEntity().getProduct().getPrice()));
+                orderProductVM.setTotalPrice(orderProduct.getProductEntity().getProduct().getPrice()*orderProduct.getAmount());
+                totalPriceOrder += orderProduct.getPrice();
+
+                orderProductVMS.add(orderProductVM);
+                vm.setOrderProductVMList(orderProductVMS);
+
+            }
+
+            OrderVM orderVM = new OrderVM();
+            orderVM.setId(order.getId());
+            orderVM.setCustomerName(order.getCustomerName());
+            orderVM.setEmail(order.getEmail());
+            orderVM.setAddress(order.getAddress());
+            orderVM.setPrice(order.getPrice());
+            orderVM.setPhoneNumber(order.getPhoneNumber());
+            orderVM.setShipPrice(order.getShipPrice());
+            orderVM.setCreatedDate(order.getCreatedDate());
+            vm.setOrderVM(orderVM);
+        }
+        vm.setTotalPrice(order.getPrice()+order.getShipPrice());
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+        model.addAttribute("vm", vm);
+        return "/admin/admin-invoice-print";
+    }
+
+    @GetMapping("/mail") ///{thetype}
+    public String mail(Model model,
+                        @Valid @ModelAttribute("messageVM") MessageVM messageVM,
+                       //@PathVariable("thetype") String thetype,
+                        @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                        @RequestParam(name = "size", required = false, defaultValue = "15") Integer size) {
+        AdminMessageVM vm= new AdminMessageVM();
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<Message> messagePage = null;
+
+        if (messageVM.getKeyword() != null && !messageVM.getKeyword().isEmpty()) {
+            messagePage = messageService.getAllSearch(pageable,messageVM.getKeyword().trim());
+            vm.setKeyWord("Tìm kiếm: " + messageVM.getKeyword());
+        } else {
+            messagePage = messageService.getAllSearch(pageable,null);
+        }
+
+
+        List<MessageVM> messageVMList = new ArrayList<>();
+
+        for(Message message : messagePage.getContent()) {
+            MessageVM item = new MessageVM();
+            item.setCreatedDate(message.getCreatedDate());
+            item.setEmail(message.getEmail());
+            item.setContent(message.getContent());
+            item.setTitle(message.getTitle());
+            item.setId(message.getId());
+            item.setDelete(message.getTrash());
+            item.setImportant(message.getImportant());
+            item.setSent(message.getSent());
+            item.setStatus(message.getStatus());
+
+            messageVMList.add(item);
+        }
+
+        LayoutHeaderAdminVM layoutHeaderAdminVM=this.getLayoutHeaderAdminVM();
+        vm.setLayoutHeaderAdminVM( layoutHeaderAdminVM);
+        vm.setMessageVMList(messageVMList);
+        model.addAttribute("vm", vm);
+        model.addAttribute("page",messagePage);
+        return "/admin/admin-mail";
+    }
+
+    @GetMapping("/mail/detail/{messageId}") ///{thetype}
+    public String detail(Model model,
+                       @Valid @ModelAttribute("messageVM") MessageVM messageVM,
+                       @PathVariable("messageId") Integer messageId,
+                       @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                       @RequestParam(name = "size", required = false, defaultValue = "15") Integer size) {
+        AdminMessageDetailVM vm= new AdminMessageDetailVM();
+        Message message = messageService.findOne(messageId);
+        MessageVM messageVM2 = new MessageVM();
+        if(message!=null){
+            messageVM2.setTitle(message.getTitle());
+            messageVM2.setEmail(message.getEmail());
+            messageVM2.setContent(message.getContent());
+            messageVM2.setCreatedDate(message.getCreatedDate());
+            messageVM2.setId(message.getId());
+            messageVM2.setStatus(message.getStatus());
+            if(message.getStatus()==1){
+                message.setStatus(0);
+                messageService.update(message);
+            }
+        }
+
+        LayoutHeaderAdminVM layoutHeaderAdminVM=this.getLayoutHeaderAdminVM();
+        vm.setLayoutHeaderAdminVM( layoutHeaderAdminVM);
+        vm.setMessageVM(messageVM2);
+        model.addAttribute("vm", vm);
+        return "/admin/admin-mail-detail";
     }
 }

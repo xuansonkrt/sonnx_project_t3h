@@ -6,7 +6,7 @@ import java.util.Date;
 @Entity(name="dbo_message")
 public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "cart_id")
+    @Column(name = "message_id")
     @Id
     private int id;
 
@@ -24,6 +24,39 @@ public class Message {
 
     @Column(name = "created_date")
     private Date createdDate;
+
+    @Column(name = "trash")
+    private int trash;
+
+    @Column(name = "important")
+    private int important;
+
+    @Column(name = "sent")
+    private int sent;
+
+    public int getTrash() {
+        return trash;
+    }
+
+    public void setTrash(int trash) {
+        this.trash = trash;
+    }
+
+    public int getImportant() {
+        return important;
+    }
+
+    public void setImportant(int important) {
+        this.important = important;
+    }
+
+    public int getSent() {
+        return sent;
+    }
+
+    public void setSent(int sent) {
+        this.sent = sent;
+    }
 
     public int getId() {
         return id;

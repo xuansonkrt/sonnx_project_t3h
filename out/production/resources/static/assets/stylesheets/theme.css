@@ -2841,11 +2841,11 @@ blockquote.dark {
 
 /* Arrows */
 .arrow {
-	background: transparent url(../images/arrows.png) no-repeat 0 0;
-	width: 47px;
-	height: 120px;
-	display: inline-block;
-	position: relative;
+	/*background: transparent url(../images/arrows.png) no-repeat 0 0;*/
+	/*width: 47px;*/
+	/*height: 120px;*/
+	/*display: inline-block;*/
+	/*position: relative;*/
 }
 
 .arrow.vtl {

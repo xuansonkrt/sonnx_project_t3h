@@ -12,8 +12,38 @@ public class MessageDTO {
     private String title;
     private String content;
     private int status;
+    private int delete;
+    private int important;
+    private int sent;
+
+
     @JsonSerialize(using = CustomDateSerializer.class)
     private Date createdDate;
+
+
+    public int getDelete() {
+        return delete;
+    }
+
+    public void setDelete(int delete) {
+        this.delete = delete;
+    }
+
+    public int getImportant() {
+        return important;
+    }
+
+    public void setImportant(int important) {
+        this.important = important;
+    }
+
+    public int getSent() {
+        return sent;
+    }
+
+    public void setSent(int sent) {
+        this.sent = sent;
+    }
 
     public int getId() {
         return id;

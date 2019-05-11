@@ -29,6 +29,9 @@ public class ContactApiController {
             obj.setEmail(dto.getEmail());
             obj.setCreatedDate(new Date());
             obj.setStatus(1);
+            obj.setTrash(0);
+            obj.setImportant(0);
+            obj.setSent(0);
             messageService.update(obj);
             result.setMessage("Chúng tôi sẽ liên lạc với bạn trong thời gian ngắn nhất!");
             result.setSuccess(true);

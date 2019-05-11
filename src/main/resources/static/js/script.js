@@ -154,3 +154,103 @@ function loadListImage(productId) {
 //         source: availableTutorials
 //     });
 // });
+
+function TextAbstract(text, length) {
+    if (text == null) {
+        return "";
+    }
+    if (text.length <= length) {
+        return text;
+    }
+    text = text.substring(0, length);
+   // last = text.lastIndexOf(" ");
+   // text = text.substring(0, last);
+    return text + "...";
+}
+
+var maxlengthwanted=20;
+
+$('.MySender').each(function(){
+    if ($('.MySender').text().length > maxlengthwanted)
+        $(this).text(TextAbstract($(this).text(),maxlengthwanted));
+});
+
+$('.MyContent').each(function(){
+    if ($('.MySender').text().length > 100)
+        $(this).text(TextAbstract($(this).text(),100));
+});
+
+function NewDate(text){
+    var date = new Date(text);
+    return date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear();
+}
+$('.MyDate').each(function(){
+    if ($('.MyDate').text().length > 10)
+        $(this).text(NewDate($(this).text()));
+});
+
+$('.changeStatus').on('change',function () {
+    var id= $(this).data('id');
+    var status = parseInt($(this).val());
+    var data={};
+    data.id=$(this).data('id');
+    data.status=$(this).val();
+    console.log("data: ",data);
+    $.ajax({
+        url:"/order/changeStatus",
+        data: JSON.stringify(data),
+        type:"POST",
+        crossDomain: true,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data) {
+            if (data.success === true) {
+                swal({
+                    title: 'Thành công',
+                    text: data.message,
+                    type: 'success',
+                    timer: 1500
+                });
+            }
+            else {
+                swal({
+                    title: 'Thất bại',
+                    text: data.message,
+                    type: 'error',
+                    timer: 1500
+                }).then(function() {
+                    window.location.reload();
+                });
+            }
+        }.bind(this),
+        error: function (e) {
+            console.log(e);
+        }
+    });
+    //
+    // axios.post("/order/changeStatus", data).then(function(res){
+    //     NProgress.done();
+    //     if(res.data.success) {
+    //         swal(
+    //             'Good job!',
+    //             res.data.message,
+    //             'success'
+    //         ).then(function() {
+    //             location.reload();
+    //         });
+    //     } else {
+    //         swal(
+    //             'Error',
+    //             res.data.message,
+    //             'error'
+    //         );
+    //     }
+    // }, function(err){
+    //     NProgress.done();
+    //     swal(
+    //         'Error',
+    //         'Some error when saving product',
+    //         'error'
+    //     );
+    // })
+});
