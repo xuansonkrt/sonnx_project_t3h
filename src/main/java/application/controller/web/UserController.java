@@ -52,9 +52,12 @@ public class UserController extends  BaseController{
     private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = {"/sign-in"})
-    public String signIn(Model model)
+    public String signIn(Model model,
+                         @Valid @ModelAttribute("productname") ProductDTO productName)
     {
-        model.addAttribute("vm","Xuan Son");
+        HomeVM vm = new HomeVM();
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+        model.addAttribute("vm",vm);
         return "/sign-in";
     }
 

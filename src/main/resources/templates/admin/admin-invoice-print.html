@@ -40,7 +40,7 @@
             <div class="invoice">
                 <header class="clearfix">
                     <div class="row">
-                        <div class="col-sm-4 mt-md">
+                        <div class="col-sm-2 mt-md">
                             <h2 class="h2 mt-none mb-sm text-dark text-bold">Hóa đơn</h2>
                             <h4 class="h4 m-none text-dark text-bold" th:text="${'#'+vm.getOrderVM().getId()}">#76598345</h4>
                         </div>
@@ -56,7 +56,7 @@
                             </address>
 
                         </div>
-                        <div class="col-sm-2 ib">
+                        <div class="col-sm-3 ib">
                             <img th:src="@{/images/logo-small-2.png}" style="     position: relative;    bottom: 10px;" alt="IMG-LOGO">
                         </div>
                     </div>
@@ -79,9 +79,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="bill-data text-right">
-                                <p class="mb-none">
-                                    <span class="text-dark">Ngày đặt hàng:</span>
-                                    <span class="value" th:text="${vm.getOrderVM().getCreatedDate()}">05/20/2014</span>
+                                <p class="mb-none"  th:text="${'Ngày đặt hàng: '+vm.getOrderVM().getCreatedDate()}">
+                                    <!--<span class="text-dark"></span>-->
+                                    <span class="value" th:text="${'Ngày đặt hàng: '+vm.getOrderVM().getCreatedDate()}">05/20/2014</span>
                                 </p>
 
                             </div>
@@ -116,18 +116,18 @@
                 <div class="invoice-summary">
                     <div class="row">
                         <div class="col-sm-4 col-sm-offset-8">
-                            <table class="table h5 text-dark">
+                            <table class="table h5 text-dark ">
                                 <tbody>
                                 <tr class="b-top-none">
-                                    <td colspan="2">Tạm tính</td>
+                                    <td colspan="1">Tạm tính</td>
                                     <td class="text-left" th:text="${vm.getOrderVM().getPrice()+' đ'}">$73.00</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Phí giao hàng</td>
+                                    <td colspan="1">Phí giao hàng</td>
                                     <td class="text-left"  th:text="${vm.getOrderVM().getShipPrice()+' đ'}">$0.00</td>
                                 </tr>
                                 <tr class="h4">
-                                    <td colspan="2">Tổng tiền</td>
+                                    <td colspan="1">Tổng tiền</td>
                                     <td class="text-left" th:text="${vm.getTotalPrice()+' đ'}">$73.00</td>
                                 </tr>
                                 </tbody>

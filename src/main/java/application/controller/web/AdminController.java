@@ -1,5 +1,6 @@
 package application.controller.web;
 
+import application.constant.RoleIdConstant;
 import application.data.model.*;
 import application.data.service.*;
 import application.model.dto.ProductDTO;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,18 +57,42 @@ public class AdminController extends  BaseController {
 
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("")
     public String admin(Model model) {
-
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
 
         model.addAttribute("vm", "Xuan Son");
-        return "/admin/home";
+        return "/admin/report";
     }
 
     @GetMapping("/supply")
     public String supply(Model model,
                          @Valid @ModelAttribute("supplyname") SupplyVM supplyName) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminSupplyVM vm= new AdminSupplyVM();
         List<Supply> supplyList;
         if (supplyName.getName() != null) {
@@ -100,6 +126,16 @@ public class AdminController extends  BaseController {
     @GetMapping("/category")
     public String category(Model model,
                            @Valid @ModelAttribute("categoryname") CategoryVM categoryName) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminCategoryVM vm = new AdminCategoryVM();
         List<Category> categoryList;
         if (categoryName.getName() != null) {
@@ -136,6 +172,16 @@ public class AdminController extends  BaseController {
     @GetMapping("/promotion")
     public String promotion(Model model,
                            @Valid @ModelAttribute("promotionname") PromotionVM promotionName) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminPromotionVM vm = new AdminPromotionVM();
         List<Promotion> promotionList;
         if (promotionName.getName() != null) {
@@ -174,6 +220,16 @@ public class AdminController extends  BaseController {
     @GetMapping("/size")
     public String size(Model model,
                          @Valid @ModelAttribute("sizename") SizeVM sizeName) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminSizeVM vm= new AdminSizeVM();
         List<Size> sizeList;
         if (sizeName.getName() != null) {
@@ -208,6 +264,16 @@ public class AdminController extends  BaseController {
     @GetMapping("/color")
     public String color(Model model,
                        @Valid @ModelAttribute("colorname") ColorVM colorName) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminColorVM vm= new AdminColorVM();
         List<Color> colorList;
         if (colorName.getName() != null) {
@@ -247,6 +313,16 @@ public class AdminController extends  BaseController {
                      //     @RequestParam(name = "categoryId", required = false, defaultValue = "0") Integer categoryId
                      //     @RequestParam(name = "supplyId", required = false, defaultValue = "0") Integer supplyId
     ) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminProductVM vm = new AdminProductVM();
 
 
@@ -350,6 +426,16 @@ public class AdminController extends  BaseController {
                           @Valid @ModelAttribute("productname") ProductDTO productName,
                           @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
                           @RequestParam(name = "size", required = false, defaultValue = "8") Integer size) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminWareHouseVM vm = new AdminWareHouseVM();
 
 
@@ -447,6 +533,16 @@ public class AdminController extends  BaseController {
                          @Valid @ModelAttribute("customerName") OrderVM customerName,
                         @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
                         @RequestParam(name = "size", required = false, defaultValue = "8") Integer size) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminOrderVM vm= new AdminOrderVM();
         Pageable pageable = new PageRequest(page, size);
 
@@ -496,6 +592,16 @@ public class AdminController extends  BaseController {
     @GetMapping("/order/{orderId}")
     public String orderDetail(Model model,
                               @PathVariable("orderId") Integer orderId) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminInvoiceVM vm= new AdminInvoiceVM();
         Order order = orderService.findOne(orderId);
         double totalPriceOrder=0;
@@ -541,6 +647,16 @@ public class AdminController extends  BaseController {
     @GetMapping("/invoice-print/{orderId}")
     public String invoicePrint(Model model,
                               @PathVariable("orderId") Integer orderId) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminInvoiceVM vm= new AdminInvoiceVM();
         Order order = orderService.findOne(orderId);
         double totalPriceOrder=0;
@@ -588,6 +704,16 @@ public class AdminController extends  BaseController {
                        //@PathVariable("thetype") String thetype,
                         @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
                         @RequestParam(name = "size", required = false, defaultValue = "15") Integer size) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminMessageVM vm= new AdminMessageVM();
         Pageable pageable = new PageRequest(page, size);
 
@@ -632,6 +758,16 @@ public class AdminController extends  BaseController {
                        @PathVariable("messageId") Integer messageId,
                        @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
                        @RequestParam(name = "size", required = false, defaultValue = "15") Integer size) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminMessageDetailVM vm= new AdminMessageDetailVM();
         Message message = messageService.findOne(messageId);
         MessageVM messageVM2 = new MessageVM();
@@ -658,6 +794,16 @@ public class AdminController extends  BaseController {
 
     @GetMapping("/report") ///{thetype}
     public String report(Model model) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
         AdminChartVM vm= new AdminChartVM();
 
         List<ChartLabelDataVM> countProductByCategory= categoryService.countProductByCategory();

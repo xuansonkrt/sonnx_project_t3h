@@ -5,6 +5,8 @@ package application.data.service;
 import application.data.model.Role;
 import application.data.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -58,4 +60,9 @@ public class RoleService {
             return new ArrayList<>();
         }
     }
+
+    public Role getRoleByUser(Integer userId){
+        return roleRepository.getRoleByUser(userId);
+    }
+
 }

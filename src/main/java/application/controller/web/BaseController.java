@@ -1,9 +1,14 @@
 package application.controller.web;
 
 import application.constant.CompanyConstant;
+import application.constant.RoleIdConstant;
 import application.data.model.Cart;
+import application.data.model.Role;
 import application.data.model.User;
+import application.data.model.UserRole;
 import application.data.service.CartService;
+import application.data.service.RoleService;
+import application.data.service.UserRoleService;
 import application.data.service.UserService;
 import application.model.viewmodel.Admin.LayoutHeaderAdminVM;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +29,11 @@ public class BaseController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRoleService userRoleService;
 
+    @Autowired
+    private RoleService roleService;
 
     public void checkCookie(HttpServletResponse response,
                             HttpServletRequest request,
@@ -97,8 +106,13 @@ public class BaseController {
 
         String  username = SecurityContextHolder.getContext().getAuthentication().getName();
         User userEntity = userService.findUserByUsername(username);
-
         if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if(role.getId()== RoleIdConstant.Role_Admin){
+                vm.setAdmin(true);
+            } else{
+                vm.setAdmin(false);
+            }
             vm.setUserName(username);
             if(userEntity.getAvatar() != null) {
                 vm.setAvatar(userEntity.getAvatar());

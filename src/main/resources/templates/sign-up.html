@@ -14,13 +14,17 @@
     <link rel="stylesheet" th:href="@{/css/style-signin.css}">
 </head>
 <body>
-    <div class="container">
+    <div class="container mt-3" >
         <!-- Sign up form -->
         <section class="signup">
             <div class="container">
                 <div class="signup-content">
                     <div class="signup-form">
-                        <a style="font-family: Arial, Helvetica, sans-serif" href="/"><span class="fa fa-long-arrow-left">       sTrang chủ</span></a>
+                        <div style="text-align: left">
+                            <a href="/">
+                                <i class="fa fa-home" style="font-size:25px"></i>
+                            </a>
+                        </div>
                         <h2 class="form-title">Đăng ký</h2>
                         <div th:if="${param.exit_username}">
                             <div style="font-family: Arial, Helvetica, sans-serif" class="alert alert-danger">
