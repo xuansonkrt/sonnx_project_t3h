@@ -24,5 +24,9 @@ public class MessageService  {
     public  Page<Message> getAllSearch(Pageable pageable,  String keyword){
         return messageRepository.getAllSearch(pageable,keyword);
     }
+    public Integer getTotalUnread(){
+        return messageRepository.getTotalUnread();
+    }
+
 
 }

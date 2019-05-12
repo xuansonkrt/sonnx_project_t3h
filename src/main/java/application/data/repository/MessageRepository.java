@@ -1,6 +1,7 @@
 package application.data.repository;
 
 import application.data.model.Message;
+import application.data.model.Order;
 import application.data.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,5 +17,11 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
             "OR (:keyword IS NULL OR UPPER(m.content) LIKE CONCAT('%',UPPER(:keyword),'%')) " +
             "ORDER BY createdDate desc ")
     Page<Message> getAllSearch(Pageable pageable, @Param("keyword") String keyword);
+
+
+    @Query("SELECT count(m.id) FROM dbo_message  m " +
+            "WHERE  status =1 ")
+   Integer getTotalUnread();
+
 
 }

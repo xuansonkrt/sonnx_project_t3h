@@ -2,6 +2,8 @@ package application.data.repository;
 
 import application.data.model.Order;
 import application.data.model.Product;
+import application.model.viewmodel.ChartLabelDataVM;
+import application.model.viewmodel.ChartLabelDataVM2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +23,16 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "WHERE  (:customerName IS NULL OR UPPER(p.customerName) LIKE CONCAT('%',UPPER(:customerName),'%'))")
     Page<Order> getListOrderByCustomerName(Pageable pageable, @Param("customerName") String customerName);
 
+    @Query (value = "CALL TotalPriceOfWeek()", nativeQuery = true)
+    Double totalPriceOfWeek();
+
+    @Query (value = "CALL TotalOrderOfWeek()", nativeQuery = true)
+    Integer totalOrderOfWeek();
+
+    @Query("select distinct  new application.model.viewmodel.ChartLabelDataVM2(o.createdDateShow,sum(o.price)) " +
+            "from dbo_order o " +
+            "where o.createdDate BETWEEN (SUBDATE(now(), weekday(now()))) AND (SUBDATE(now(),6- weekday(now()) )) " +
+            "group by o.createdDateShow " +
+            "order by o.createdDateShow asc")
+    List<ChartLabelDataVM2> profitInWeek();
 }

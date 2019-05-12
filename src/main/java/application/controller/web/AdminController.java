@@ -14,8 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping(path = "/admin")
@@ -649,5 +653,56 @@ public class AdminController extends  BaseController {
         vm.setMessageVM(messageVM2);
         model.addAttribute("vm", vm);
         return "/admin/admin-mail-detail";
+    }
+
+
+    @GetMapping("/report") ///{thetype}
+    public String report(Model model) {
+        AdminChartVM vm= new AdminChartVM();
+
+        List<ChartLabelDataVM> countProductByCategory= categoryService.countProductByCategory();
+
+        ChartVM chartVM= new ChartVM();
+        chartVM.setLabelDataVMList(countProductByCategory);
+        vm.setCountProductByCategory(chartVM);
+        if(orderService.totalPriceOfWeek()!=null)
+            vm.setTotalPriceOfWeek(orderService.totalPriceOfWeek());
+        else
+            vm.setTotalPriceOfWeek(0);
+
+        if(orderService.totalOrderOfWeek()!=null)
+            vm.setTotalOrderOfWeek(orderService.totalOrderOfWeek());
+        else
+            vm.setTotalPriceOfWeek(0);
+
+        if(messageService.getTotalUnread()!=null)
+            vm.setUnread(messageService.getTotalUnread());
+        else
+            vm.setUnread(0);
+
+        List<ChartLabelDataVM2> temp = orderService.profitInWeek();
+        List<ChartLabelDataVM> listTemp = new ArrayList<>();
+        ChartVM chartVM1 = new ChartVM();
+        for (ChartLabelDataVM2 item : temp ) {
+            ChartLabelDataVM chartLabelDataVM = new ChartLabelDataVM();
+            if(item.getData()!=null){
+                chartLabelDataVM.setData(item.getData().longValue());
+            } else{
+                chartLabelDataVM.setData(0);
+            }
+
+            LocalDateTime ldt = LocalDateTime.ofInstant(item.getLabel().toInstant(),
+                    ZoneId.systemDefault());
+
+            chartLabelDataVM.setLabel(DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH).format(ldt).toString());
+            listTemp.add(chartLabelDataVM);
+        }
+        chartVM1.setLabelDataVMList(listTemp);
+
+        vm.setProfitInWeek(chartVM1);
+
+        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
+        model.addAttribute("vm",vm);
+        return "/admin/admin-report";
     }
 }

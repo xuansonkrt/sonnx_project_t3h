@@ -253,4 +253,10 @@ $('.changeStatus').on('change',function () {
     //         'error'
     //     );
     // })
+
+
+
+//    chart
+
+
 });

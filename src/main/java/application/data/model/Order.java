@@ -41,6 +41,10 @@ public class Order {
     @Column (name = "created_date")
     private Date createdDate;
 
+
+    @Column (name = "created_date_show")
+    private Date createdDateShow;
+
     @Column(name = "delivery_status_id")
     private int deliveryStatusId;
 
@@ -120,6 +124,14 @@ public class Order {
 
     public void setListProductOrders(List<OrderProduct> listProductOrders) {
         this.listProductOrders = listProductOrders;
+    }
+
+    public Date getCreatedDateShow() {
+        return createdDateShow;
+    }
+
+    public void setCreatedDateShow(Date createdDateShow) {
+        this.createdDateShow = createdDateShow;
     }
 
     public String getCustomerName() {

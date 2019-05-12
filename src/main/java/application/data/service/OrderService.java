@@ -2,6 +2,8 @@ package application.data.service;
 
 import application.data.model.Order;
 import application.data.repository.OrderRepository;
+import application.model.viewmodel.ChartLabelDataVM;
+import application.model.viewmodel.ChartLabelDataVM2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +39,16 @@ public class OrderService {
 
     public  Page<Order> getListOrderByCustomerName(Pageable pageable, String customerName){
         return  orderRepository.getListOrderByCustomerName(pageable,customerName);
+    }
+    public Double totalPriceOfWeek(){
+        return orderRepository.totalPriceOfWeek();
+    }
+
+    public Integer totalOrderOfWeek(){
+        return orderRepository.totalOrderOfWeek();
+    }
+
+    public List<ChartLabelDataVM2> profitInWeek(){
+        return orderRepository.profitInWeek();
     }
 }

@@ -2,6 +2,7 @@ package application.data.service;
 
 import application.data.model.Category;
 import application.data.repository.CategoryRepository;
+import application.model.viewmodel.ChartLabelDataVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,10 @@ public class CategoryService {
 
     public List<Category> getListCategoryByName(String CategoryName){
         return categoryRepository.getListCategoryByName(CategoryName);
+    }
+
+    public List<ChartLabelDataVM> countProductByCategory(){
+        return categoryRepository.countProductByName();
     }
 
 }

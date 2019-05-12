@@ -314,7 +314,7 @@ public class OrderController extends BaseController {
             order.setCustomerName(orderVM.getCustomerName());
             order.setCreatedDate(new Date());
             order.setDeliveryStatusId(1);
-
+            order.setCreatedDateShow(new Date());
 
             Cart cartEntity = cartService.findFirstCartByGuid(guid);
             if(cartEntity != null) {
