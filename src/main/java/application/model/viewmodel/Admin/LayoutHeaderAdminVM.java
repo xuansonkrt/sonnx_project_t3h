@@ -5,6 +5,15 @@ public class LayoutHeaderAdminVM {
     private String userName;
     private String avatar;
     private boolean isAdmin;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public LayoutHeaderAdminVM(String userName, String avatar, boolean isAdmin) {
         this.userName = userName;

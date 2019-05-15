@@ -43,9 +43,20 @@ public class User {
     @Column(name="date_of_birth")
     private Date dateOfBirth;
 
+
+    @Column(name="status")
+    private int status;
+
     @Transient
     private String password;
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;

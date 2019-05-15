@@ -79,7 +79,7 @@
 
                                 <div class="size-204 respon6-next">
                                     <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2 selectSize2" onchange="changeSize(this)"   placeholder="Chọn size">
+                                        <select class="js-select2 selectSize2" placeholder="Chọn size">
                                             <option value="0">Chọn size</option>
                                             <option th:each="size : ${product.getSizeVMList()}"
                                                     th:value="${size.getId()}"
@@ -126,7 +126,7 @@
                                         </div>
                                     </div>
                                     <span style="color: red" id="warehouse"></span>
-                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04  add-to-cart"
+                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04  add-to-cart2"
                                             th:attr="data-product=${product.getId()}">
                                         <!--js-addcart-detail-->
                                         Thêm vào giỏ
@@ -174,6 +174,81 @@
         }
         getAmount();
     };
+
+
+    $(".selectSize2").on('change', function () {
+        debugger
+        alert("change");
+
+    });
+
+    $(".add-to-cart2").on("click", function () {
+        if($('#selectSize :selected').val()=="0"){
+            swal(
+                'Thất bại',
+                'Chưa chọn size!',
+                'error'
+            )
+            return;
+        }
+        if($('#selectColor :selected').val()=="0"){
+            swal(
+                'Thất bại',
+                'Chưa chọn màu!',
+                'error'
+            )
+            return;
+        }
+
+
+        var dataCart = {};
+        var pdInfo = $(this).data("product");
+        dataCart.amount = $(".num-product").val();
+        if(dataCart.amount>state.amount){
+            swal(
+                'Thất bại',
+                'Không đủ số lượng!',
+                'error'
+            )
+            return;
+        }
+        dataCart.productEntityId = state.productEntityId;
+        dataCart.guid = getCookie("guid");
+
+        NProgress.start();
+        console.log("data: ",dataCart);
+        var linkPost = "/api/cart-product/add";
+
+        axios.post(linkPost, dataCart).then(function(res){
+            NProgress.done();
+            if(res.data.success) {
+                swal(
+                    {
+                        title:'Thành công',
+                        text:res.data.message,
+                        type:'success',
+                        showCancelButton: false,
+                        timer:1500
+                    }
+                ).then(function() {
+                    location.reload();
+                });
+            } else {
+                swal(
+                    'Xảy ra lỗi',
+                    res.data.message,
+                    'error'
+                );
+            }
+        }, function(err){
+            NProgress.done();
+            swal(
+                'Error',
+                'Fail',
+                'error'
+            );
+        });
+    });
 </script>
 </body>
 </html>

@@ -38,13 +38,6 @@ $(document).ready(function () {
         getAmount();
     });
 
-    $('.selectColor2').on('change',function () {
-        alert("size");
-        if($('#selectColor :selected').val()=="0"){
-            return;
-        }
-        getAmount();
-    });
 
     function changeSize(that) {
 
@@ -74,7 +67,7 @@ $(document).ready(function () {
         state.amount=amount;
         $("#warehouse").text("(Còn "+amount+" sản phẩm)");
 
-    }
+    };
 
 
     $(".add-to-cart").on("click", function () {
@@ -144,4 +137,12 @@ $(document).ready(function () {
             );
         });
     });
+
+
+
+
+    //new
+
+
+
 })

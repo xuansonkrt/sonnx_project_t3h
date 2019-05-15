@@ -357,7 +357,7 @@
                                         </div>
 
                                         <div class="size-207">
-                                            <div class="flex-w flex-sb-m p-b-17">
+                                            <div class="flex-w flex-sb-m">
 													<span th:text="${rate.getUserName()}" class="mtext-107 cl2 p-r-20">
 														Ariana Grande
 													</span>
@@ -371,7 +371,12 @@
 
 
                                             </div>
+                                            <div class="flex-w flex-sb-m p-b-17">
+													<i th:text="${rate.getCreatedDate()}" style="font-size: 13px" class="mtext-107 cl2 p-r-20">
+														Ariana Grande
+													</i>
 
+                                           </div>
                                             <p th:text="${rate.getComment()}" class="stext-102 cl6">
                                                 Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
                                             </p>
@@ -383,12 +388,17 @@
                                                 </div>
 
                                                 <div class="size-207">
-                                                    <div class="flex-w flex-sb-m p-b-17">
+                                                    <div class="flex-w flex-sb-m">
 													<span th:text="${sub.getUserName()}" class="mtext-107 cl2 p-r-20">
 														Ariana Grande
 													</span>
                                                     </div>
+                                                    <div class="flex-w flex-sb-m p-b-17">
+                                                        <i th:text="${rate.getCreatedDate()}" style="font-size: 13px" class="mtext-107 cl2 p-r-20">
+                                                            Ariana Grande
+                                                        </i>
 
+                                                    </div>
                                                     <p th:text="${sub.getComment()}" class="stext-102 cl6">
                                                         Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
                                                     </p>
@@ -488,7 +498,7 @@
                                                 <!--</div>-->
                                             </div>
 
-                                            <input type="button" th:attr="data-product=${vm.getProductVM().getId()}" value=" Đánh giá"  id="rateSubmit" class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-100">
+                                            <input type="button" th:attr="data-product=${vm.getProductVM().getId()}" value=" Đánh giá"  id="rateSubmit" class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 ">
 
                                             <!--</input>-->
                                         </form>

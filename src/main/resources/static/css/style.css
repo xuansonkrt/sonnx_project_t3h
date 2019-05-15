@@ -1029,6 +1029,15 @@ html.dark .checkbox-text-dark input[type="checkbox"]:checked + label:after,
     border-radius: 55px;
 }
 
+.add-to-cart:hover{
+    cursor: pointer;
+}
+
+.card{
+    border: 1px solid gray;
+    padding: 5px;
+}
+
 
 /*end report*/
 

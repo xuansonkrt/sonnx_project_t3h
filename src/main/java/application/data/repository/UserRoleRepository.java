@@ -19,4 +19,11 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
             "inner join dbo_role r on(r.role_id=ur.role_id) " +
             "where ur.user_id=:id", nativeQuery = true)
     Role getRoleByUser(@Param("id") Integer userId);
+
+
+    @Query(value = "select ur.* " +
+            "from dbo_user_role ur " +
+          //  "inner join dbo_user u on(u.user_id=ur.user_id) " +
+            "where ur.user_id=:id", nativeQuery = true)
+    UserRole getUserRoleByUser(@Param("id") Integer userId);
 }

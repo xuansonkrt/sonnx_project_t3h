@@ -31,7 +31,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query("select distinct  new application.model.viewmodel.ChartLabelDataVM2(o.createdDateShow,sum(o.price)) " +
             "from dbo_order o " +
-            "where o.createdDate BETWEEN (SUBDATE(now(), weekday(now()))) AND (SUBDATE(now(),6- weekday(now()) )) " +
+            "where o.createdDate BETWEEN (SUBDATE(now(), weekday(now()))) AND (SUBDATE(now(),weekday(now()) -6)) " +
             "group by o.createdDateShow " +
             "order by o.createdDateShow asc")
     List<ChartLabelDataVM2> profitInWeek();

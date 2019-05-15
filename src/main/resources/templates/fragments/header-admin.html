@@ -82,12 +82,12 @@
                 <span th:text="${vm.getUserName()}"></span> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                <li><a  th:href="@{/user/detail}"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                </li>
+                <!--<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>-->
+                <!--</li>-->
                 <li class="divider"></li>
-                <li><a th:href="@{/logout}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a th:href="@{/logout}"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
                 </li>
             </ul>
         </li>
@@ -123,9 +123,9 @@
                         <!--<li>-->
                             <!--<a href="/admin/category">Quan trọng</a>-->
                         <!--</li>-->
-                        <li>
-                            <a href="/admin/promotion">Thùng rác</a>
-                        </li>
+                        <!--<li>-->
+                            <!--<a href="/admin/promotion">Thùng rác</a>-->
+                        <!--</li>-->
 
                         <!--<li>-->
                         <!--<a href="#">Đơn hàng</a>-->
@@ -141,9 +141,9 @@
                         <li>
                             <a href="/admin/category">Danh mục</a>
                         </li>
-                        <li>
-                            <a href="/admin/promotion">Khuyễn mại</a>
-                        </li>
+                        <!--<li>-->
+                            <!--<a href="/admin/promotion">Khuyễn mại</a>-->
+                        <!--</li>-->
                         <li>
                             <a href="/admin/product">Sản phẩm</a>
                         </li>
@@ -165,9 +165,9 @@
                 <li>
                     <a href="/admin/ware-house"><i class="fa fa-industry fa-fw"></i> Kho</a>
                 </li>
-                <!--<li>-->
-                    <!--<a href="#"><i class="fa fa-user-circle-o fa-fw"></i> Quản lý người dùng</a>-->
-                <!--</li>-->
+                <li>
+                    <a href="/admin/user"><i class="fa fa-user-circle-o fa-fw"></i> Quản lý người dùng</a>
+                </li>
 
             </ul>
         </div>

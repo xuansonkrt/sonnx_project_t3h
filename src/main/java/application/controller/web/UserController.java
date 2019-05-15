@@ -144,7 +144,7 @@ public class UserController extends  BaseController{
             productVM.setMainImage(product.getMainImage());
             productVM.setPrice(product.getPrice());
             productVM.setShortDesc(product.getShortDesc());
-            productVM.setCreatedDate(product.getCreatedDate());
+           // productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
             productVMList.add(productVM);
         }
@@ -274,7 +274,7 @@ public class UserController extends  BaseController{
             productVM.setMainImage(product.getMainImage());
             productVM.setPrice(product.getPrice());
             productVM.setShortDesc(product.getShortDesc());
-            productVM.setCreatedDate(product.getCreatedDate());
+          //  productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
             productVMList.add(productVM);
         }

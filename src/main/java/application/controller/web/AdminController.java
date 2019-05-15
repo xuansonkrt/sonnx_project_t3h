@@ -16,10 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -398,7 +400,16 @@ public class AdminController extends  BaseController {
             productVM.setMainImage(product.getMainImage());
             productVM.setPrice(product.getPrice());
             productVM.setShortDesc(product.getShortDesc());
-            productVM.setCreatedDate(product.getCreatedDate());
+
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            Date sn = product.getCreatedDate();
+            if(sn!=null){
+                String date = simpleDateFormat.format(sn);
+                productVM.setCreatedDate(date);
+            }
+
+            //productVM.setCreatedDate(product.getCreatedDate());
 
             productVMList.add(productVM);
         }
@@ -850,5 +861,71 @@ public class AdminController extends  BaseController {
         vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         model.addAttribute("vm",vm);
         return "/admin/admin-report";
+    }
+
+
+    @GetMapping("/user")
+    public String user(Model model,
+                        @Valid @ModelAttribute("userName") UserVM userName,
+                        @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                        @RequestParam(name = "size", required = false, defaultValue = "8") Integer size) {
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+        if(userEntity!=null) {
+            Role role = roleService.getRoleByUser(userEntity.getId());
+            if (role.getId() != RoleIdConstant.Role_Admin) {
+                return "redirect:/user/sign-in";
+            }
+        } else{
+            return "redirect:/user/sign-in";
+        }
+        AdminUserVM vm= new AdminUserVM();
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<User> userPage = null;
+
+        if (userName.getUserName() != null && !userName.getUserName().isEmpty()) {
+            userPage = userService.getList(pageable,userName.getUserName().trim());
+            vm.setKeyWord("Tìm kiếm: " + userName.getUserName());
+        } else {
+            userPage = userService.getList(pageable,null);
+        }
+
+
+        List<UserVM> userVMList = new ArrayList<>();
+
+        for(User user: userPage.getContent()) {
+            UserVM userVM = new UserVM();
+            userVM.setId(user.getId());
+            userVM.setName(user.getName());
+            userVM.setGender(user.getGender());
+            userVM.setUserName(user.getUserName());
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            Date sn = user.getDateOfBirth();
+            if(sn!=null){
+                String date = simpleDateFormat.format(sn);
+                userVM.setDateOfBirth(date);
+            }
+            userVM.setEmail(user.getEmail());
+            userVM.setRoleId(roleService.getRoleByUser(user.getId()).getId());
+           userVMList.add(userVM);
+        }
+
+        List<RoleVM> roleVMArrayList= new ArrayList<>();
+        for (Role role: roleService.getListAllRole()) {
+            RoleVM roleVM = new RoleVM();
+            roleVM.setId(role.getId());
+            roleVM.setName(role.getName());
+            roleVMArrayList.add(roleVM);
+        }
+
+        LayoutHeaderAdminVM layoutHeaderAdminVM=this.getLayoutHeaderAdminVM();
+        vm.setLayoutHeaderAdminVM( layoutHeaderAdminVM);
+        vm.setUserVMList(userVMList);
+        vm.setRoleVMList(roleVMArrayList);
+        model.addAttribute("vm", vm);
+        model.addAttribute("page",userPage);
+        return "/admin/admin-user";
     }
 }

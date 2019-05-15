@@ -149,7 +149,7 @@ public class HomeController extends BaseController {
             productVM.setPrice(product.getPrice());
             productVM.setShortDesc(product.getShortDesc());
             productVM.setRateAvg(Math.round(rateService.getRateAvg(product.getId())));
-            productVM.setCreatedDate(product.getCreatedDate());
+        //    productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
             productVM.setSizeVMList(MyFunction.toSizeVMList(sizeService.getListSizeByProductId(product.getId())));
             productVM.setColorVMList(MyFunction.toColorVMList(colorService.getListColorByProductId(product.getId())));
@@ -319,7 +319,7 @@ public class HomeController extends BaseController {
             productVM.setPrice(product.getPrice());
             productVM.setRateAvg(Math.round(rateService.getRateAvg(product.getId())));
             productVM.setShortDesc(product.getShortDesc());
-            productVM.setCreatedDate(product.getCreatedDate());
+         //   productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
             productVM.setSizeVMList(MyFunction.toSizeVMList(sizeService.getListSizeByProductId(product.getId())));
             productVM.setColorVMList(MyFunction.toColorVMList(colorService.getListColorByProductId(product.getId())));

@@ -63,7 +63,6 @@ $(document).ready(function () {
     });
 
     $(".rateReply").on("click", function () {
-        alert("ahihi");
         var rateId=$(this).data("rate");
 
         var data={};

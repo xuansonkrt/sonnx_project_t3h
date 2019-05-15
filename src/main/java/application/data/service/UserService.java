@@ -12,6 +12,8 @@ import application.data.repository.UserRoleRepository;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -142,6 +144,9 @@ public class UserService {
 //    public Iterable<User> findByUserName( String userName){
 //        return userRepository.findByUserName(userName);
 //    }
+    public Page<User> getList(Pageable pageable,  String key){
+        return userRepository.getList(pageable,key);
+    }
 
 }
 

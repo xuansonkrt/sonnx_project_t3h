@@ -157,7 +157,7 @@ public class ProductController extends  BaseController{
             rateVM.setId(rate.getId());
             totalStar+=rate.getStar();
             amountStar++;
-            if(rate.getUser().getName()==null)
+            if(rate.getUser().getName()==null || rate.getUser().getName().equals("unname"))
                 rateVM.setUserName(rate.getUser().getUserName());
             else
                 rateVM.setUserName(rate.getUser().getName());
@@ -171,7 +171,7 @@ public class ProductController extends  BaseController{
                     rateVM2.setCreatedDate(item.getCreatedDate());
                     rateVM2.setId(item.getId());
                     rateVM2.setParentId(item.getRate().getId());
-                    if(item.getUser().getName()==null)
+                    if(item.getUser().getName()==null || item.getUser().getName().equals("unname"))
                         rateVM2.setUserName(item.getUser().getUserName());
                     else
                         rateVM2.setUserName(item.getUser().getName());
@@ -224,7 +224,7 @@ public class ProductController extends  BaseController{
             productVM.setMainImage(product.getMainImage());
             productVM.setPrice(product.getPrice());
             productVM.setShortDesc(product.getShortDesc());
-            productVM.setCreatedDate(product.getCreatedDate());
+         //   productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
             productVMList.add(productVM);
         }

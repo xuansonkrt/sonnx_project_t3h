@@ -16,9 +16,19 @@ public class UserVM {
     private String address;
     private String phoneNumber;
     private int gender;
+    private int roleId;
+
 
   //  @JsonDeserialize(using = CustomDateDeserializer2.class)
     private String dateOfBirth;
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
 
     public String getDateOfBirth() {
         return dateOfBirth;

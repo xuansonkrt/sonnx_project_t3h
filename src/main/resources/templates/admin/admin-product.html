@@ -105,50 +105,50 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr style="text-align: center">
-                                <th colspan="1"  style="background-color: #1ab7ea; text-align: center">
+                                <th  style="background-color: #1ab7ea; text-align: center">
                                     STT
                                 </th>
-                                <th colspan="2" style="background-color: #1ab7ea; text-align: center">
+                                <th  style="background-color: #1ab7ea; text-align: center">
                                     Tên sản phẩm
                                 </th>
-                                <th colspan="2" style="background-color: #1ab7ea; text-align: center">
+                                <th  style="background-color: #1ab7ea; text-align: center">
                                     Danh mục
                                 </th>
-                                <th colspan="2" style="background-color: #1ab7ea; text-align: center">
+                                <th style="background-color: #1ab7ea; text-align: center">
                                     Nhà sản xuất
                                 </th>
-                                <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Khuyến mại
-                                </th>
-                                <th colspan="2" style="background-color: #1ab7ea; text-align: center">
+                                <!--<th style="background-color: #1ab7ea; text-align: center">-->
+                                    <!--Khuyến mại-->
+                                <!--</th>-->
+                                <th  style="background-color: #1ab7ea; text-align: center">
                                     Mô tả
                                 </th>
-                                <th colspan="1" style="background-color: #1ab7ea; text-align: center">
+                                <th  style="background-color: #1ab7ea; text-align: center">
                                     Giá
                                 </th>
-                                <th colspan="2" style="background-color: #1ab7ea; text-align: center">
+                                <th  style="background-color: #1ab7ea; text-align: center">
                                     Ngày tạo
                                 </th>
-                                <th colspan="2" style="background-color: #1ab7ea; text-align: center">
+                                <th style="background-color: #1ab7ea; text-align: center">
 
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="product,iter : ${vm.getProductVMList()}">
-                                <td colspan="1" th:text="${page.number*page.size + iter.index+1}"></td>
-                                <td colspan="2" th:text="${product.getName()}"></td>
-                                <td colspan="2" th:text="${product.getCategoryName()}"></td>
-                                <td colspan="2" th:text="${product.getSupplyName()}"></td>
-                                <td colspan="2" th:text="${product.getPromotionName()}"></td>
-                                <td colspan="2" th:text="${product.getShortDesc()}"></td>
-                                <td colspan="1" th:text="${product.getPrice() + ' $'}" style="text-align: right"></td>
-                                <td colspan="2" th:text="${product.getCreatedDate()}"></td>
-                                <td colspan="2">
+                                <td  th:text="${page.number*page.size + iter.index+1}"></td>
+                                <td  th:text="${product.getName()}"></td>
+                                <td  th:text="${product.getCategoryName()}"></td>
+                                <td th:text="${product.getSupplyName()}"></td>
+                                <!--<td  th:text="${product.getPromotionName()}"></td>-->
+                                <td  th:text="${product.getShortDesc()}" style="width: 300px"></td>
+                                <td  th:text="${product.getPrice() + ' đ'}" style="text-align: right;width: 100px"></td>
+                                <td  th:text="${product.getCreatedDate()}"></td>
+                                <td style="text-align: center" >
                                     <i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px" title="Edit"></i>
                                     <i id="" class=" addImage fa fa-file-image-o tooltip-test image-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#ImageModal" style="cursor: pointer; color: blue; font-size: 20px" title="Add image"></i>
                                     <i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px" title="Delete"></i>
-                                    <i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#DescriptionModal" style="cursor: pointer; font-size: 20px" title="Edit"></i>
+                                    <!--<i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#DescriptionModal" style="cursor: pointer; font-size: 20px" title="Edit"></i>-->
 
 
                                 </td>
@@ -320,11 +320,11 @@
                                 <input type="file" class="mx-10px" id="input-image">
 
                                 <div class="form-group">
-                                    <label>Image description:</label>
+                                    <label>Mô tả:</label>
                                     <textarea type="text" class="form-control"  rows="4"  id="input-title"></textarea>
                                 </div>
-                                <button type="button" class="btn btn-success mb-10px" id="btn-add-image">Save changes</button>
-                                <button type="button" class="btn btn-danger mb-10px hidden" id="btn-del-image" >Delete</button>
+                                <button type="button" class="btn btn-success mb-10px" id="btn-add-image">Lưu</button>
+                                <button type="button" class="btn btn-danger mb-10px hidden" id="btn-del-image" >Xóa</button>
 
                             </div>
                         </div>

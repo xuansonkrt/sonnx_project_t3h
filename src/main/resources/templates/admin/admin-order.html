@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sản phẩm</title>
+    <title>Đơn đặt hàng</title>
     <link rel="icon" type="image/png" th:href="@{/images/logo-small.png}"/>
 
     <!-- Bootstrap Core CSS -->
@@ -47,11 +47,11 @@
                     <div id="main-content">
                         <div class="row">
                             <div class="col-sm-8 col-12">
-                                <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal" style="margin-bottom: 20px" data-target="#exampleModalLong">
-                                    Tạo hóa đơn
-                                </button>
+                                <!--<button type="button" class="btn btn-primary" id="new-product" data-toggle="modal" style="margin-bottom: 20px" data-target="#exampleModalLong">-->
+                                    <!--Tạo hóa đơn-->
+                                <!--</button>-->
                             </div>
-                            <div class="col-sm-4 col-12">
+                            <div class="col-sm-4 col-12 ">
                                 <form style="float: right" class="form-inline my-2 my-lg-0 float-sm-right" th:action="@{/admin/order}" th:object="${customerName}"  method="get">
                                     <!--<div class="form-group">-->
                                         <!--<label>Category:</label>-->
@@ -78,7 +78,7 @@
                         </div>
                         <h2 th:if="${vm.getKeyWord()}" th:text="${vm.getKeyWord()}"></h2>
 
-                        <table class="table table-bordered">
+                        <table class="table table-bordered mt-4">
                             <thead>
                             <tr style="text-align: center">
                                 <th colspan="1"  style="background-color: #1ab7ea; text-align: center">
@@ -107,7 +107,7 @@
                                 <td colspan="1" th:text="${page.number*page.size + iter.index+1}"></td>
                                 <td colspan="2" th:text="${order.getCustomerName()}"></td>
                                 <td colspan="2" th:text="${order.getCreatedDate()}"></td>
-                                <td colspan="2" th:text="${order.getPrice()}+' đ'"></td>
+                                <td colspan="2" style="text-align: right" th:text="${order.getPrice()}+' đ'"></td>
                                 <td colspan="2" style="width: 100px" >
                                     <!--th:text="${order.getDeliveryStatus()}"-->
                                     <select class="form-control changeStatus" th:attr="data-id=${order.getId()}" id="input-product-promotion" placeholder="Choose " >

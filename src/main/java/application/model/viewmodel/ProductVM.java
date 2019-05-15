@@ -10,7 +10,7 @@ public class    ProductVM {
     private String shortDesc;
     private String mainImage;
     private String price;
-    private Date createdDate;
+    private String createdDate;
     private List<ProductImageVM> productImageVMS;
     private String supplyName;
     private String promotionName;
@@ -157,11 +157,11 @@ public class    ProductVM {
         this.price = result;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 

@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Category</title>
+    <title>Danh mục</title>
 
     <!-- Bootstrap Core CSS -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
@@ -41,18 +41,18 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header" id="main-title">Category</h1>
+                    <h1 class="page-header" id="main-title">Danh mục</h1>
                     <div id="main-content">
                         <div class="row">
                             <div class="col-sm-8">
                                 <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal" style="margin-bottom: 20px" data-target="#exampleModalLong">
-                                    Add new Category
+                                    Thêm danh mục
                                 </button>
                             </div>
                             <div class="col-sm-4">
                                 <form style="float: right" class="form-inline my-2 my-lg-0 float-sm-right" th:action="@{/admin/category}" th:object="${categoryname}"  method="get">
-                                    <input class="form-control mr-sm-2" type="search" th:field="*{name}"  placeholder="Search..." aria-label="Search">
-                                    <button class="btn btn-success" type="submit">Search</button>
+                                    <input class="form-control mr-sm-2" type="search" th:field="*{name}"  placeholder="Tìm kiếm..." aria-label="Search">
+                                    <button class="btn btn-success" type="submit">Tìm kiếm</button>
                                 </form>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                 <div class="modal-header" style="background-color: #1ab7ea; border-radius: 4px 4px 0 0;">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h5 class="modal-title" style="color: white" id="exampleModalLongTitle">Add new/ update Category</h5>
+                            <h5 class="modal-title" style="color: white" id="exampleModalLongTitle">Cập nhật danh mục</h5>
                         </div>
                         <div class="col-sm-6">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right">
@@ -119,13 +119,13 @@
                     <input type="text" class="form-control" id="input-category-id" class="hidden">
 
                     <div class="form-group margin-bottom-15" style="margin-top: 20px">
-                        <label>Category name:</label>
+                        <label>Tên danh mục: </label>
                         <input type="text" class="form-control" id="input-category-name">
                     </div>
 
 
                     <div class="form-group margin-bottom-15">
-                        <label>Category description:</label>
+                        <label>Giới thiệu:</label>
                         <textarea type="text" class="form-control" id="input-category-desc"></textarea>
                     </div>
 
@@ -133,8 +133,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary btn-save-category">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary btn-save-category">Lưu</button>
                 </div>
             </div>
         </div>

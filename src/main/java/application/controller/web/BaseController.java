@@ -114,6 +114,7 @@ public class BaseController {
                 vm.setAdmin(false);
             }
             vm.setUserName(username);
+            vm.setId(userEntity.getId());
             if(userEntity.getAvatar() != null) {
                 vm.setAvatar(userEntity.getAvatar());
             } else {

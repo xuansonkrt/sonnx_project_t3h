@@ -188,6 +188,45 @@ $('.MyDate').each(function(){
     if ($('.MyDate').text().length > 10)
         $(this).text(NewDate($(this).text()));
 });
+$('.changeRole').on('change',function () {
+    var id = $(this).data('id');
+    var role = parseInt($(this).val());
+    var data = {};
+    data.id = $(this).data('id');
+    data.roleId = $(this).val();
+    console.log("data: ", data);
+    $.ajax({
+        url: "/api/user/changeRole",
+        data: JSON.stringify(data),
+        type: "POST",
+        crossDomain: true,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data) {
+            if (data.success === true) {
+                swal({
+                    title: 'Thành công',
+                    text: data.message,
+                    type: 'success',
+                    timer: 1500
+                });
+            }
+            else {
+                swal({
+                    title: 'Thất bại',
+                    text: data.message,
+                    type: 'error',
+                    timer: 1500
+                }).then(function () {
+                    window.location.reload();
+                });
+            }
+        }.bind(this),
+        error: function (e) {
+            console.log(e);
+        }
+    });
+});
 
 $('.changeStatus').on('change',function () {
     var id= $(this).data('id');
@@ -227,36 +266,60 @@ $('.changeStatus').on('change',function () {
             console.log(e);
         }
     });
-    //
-    // axios.post("/order/changeStatus", data).then(function(res){
-    //     NProgress.done();
-    //     if(res.data.success) {
-    //         swal(
-    //             'Good job!',
-    //             res.data.message,
-    //             'success'
-    //         ).then(function() {
-    //             location.reload();
-    //         });
-    //     } else {
-    //         swal(
-    //             'Error',
-    //             res.data.message,
-    //             'error'
-    //         );
-    //     }
-    // }, function(err){
-    //     NProgress.done();
-    //     swal(
-    //         'Error',
-    //         'Some error when saving product',
-    //         'error'
-    //     );
-    // })
-
-
-
-//    chart
-
 
 });
+
+$('.delUser').on('click', function(){
+    var id=$(this).data('id');
+    var data = {};
+    data.id = id;
+    console.log("data: ", data);
+    swal({
+        title: 'Xóa tài khoản?',
+        text: "Bạn sẽ không có khả năng khôi phục!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Xóa',
+        cancelButtonText:'Hủy'
+    }).then(function(result)  {
+        if (result.value) {
+
+
+            NProgress.start();
+            var linkGet = "/api/user/delete/"+id;
+            axios.get(linkGet).then(function(res){
+                NProgress.done();
+                if(res.data.success) {
+                    swal(
+                        {
+                            title:'Thành công',
+                            text:res.data.message,
+                            type:'success',
+                            showCancelButton: false,
+                            timer:1500
+                        }
+                    ).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    swal(
+                        'Thất bại',
+                        res.data.message,
+                        'error'
+                    );
+                }
+            }, function(err){
+                NProgress.done();
+                swal(
+                    'Thất bại',
+                    'Xảy ra lỗi',
+                    'error'
+                );
+            });
+        }
+    });
+
+});
+

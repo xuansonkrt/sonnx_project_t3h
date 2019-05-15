@@ -167,7 +167,7 @@ public class OrderController extends BaseController {
             productVM.setMainImage(product.getMainImage());
             productVM.setPrice(product.getPrice());
             productVM.setShortDesc(product.getShortDesc());
-            productVM.setCreatedDate(product.getCreatedDate());
+         //   productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
             productVMList.add(productVM);
         }
@@ -585,7 +585,7 @@ public class OrderController extends BaseController {
             productVM.setMainImage(product.getMainImage());
             productVM.setPrice(product.getPrice());
             productVM.setShortDesc(product.getShortDesc());
-            productVM.setCreatedDate(product.getCreatedDate());
+         //   productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
             productVMList.add(productVM);
         }

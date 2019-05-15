@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Đơn đặt hàng</title>
+    <title>Quản lý tài khoản</title>
     <link rel="icon" type="image/png" th:href="@{/images/logo-small.png}"/>
 
     <!-- Bootstrap Core CSS -->
@@ -43,7 +43,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header" id="main-title">Đơn hàng</h1>
+                    <h1 class="page-header" id="main-title">Tài khoản</h1>
                     <div id="main-content">
                         <div class="row">
                             <div class="col-sm-8 col-12">
@@ -51,8 +51,8 @@
                                     <!--Tạo hóa đơn-->
                                 <!--</button>-->
                             </div>
-                            <div class="col-sm-4 col-12 ">
-                                <form style="float: right" class="form-inline my-2 my-lg-0 float-sm-right" th:action="@{/admin/order}" th:object="${customerName}"  method="get">
+                            <div class="col-sm-4 col-12">
+                                <form style="float: right" class="form-inline my-2 my-lg-0 float-sm-right" th:action="@{/admin/user}" th:object="${userName}"  method="get">
                                     <!--<div class="form-group">-->
                                         <!--<label>Category:</label>-->
                                         <!--<select th:field="*{categoryId}"  class="form-control" id="input-product-category" placeholder="Choose Category">-->
@@ -67,7 +67,7 @@
                                         <!--</select>-->
                                     <!--</div>-->
                                     <!---->
-                                    <input id="key-search" class="form-control mr-sm-2" type="search" th:field="*{customerName}"  placeholder="Tìm kiếm..." aria-label="Search">
+                                    <input id="key-search" class="form-control mr-sm-2" type="search" th:field="*{name}"  placeholder="Tìm kiếm..." aria-label="Search">
                                     <button class="btn btn-success" type="submit">Tìm kiếm</button>
                                 </form>
                             </div>
@@ -78,23 +78,26 @@
                         </div>
                         <h2 th:if="${vm.getKeyWord()}" th:text="${vm.getKeyWord()}"></h2>
 
-                        <table class="table table-bordered mt-4">
+                        <table class="table table-bordered mt-3">
                             <thead>
                             <tr style="text-align: center">
-                                <th colspan="1"  style="background-color: #1ab7ea; text-align: center">
+                                <th  style="background-color: #1ab7ea; text-align: center; width: 30px">
                                     STT
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Người đặt hàng
+                                    Tên tài khoản
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Ngày đặt hàng
+                                    Họ và tên
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Tổng tiền
+                                    Ngày sinh
                                 </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
-                                    Tình trạng
+                                    Giới tính
+                                </th>
+                                <th colspan="2" style="background-color: #1ab7ea; text-align: center">
+                                    Vai trò
                                 </th>
 
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
@@ -103,23 +106,23 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="order,iter : ${vm.getOrderVMList()}">
+                            <tr th:each="user,iter : ${vm.getUserVMList()}">
                                 <td colspan="1" th:text="${page.number*page.size + iter.index+1}"></td>
-                                <td colspan="2" th:text="${order.getCustomerName()}"></td>
-                                <td colspan="2" th:text="${order.getCreatedDate()}"></td>
-                                <td colspan="2" style="text-align: right" th:text="${order.getPrice()}+' đ'"></td>
+                                <td colspan="2" th:text="${user.getUserName()}"></td>
+                                <td colspan="2" th:text="${user.getName()}"></td>
+                                <td colspan="2" th:text="${user.getDateOfBirth()}"></td>
+                                <td colspan="2" th:if="${user.getGender()==1}">Nam</td>
+                                <td colspan="2" th:unless="${user.getGender()==1}">Nữ</td>
                                 <td colspan="2" style="width: 100px" >
                                     <!--th:text="${order.getDeliveryStatus()}"-->
-                                    <select class="form-control changeStatus" th:attr="data-id=${order.getId()}" id="input-product-promotion" placeholder="Choose " >
-                                        <option th:each="status : ${vm.getDeliveryStatusVMS()}" th:value="${status.getId()}"
-                                                th:text="${status.getName()}"  th:selected="${order.getDeliveryStatusId() == status.getId() ? true : false}"></option>
+                                    <select class="form-control changeRole" th:attr="data-id=${user.getId()}" id="input-product-promotion" placeholder="Choose " >
+                                        <option th:each="role : ${vm.getRoleVMList()}" th:value="${role.getId()}"
+                                                th:text="${role.getName()}"  th:selected="${role.getId() == user.getRoleId() ? true : false}"></option>
                                     </select>
                                 </td>
 
-                                <td colspan="2">
-                                    <a th:href="${'/admin/order/'+order.getId()}" class="fa fa-edit tooltip-test" style="cursor: pointer; font-size: 20px" title="Chi tiết"></a>
-
-
+                                <td colspan="1" style="text-align: center">
+                                    <a class="fa fa-trash-o tooltip-test delUser"   th:attr="data-id=${user.getId()}"  style="cursor: pointer; font-size: 20px" title="Xóa"></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -127,7 +130,7 @@
 
 
 
-                        <nav style="margin-top: 50px" aria-label="..." th:if="${vm.getOrderVMList().size()>0}">
+                        <nav style="margin-top: 50px" aria-label="..." th:if="${vm.getUserVMList().size()>0}">
                             <ul class="pagination">
                                 <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
                                     <li class="page-item active" th:if="${page.number == i}" aria-current="page">
