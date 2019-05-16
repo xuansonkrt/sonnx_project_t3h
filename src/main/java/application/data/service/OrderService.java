@@ -51,4 +51,8 @@ public class OrderService {
     public List<ChartLabelDataVM2> profitInWeek(){
         return orderRepository.profitInWeek();
     }
+
+    public List<Order> findOrderByGuidOrUserName2(String guid, String userName){
+        return orderRepository.findOrderByGuidOrUserName2(guid,userName);
+    }
 }

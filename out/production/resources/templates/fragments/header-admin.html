@@ -82,7 +82,7 @@
                 <span th:text="${vm.getUserName()}"></span> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a th:href="${'/user/detail/'+vm.getId()}"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
+                <li><a  th:href="@{/user/detail}"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
                 </li>
                 <!--<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>-->
                 <!--</li>-->
