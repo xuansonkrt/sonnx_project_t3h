@@ -323,3 +323,54 @@ $('.delUser').on('click', function(){
 
 });
 
+
+$('.btnCancel').on('click',function () {
+    var id = $(this).data('id');
+    swal({
+        title: 'Bạn có chắc chắn muốn xóa đơn hàng?',
+        text: "Bạn sẽ không có khả năng khôi phục!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Xóa',
+        cancelButtonText:'Hủy'
+    }).then(function(result)  {
+        if (result.value) {
+
+
+            NProgress.start();
+            var linkGet = "/order/cancel/"+id;
+            axios.post(linkGet).then(function(res){
+                NProgress.done();
+                if(res.data.success) {
+                    swal(
+                        {
+                            title:'Thành công',
+                            text:res.data.message,
+                            type:'success',
+                            showCancelButton: false,
+                            timer:1500
+                        }
+                    ).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    swal(
+                        'Thất bại',
+                        res.data.message,
+                        'error'
+                    );
+                }
+            }, function(err){
+                NProgress.done();
+                swal(
+                    'Thất bại',
+                    'Xảy ra lỗi',
+                    'error'
+                );
+            });
+        }
+    });
+});
+

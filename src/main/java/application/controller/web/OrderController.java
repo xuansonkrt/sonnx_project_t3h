@@ -3,6 +3,7 @@ package application.controller.web;
 import application.data.model.*;
 import application.data.service.*;
 import application.extension.DELIVERYSTATUS;
+import application.model.api.BaseApiResult;
 import application.model.api.DataApiResult;
 import application.model.dto.OrderDTO;
 import application.model.viewmodel.*;
@@ -604,6 +605,47 @@ public class OrderController extends BaseController {
         return "/order-detail";
     }
 
+    @PostMapping("/cancel/{orderId}")
+    public  @ResponseBody  BaseApiResult cancelOrder(Model model,
+                                     @Valid @ModelAttribute("productname") ProductVM productName,
+                                     @PathVariable("orderId") int orderId,
+                                     HttpServletResponse response,
+                                     HttpServletRequest request,
+                                     final Principal principal) {
+
+        BaseApiResult result = new BaseApiResult();
+        Order order = orderService.findOne(orderId);
+        if(order!=null){
+            try{
+                order.setDeliveryStatusId(DELIVERYSTATUS.CANCEL);
+                orderService.update(order);
+
+                OrderDeliveryStatus orderDeliveryStatus = new OrderDeliveryStatus();
+                orderDeliveryStatus.setCreatedDate(new Date());
+                orderDeliveryStatus.setDeliveryStatus(deliveryStatusService.findOne(DELIVERYSTATUS.CANCEL));
+                orderDeliveryStatus.setOrder(order);
+                orderDeliveryStatusService.add(orderDeliveryStatus);
+
+                Message message = new Message();
+                message.setTitle("Xóa đơn hàng");
+                message.setEmail("system");
+                message.setCreatedDate(new Date());
+                message.setContent(order.toString());
+                messageService.update(message);
+                result.setMessage("Xóa đơn hàng thành công");
+                result.setSuccess(true);
+                return result;
+            } catch (Exception e){
+                result.setMessage(e.getMessage());
+                result.setSuccess(false);
+                return result;
+            }
+        }
+        result.setMessage("Không tìm thấy đơn hàng");
+        result.setSuccess(false);
+        return result;
+    }
+
     public String getGuid(HttpServletRequest request) {
         Cookie cookie[] = request.getCookies();
 
@@ -621,13 +663,13 @@ public class OrderController extends BaseController {
         DataApiResult result = new DataApiResult();
         Order order = orderService.findOne(dto.getId());
         if(order!=null){
-            if(order.getDeliveryStatusId()== DELIVERYSTATUS.SHIPPED ||
-                    order.getDeliveryStatusId()== DELIVERYSTATUS.CANCEL||
-                    order.getDeliveryStatusId()>dto.getStatus()){
-                result.setMessage("Cập nhật không thành công");
-                result.setSuccess(false);
-                return result;
-            }
+           // if(order.getDeliveryStatusId()== DELIVERYSTATUS.SHIPPED ||
+           //         order.getDeliveryStatusId()== DELIVERYSTATUS.CANCEL||
+             //       order.getDeliveryStatusId()>dto.getStatus()){
+             //   result.setMessage("Cập nhật không thành công");
+             //   result.setSuccess(false);
+             //   return result;
+           // }
             order.setDeliveryStatusId(dto.getStatus());
             orderService.update(order);
 

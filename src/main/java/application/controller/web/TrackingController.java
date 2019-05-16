@@ -67,6 +67,7 @@ public class TrackingController extends  BaseController{
 
     @GetMapping("")
     public String tracking(Model model,
+                               @Valid @ModelAttribute("productname") ProductVM productname,
                                @Valid @ModelAttribute("orderId") OrderVM orderId,
                                HttpServletResponse response,
                                HttpServletRequest request,
@@ -181,10 +182,10 @@ public class TrackingController extends  BaseController{
         vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
         vm.setProductAmount(productAmount);
         vm.setCartProductVMList(cartProductVMS);
-
+        vm.setOrderTrackingVMList(orderTrackingVMList);
 //        vm.setOrderVMList(orderVMS);
 //        vm.setCategoryVMList(categoryVMList);
         model.addAttribute("vm",vm);
-        return "/order-history";
+        return "/tracking";
     }
 }

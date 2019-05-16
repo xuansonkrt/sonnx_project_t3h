@@ -15,4 +15,7 @@ public class OrderDeliveryStatusService {
         orderDeliveryStatusRepository.save(orderDeliveryStatus);
     }
 
+    public OrderDeliveryStatus findOne(int id){
+        return orderDeliveryStatusRepository.findOne(id);
+    }
 }

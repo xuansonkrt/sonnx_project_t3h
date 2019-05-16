@@ -125,7 +125,7 @@
                                 <td colspan="1" style="text-align: center" th:text="${page.number*page.size + iter.index+1}"></td>
                                 <td colspan="2" th:text="${product.getName()}"></td>
                                 <td colspan="2" th:text="${product.getAmount()}"></td>
-                                <td colspan="2" style="width: 50px">
+                                <td colspan="2" style="width: 50px; text-align: center">
                                     <i class="fa fa-edit tooltip-test detailProductEntity" th:attr="data-product = ${product.getProductId()}" data-toggle="modal" data-target="#detailProduct" style="cursor: pointer; font-size: 20px" title="Chi tiết"></i>
                                     <!--<i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getProductId()}" style="cursor: pointer; color: red; font-size: 20px" title="Delete"></i>-->
 
