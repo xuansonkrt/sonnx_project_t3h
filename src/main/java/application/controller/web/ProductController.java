@@ -2,6 +2,7 @@ package application.controller.web;
 
 import application.data.model.*;
 import application.data.service.*;
+import application.extension.MyFunction;
 import application.model.dto.ProductDTO;
 import application.model.viewmodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -225,6 +226,9 @@ public class ProductController extends  BaseController{
             productVM.setPrice(product.getPrice());
             productVM.setShortDesc(product.getShortDesc());
          //   productVM.setCreatedDate(product.getCreatedDate());
+            productVM.setSizeVMList(MyFunction.toSizeVMList(sizeService.getListSizeByProductId(product.getId())));
+            productVM.setColorVMList(MyFunction.toColorVMList(colorService.getListColorByProductId(product.getId())));
+            productVM.setProductImageVMList(MyFunction.toProductImageVMList(product.getProductImageList()));
             productVM.setCategoryId(product.getCategoryId());
             productVMList.add(productVM);
         }

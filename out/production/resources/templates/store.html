@@ -359,7 +359,7 @@
         </div>
 
 
-        <div th:if="${vm.isFound()}">
+        <div th:if="${vm.isFound()&&vm.getKeyWord()!=null}">
             <div class="alert alert-primary"  th:text="${vm.getKeyWord()}">
                 Đổi mật khẩu thành công !!
             </div>
@@ -583,9 +583,15 @@
 
 <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js" data-cf-settings="e5d6ee6a7978d5070e084177-|49" defer=""></script></body>
 <!-- jQuery -->
+
 <script th:src="@{/js/jquery.min.js}"></script>
+<!--===============================================================================================-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
 <script th:src="@{/js/price-range.js}"></script>
 <script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/script.js}"></script>
 <script th:src="@{/js/add-to-cart.js}"></script>
 <script  th:inline="javascript">
     var vm = [[${vm}]];

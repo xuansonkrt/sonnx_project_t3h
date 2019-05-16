@@ -264,6 +264,19 @@ public class HomeController extends BaseController {
             supplyVMList.add(supplyVM);
         }
 
+        List<ProductEntity> productEntityList = productEntityService.getAll();
+        List<ProductEntityVM> productEntityVMList = new ArrayList<>();
+        for(ProductEntity item : productEntityList){
+            ProductEntityVM entityVM = new ProductEntityVM();
+            entityVM.setColorName(item.getColor().getName());
+            entityVM.setSizeName(item.getSize().getName());
+            entityVM.setAmount(item.getAmount());
+            entityVM.setProductId(item.getProductId());
+            entityVM.setColorId(item.getColorId());
+            entityVM.setSizeId(item.getSizeId());
+            entityVM.setProductEntityId(item.getId());
+            productEntityVMList.add(entityVM);
+        }
 
         List<Size> sizeList = sizeService.getAll();
         List<SizeVM> sizeVMList = MyFunction.toSizeVMList(sizeList);
@@ -384,6 +397,7 @@ public class HomeController extends BaseController {
         vm.setProductVMList(productVMList);
         vm.setSizeVMList(sizeVMList);
         vm.setSupplyVMList(supplyVMList);
+        vm.setProductEntityVMList(productEntityVMList);
         model.addAttribute("vm",vm);
         model.addAttribute("page",productPage);
 

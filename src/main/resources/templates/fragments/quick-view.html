@@ -78,8 +78,8 @@
                                 </div>
 
                                 <div class="size-204 respon6-next">
-                                    <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2 selectSize2" placeholder="Chọn size">
+                                    <div class="rs1-select2 bor8 bg0 form-group">
+                                        <select  th:attr="data-product=${product.getId()}" class="inputSelectSize form-control " th:id="${'selectSize'+product.getId()}" placeholder="Chọn size">
                                             <option value="0">Chọn size</option>
                                             <option th:each="size : ${product.getSizeVMList()}"
                                                     th:value="${size.getId()}"
@@ -96,9 +96,9 @@
                                 </div>
 
                                 <div class="size-204 respon6-next">
-                                    <div class="rs1-select2 bor8 bg0">
+                                    <div class="rs1-select2 bor8 bg0 form-group">
 
-                                        <select class="js-select2 selectColor2"   placeholder="Chọn màu">
+                                        <select  th:attr="data-product=${product.getId()}" class="form-control inputSelectColor"   th:id="${'selectColor'+product.getId()}"  placeholder="Chọn màu">
                                             <option value="0">Chọn màu</option>
                                             <option th:each="color : ${product.getColorVMList()}"
                                                     th:value="${color.getId()}"
@@ -118,15 +118,15 @@
                                             <i class="fs-16 zmdi zmdi-minus"></i>
                                         </div>
 
-                                        <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+                                        <input class="mtext-104 cl3 txt-center num-product"  th:id="${'inputAmount'+product.getId()}" type="number" name="num-product" value="1">
 
 
                                         <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                             <i class="fs-16 zmdi zmdi-plus"></i>
                                         </div>
                                     </div>
-                                    <span style="color: red" id="warehouse"></span>
-                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04  add-to-cart2"
+                                    <span style="color: red" th:id="${'warehouse'+product.getId()}" ></span>
+                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04  btnAddToCart"
                                             th:attr="data-product=${product.getId()}">
                                         <!--js-addcart-detail-->
                                         Thêm vào giỏ
@@ -161,94 +161,14 @@
         </div>
     </div>
 </div>
+
+
+
 <script th:src="@{/vendor/jquery/jquery-3.2.1.min.js}" type="e5d6ee6a7978d5070e084177-text/javascript"></script>
 <script th:src="@{/js/add-to-cart.js}"></script>
 <script>
-    function changeSize(that) {
-
-        alert("size");
-        // var id= $(that).val();
-        //alert(id);
-        if($('#selectColor :selected').val()=="0"){
-            return;
-        }
-        getAmount();
-    };
 
 
-    $(".selectSize2").on('change', function () {
-        debugger
-        alert("change");
-
-    });
-
-    $(".add-to-cart2").on("click", function () {
-        if($('#selectSize :selected').val()=="0"){
-            swal(
-                'Thất bại',
-                'Chưa chọn size!',
-                'error'
-            )
-            return;
-        }
-        if($('#selectColor :selected').val()=="0"){
-            swal(
-                'Thất bại',
-                'Chưa chọn màu!',
-                'error'
-            )
-            return;
-        }
-
-
-        var dataCart = {};
-        var pdInfo = $(this).data("product");
-        dataCart.amount = $(".num-product").val();
-        if(dataCart.amount>state.amount){
-            swal(
-                'Thất bại',
-                'Không đủ số lượng!',
-                'error'
-            )
-            return;
-        }
-        dataCart.productEntityId = state.productEntityId;
-        dataCart.guid = getCookie("guid");
-
-        NProgress.start();
-        console.log("data: ",dataCart);
-        var linkPost = "/api/cart-product/add";
-
-        axios.post(linkPost, dataCart).then(function(res){
-            NProgress.done();
-            if(res.data.success) {
-                swal(
-                    {
-                        title:'Thành công',
-                        text:res.data.message,
-                        type:'success',
-                        showCancelButton: false,
-                        timer:1500
-                    }
-                ).then(function() {
-                    location.reload();
-                });
-            } else {
-                swal(
-                    'Xảy ra lỗi',
-                    res.data.message,
-                    'error'
-                );
-            }
-        }, function(err){
-            NProgress.done();
-            swal(
-                'Error',
-                'Fail',
-                'error'
-            );
-        });
-    });
 </script>
 </body>
 </html>

@@ -2,6 +2,7 @@ package application.controller.web;
 
 import application.data.model.*;
 import application.data.service.*;
+import application.extension.MyFunction;
 import application.model.dto.ProductDTO;
 import application.model.viewmodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,9 @@ public class HotProductController extends BaseController {
 
     @Autowired
     RateService rateService;
+
+    @Autowired
+    ProductEntityService productEntityService;
 
     @GetMapping("")
     public String home(Model model,
@@ -150,6 +154,9 @@ public class HotProductController extends BaseController {
             productVM.setShortDesc(product.getShortDesc());
             productVM.setRateAvg(Math.round(rateService.getRateAvg(product.getId())));
          //   productVM.setCreatedDate(product.getCreatedDate());
+            productVM.setSizeVMList(MyFunction.toSizeVMList(sizeService.getListSizeByProductId(product.getId())));
+            productVM.setColorVMList(MyFunction.toColorVMList(colorService.getListColorByProductId(product.getId())));
+            productVM.setProductImageVMList(MyFunction.toProductImageVMList(product.getProductImageList()));
             productVM.setCategoryId(product.getCategoryId());
             productVMList.add(productVM);
         }
@@ -196,7 +203,21 @@ public class HotProductController extends BaseController {
         } catch (Exception e) {
             //logger.error(e.getMessage());
         }
+        List<ProductEntity> productEntityList = productEntityService.getAll();
+        List<ProductEntityVM> productEntityVMList = new ArrayList<>();
+        for(ProductEntity item : productEntityList){
+            ProductEntityVM entityVM = new ProductEntityVM();
+            entityVM.setColorName(item.getColor().getName());
+            entityVM.setSizeName(item.getSize().getName());
+            entityVM.setAmount(item.getAmount());
+            entityVM.setProductId(item.getProductId());
+            entityVM.setColorId(item.getColorId());
+            entityVM.setSizeId(item.getSizeId());
+            entityVM.setProductEntityId(item.getId());
+            productEntityVMList.add(entityVM);
+        }
 
+        vm.setProductEntityVMList(productEntityVMList);
         vm.setCartProductVMList(cartProductVMS);
         vm.setProductAmount(productAmount);
         vm.setTotalPrice(totalPrice);

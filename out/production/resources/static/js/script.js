@@ -375,7 +375,137 @@ $('.btnCancel').on('click',function () {
 });
 
 
-$('#trackingorder').on('click', function () {
-   var phone = $('#phone').val();
+var state2={
+    amount:"",
+    productEntityId:"",
+    id:"",
+    sizeId: "",
+    colorId:""
+}
 
+$('.inputSelectSize').change(function () {
+
+    state2.id=$(this).data("product");
+    var selectSizeId = '#selectSize'+state2.id;
+    var selectColorId = '#selectColor'+state2.id;
+    state2.sizeId= $(selectSizeId).val();
+    state2.colorId= $(selectColorId).val();
+    if(state2.sizeId=="0"||state2.colorId=="0"){
+        return;
+    }
+    // var sizeId = $(this).children("option:selected").val();
+    // if($('.inputSelectColor').children("option:selected").val()=="0"
+    // ||$('.inputSelectColor').children("option:selected").val()==""){
+    //     return;
+    // }
+    getAmount();
 });
+
+$('.inputSelectColor').change(function () {
+    state2.id=$(this).data("product");
+    var selectSizeId = '#selectSize'+state2.id;
+    var selectColorId = '#selectColor'+state2.id;
+    state2.sizeId= $(selectSizeId).val();
+    state2.colorId= $(selectColorId).val();
+    if(state2.sizeId=="0"||state2.colorId=="0"){
+        return;
+    }
+    getAmount();
+});
+
+$('.btnAddToCart').on('click', function () {
+    var productId= $(this).data('product');
+    var selectSizeId = '#selectSize'+productId;
+    var sizeId =$(selectSizeId).children("option:selected").val();
+
+    if(sizeId=="0" || sizeId==""){
+        swal(
+            'Thất bại',
+            'Chưa chọn size!',
+            'error'
+        )
+        return;
+    }
+
+    var selectColorId = '#selectColor'+productId;
+    var colorId =$(selectColorId).children("option:selected").val();
+    if(colorId=="0" || colorId==""){
+        swal(
+            'Thất bại',
+            'Chưa chọn màu!',
+            'error'
+        )
+        return;
+    }
+    var inputAmoutId = '#inputAmount'+productId;
+    var amount =$(inputAmoutId).val();
+    var data={};
+    if(amount>state2.amount){
+        swal(
+            'Thất bại',
+            'Không đủ số lượng!',
+            'error'
+        )
+        return;
+    }
+    data.amount = amount;
+    data.productEntityId=state2.productEntityId;
+    data.guid = getCookie("guid");
+
+    NProgress.start();
+    console.log("data: ",data);
+    var linkPost = "/api/cart-product/add";
+
+    axios.post(linkPost, data).then(function(res){
+        NProgress.done();
+        if(res.data.success) {
+            swal(
+                {
+                    title:'Thành công',
+                    text:res.data.message,
+                    type:'success',
+                   // showCancelButton: false,
+                    timer:1500
+                }
+            ).then(function() {
+                location.reload();
+            });
+        } else {
+            swal(
+                'Xảy ra lỗi',
+                res.data.message,
+                'error'
+            );
+        }
+    }, function(err){
+        NProgress.done();
+        swal(
+            'Error',
+            'Fail',
+            'error'
+        );
+    });
+})
+
+function getAmount() {
+    var size=state2.sizeId;
+    var color=state2.colorId;
+    console.log('size: '+size);
+    console.log('color: '+color);
+    var amount=0;
+    var listEntity=vm.productEntityVMList;
+    for(var i=0; i<listEntity.length;i++){
+        console.log("item: ",listEntity[i]);
+
+        if(listEntity[i].sizeId==size && listEntity[i].colorId==color){
+            amount=listEntity[i].amount;
+            state2.productEntityId=listEntity[i].productEntityId;
+            break;
+        }
+    }
+    state2.amount=amount;
+    var spanId='#warehouse'+state2.id;
+    $(spanId).text("(Còn "+amount+" sản phẩm)");
+
+};
+
