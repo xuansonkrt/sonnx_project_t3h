@@ -85,9 +85,9 @@
                         Chi tiết
                     </a>
 
-                    <a href="/order/checkout" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                        Thanh toán
-                    </a>
+                    <!--<a href="/order/checkout" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">-->
+                        <!--Thanh toán-->
+                    <!--</a>-->
                 </div>
             </div>
         </div>
@@ -110,25 +110,27 @@
     <div th:if="${vm.isFound()}" class="table-responsive">
         <table class="table table-bordered">
             <thead>
-            <tr>
-                <th colspan="1">STT</th>
-                <th colspan="2">Tên người nhận</th>
-                <th colspan="2">Email</th>
-                <th colspan="2">Địa chỉ</th>
-                <th colspan="2">Số điện thoại</th>
-                <th colspan="1">Tổng tiền</th>
-                <th colspan="1">Ngày đặt</th>
-                <th colspan="1">Chi tiết</th>
+            <tr style="text-align: center">
+                <th colspan="1" style="text-align: center">STT</th>
+                <th colspan="1" style="text-align: center">MHĐ</th>
+                <th colspan="2" style="text-align: center">Tên người nhận</th>
+                <th colspan="2" style="text-align: center">Email</th>
+                <th colspan="2" style="text-align: center">Địa chỉ</th>
+                <th colspan="2" style="text-align: center">SĐT</th>
+                <th colspan="1" style="text-align: center">Tổng tiền</th>
+                <th colspan="1" style="text-align: center">Ngày đặt</th>
+                <th colspan="1" style="text-align: center">Chi tiết</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="order,iter : ${vm.getOrderVMList()}">
-                <td colspan="1" th:text="${iter.index+1}" ></td>
-                <td colspan="2" th:text="${order.getCustomerName()}"></td>
+                <td colspan="1" th:text="${iter.index+1}" style="text-align: center" ></td>
+                <td colspan="1" th:text="${order.getId()}" style="text-align: center" ></td>
+                <td colspan="2" th:text="${order.getCustomerName()}" style="width: 200px"></td>
                 <td colspan="2" th:text="${order.getEmail()}"></td>
                 <td colspan="2" th:text="${order.getAddress()}"></td>
                 <td colspan="2" th:text="${order.getPhoneNumber()}"></td>
-                <td colspan="1" th:text="${order.getPrice()+' đ'}" style="text-align: right"></td>
+                <td colspan="1" th:text="${order.getPrice()+' đ'}" style="text-align: right"; width="150px"></td>
                 <td colspan="1" th:text="${order.getCreatedDate()}"></td>
                 <td colspan="1">
                     <a class="btn btn-primary" th:href="@{'/order/history/'+${order.getId()}}" role="button">Chi tiết</a>

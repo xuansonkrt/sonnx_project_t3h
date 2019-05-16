@@ -100,6 +100,7 @@ function loadListImage(productId) {
         contentType: "application/json",
         success: function (data) {
             if (data.success === true) {
+                $("#block-image").empty();
                 var list=data.data;
                 listImage=data.data;
                 var length= list.length;

@@ -1035,7 +1035,7 @@ html.dark .checkbox-text-dark input[type="checkbox"]:checked + label:after,
 
 .card{
     border: 1px solid gray;
-    padding: 5px;
+    /*padding: 5px;*/
 }
 
 

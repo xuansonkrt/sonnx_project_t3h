@@ -85,9 +85,11 @@ public class TrackingController extends  BaseController{
 
         List<Order> orderEntityList = null;
 
-        if(phone!=null){
+        if(phone != null && !phone.isEmpty()){
             orderEntityList= orderService.findOrderByPhoneNumber(phone);
+
         } else {
+
             if(principal != null) {
                 String  username = SecurityContextHolder.getContext().getAuthentication().getName();
                 orderEntityList = orderService.findOrderByGuidOrUserName2(null,username);

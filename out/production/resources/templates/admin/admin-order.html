@@ -84,6 +84,9 @@
                                 <th colspan="1"  style="background-color: #1ab7ea; text-align: center">
                                     STT
                                 </th>
+                                <th colspan="1"  style="background-color: #1ab7ea; text-align: center">
+                                    Mã hóa đơn
+                                </th>
                                 <th colspan="2" style="background-color: #1ab7ea; text-align: center">
                                     Người đặt hàng
                                 </th>
@@ -104,7 +107,8 @@
                             </thead>
                             <tbody>
                             <tr th:each="order,iter : ${vm.getOrderVMList()}">
-                                <td colspan="1" th:text="${page.number*page.size + iter.index+1}"></td>
+                                <td colspan="1" th:text="${page.number*page.size + iter.index+1}" style="text-align: center"></td>
+                                <td colspan="1" th:text="${order.getId()}" style="text-align: center"></td>
                                 <td colspan="2" th:text="${order.getCustomerName()}"></td>
                                 <td colspan="2" th:text="${order.getCreatedDate()}"></td>
                                 <td colspan="2" style="text-align: right" th:text="${order.getPrice()}+' đ'"></td>
