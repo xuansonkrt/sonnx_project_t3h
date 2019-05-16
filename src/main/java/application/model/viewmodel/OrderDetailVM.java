@@ -14,6 +14,15 @@ public class OrderDetailVM {
     private List<CartProductVM> cartProductVMList;
     private String keyWord;
     private List<ProductVM> productVMList;
+    private int deliveryStatusId;
+
+    public int getDeliveryStatusId() {
+        return deliveryStatusId;
+    }
+
+    public void setDeliveryStatusId(int deliveryStatusId) {
+        this.deliveryStatusId = deliveryStatusId;
+    }
 
     public List<ProductVM> getProductVMList() {
         return productVMList;

@@ -5,38 +5,60 @@
 </head>
 <body>
 <!-- Header -->
-<header th:fragment="header (vm)" class="header-v4">
+<header th:fragment="header (vm)" class="header-v4" >
     <!-- Header desktop -->
     <div class="container-menu-desktop">
         <!-- Topbar -->
         <div class="top-bar">
             <div class="content-topbar flex-sb-m h-full container">
-                <div class="left-top-bar my-font">
+                <div class="left-top-bar my-font" style="font-size: 15px">
                     Miễn phí vận chuyển cho hóa đơn trên 1.000.000 đồng
                 </div>
 
                 <div sec:authorize="isAnonymous()"  class="right-top-bar text-black-50 flex-w h-full">
-                    <a href="/tracking" class="flex-c-m trans-04 p-lr-25">
-                        Kiểm tra hóa đơn
-                    </a>
+                   <div class="dropdown">
+                       <a style="font-size: 15px" href="#" class="flex-c-m trans-04 p-lr-25"  id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           Kiểm tra hóa đơn
+                       </a>
+                       <div style=" z-index: 9999999999999999; width: 300px" class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton2">
+                           Số điện thoại đặt hàng:
+                           <form action="/tracking/">
+                               <div class="input-group mb-3">
 
-                    <a href="#" class="flex-c-m trans-04 p-lr-25 my-font" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"s>
-                        Tài khoản
-                    </a>
-                    <div style=" z-index: 9999999999999999" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a style="color: black;" class="dropdown-item" th:href="@{/order/history}">
-                            <span class="fa fa-history mr-4">       Lịch sử mua hàng</span>
+                                   <input id="phone" name="phone" type="text" class="form-control" placeholder="Số điện thoại"
+                                          aria-label="Số điện thoại" aria-describedby="basic-addon2">
+                                   <div class="input-group-addon" id="trackingorder">
+                                       <button type="submit" class="input-group-text" id="basic-addon2 " style="cursor: pointer" ><i class="fa fa-search"></i></button>
+                                   </div>
+                               </div>
+                           </form>
+
+                           <div class="dropdown-divider"></div>
+                           <a style="color: black; font-size: 15px" class="dropdown-item" href="/tracking/">
+                               <span class="fa fa-shopping-bag mr-4">       Hóa đơn của tôi</span>
+                           </a>
+                       </div>
+                   </div>
+
+                    <div class="dropdown">
+                        <a href="#" style="font-size: 15px" class="flex-c-m trans-04 p-lr-25 my-font" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"s>
+                            Tài khoản
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <a style="color: black;" class="dropdown-item" th:href="@{/user/sign-in}">
-                            <span class="fa fa-sign-in mr-4">       Đăng nhập</span>
-                        </a>
+                        <div style=" z-index: 9999999999999999" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a style="color: black; font-size: 15px" class="dropdown-item" th:href="@{/order/history}">
+                                <span class="fa fa-history mr-4"  >       Lịch sử mua hàng</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a style="color: black; font-size: 15px" class="dropdown-item" th:href="@{/user/sign-in}">
+                                <span class="fa fa-sign-in mr-4">       Đăng nhập</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div sec:authorize="isAuthenticated()"  class="right-top-bar text-black-50 flex-w h-full">
                     <div class="dropdown" style="">
-                        <a href="#" class="flex-c-m trans-04 p-lr-25"  id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a style="font-size: 15px" href="#" class="flex-c-m trans-04 p-lr-25"  id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Kiểm tra hóa đơn
                         </a>
                         <div style=" z-index: 9999999999999999; width: 300px" class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton2">
@@ -60,7 +82,7 @@
                     </div>
 
                     <div class="dropdown">
-                        <a  href="#" class="flex-c-m trans-04 p-lr-25 my-font" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a style="font-size: 15px"  href="#" class="flex-c-m trans-04 p-lr-25 my-font" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <!--<a class=" brand-logo" th:href="@{/admin}"><img th:src="${vm.getAvatar()}" alt="logo"/></a>-->
                             <div  class="nav-profile-img">
                                 <img style="width: 20px"  th:src="${vm.getLayoutHeaderAdminVM().getAvatar()}" class=" mr-3"  alt="image">

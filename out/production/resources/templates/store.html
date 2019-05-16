@@ -359,13 +359,13 @@
         </div>
 
 
-        <div th:if="${vm.getFound()}">
+        <div th:if="${vm.isFound()}">
             <div class="alert alert-primary"  th:text="${vm.getKeyWord()}">
                 Đổi mật khẩu thành công !!
             </div>
         </div>
-        <div th:unless="${vm.getFound()}">
-            <div class="alert danger"  >
+        <div th:unless="${vm.isFound()}">
+            <div class="alert alert-danger"  >
                 Không tìm thấy sản phẩm
             </div>
         </div>
@@ -391,19 +391,34 @@
                             <a th:attr="data-product=${product.getId()}" th:href="${'/product/'+product.getId()}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 showProductDetail" th:text="${product.getName()}">
                                 Esprit Ruffle Shirt
                             </a>
-                            <span  class=" fs-18 cl11">
-						    <i th:each="i: ${#numbers.sequence(1,5)}" th:if="${product.getRateAvg()>= i}" class="zmdi zmdi-star"></i>
-					        <i th:each="i: ${#numbers.sequence(1,5)}" th:unless="${product.getRateAvg()>= i}" class="item-rating pointer zmdi zmdi-star-outline"></i>
-                        </span>
-                            <span class="stext-105 cl3" th:text="${product.getPrice()+' đ'}">
-									$16.64
-								</span>
+                            <div class="row w-100">
+                                <div class="col-9">
+                                    <div>
+                                        <span  class=" fs-18 cl11">
+                                        <i th:each="i: ${#numbers.sequence(1,5)}" th:if="${product.getRateAvg()>= i}" class="zmdi zmdi-star"></i>
+                                        <i th:each="i: ${#numbers.sequence(1,5)}" th:unless="${product.getRateAvg()>= i}" class="item-rating pointer zmdi zmdi-star-outline"></i>
+                                    </span>
+                                    </div>
+
+                                    <div>
+                                        <span class="stext-105 cl3" th:text="${product.getPrice()+' đ'}">
+                                        $16.64
+                                    </span>
+                                    </div>
+                                </div>
+
+                                <!--<div class="col-2">-->
+                                   <!--<a href="#"> <i class="fa fa-cart-plus" style="font-size:20px"></i></a>-->
+
+                                <!--</div>-->
+                            </div>
                         </div>
 
                         <div class="block2-txt-child2 flex-r p-t-3">
-                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                <img class="icon-heart1 dis-block trans-04" th:src="@{/images/icons/icon-heart-01.png}" alt="ICON">
-                                <img class="icon-heart2 dis-block trans-04 ab-t-l" th:src="@{/images/icons/icon-heart-02.png}" alt="ICON">
+                            <!--<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">-->
+                                <!--<i class="fa fa-cart-plus"></i>-->
+                                <!--<img class="icon-heart1 dis-block trans-04" th:src="@{/images/icons/icon-heart-01.png}" alt="ICON">-->
+                                <!--<img class="icon-heart2 dis-block trans-04 ab-t-l" th:src="@{/images/icons/icon-heart-02.png}" alt="ICON">-->
                             </a>
                         </div>
                     </div>

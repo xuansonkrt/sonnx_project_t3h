@@ -433,6 +433,11 @@ public class OrderController extends BaseController {
                 orderVMS.add(orderVM);
             }
         }
+        if(orderEntityList.size()==0){
+            vm.setFound(false);
+        } else{
+            vm.setFound(true);
+        }
         int productAmount = 0;
         double totalPrice = 0;
         List<CartProductVM> cartProductVMS = new ArrayList<>();
@@ -503,6 +508,7 @@ public class OrderController extends BaseController {
         Order orderEntity = orderService.findOne(orderId);
 
         if(orderEntity != null) {
+            vm.setDeliveryStatusId(orderEntity.getDeliveryStatusId());
             for(OrderProduct orderProduct : orderEntity.getListProductOrders()) {
                 OrderProductVM orderProductVM = new OrderProductVM();
 

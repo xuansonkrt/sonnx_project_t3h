@@ -99,7 +99,15 @@
 <!-- breadcrumb -->
 <div class="container">
     <h2 style="margin-top: 40px; margin-bottom: 30px">Lịch sử mua hàng</h2>
-    <div class="table-responsive">
+    <div th:unless="${vm.isFound()}">
+        <div class="alert alert-danger">
+            Không tìm thấy lịch sử mua hàng
+        </div>
+    </div>
+
+
+
+    <div th:if="${vm.isFound()}" class="table-responsive">
         <table class="table table-bordered">
             <thead>
             <tr>

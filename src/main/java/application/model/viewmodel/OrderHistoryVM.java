@@ -12,6 +12,16 @@ public class OrderHistoryVM {
     private  int productAmount;
     private List<CartProductVM> cartProductVMList;
     private String totalPrice;
+    private boolean found;
+
+
+    public boolean isFound() {
+        return found;
+    }
+
+    public void setFound(boolean found) {
+        this.found = found;
+    }
 
     public String getTotalPrice() {
         return totalPrice;
