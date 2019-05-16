@@ -10,6 +10,15 @@ public class TrackingVM {
     private  int productAmount;
     private List<CartProductVM> cartProductVMList;
     private String totalPrice;
+    private  String keyWord;
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
 
     public int getProductAmount() {
         return productAmount;

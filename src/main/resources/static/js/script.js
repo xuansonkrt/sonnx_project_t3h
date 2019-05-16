@@ -374,3 +374,8 @@ $('.btnCancel').on('click',function () {
     });
 });
 
+
+$('#trackingorder').on('click', function () {
+   var phone = $('#phone').val();
+
+});

@@ -69,6 +69,7 @@ public class TrackingController extends  BaseController{
     public String tracking(Model model,
                                @Valid @ModelAttribute("productname") ProductVM productname,
                                @Valid @ModelAttribute("orderId") OrderVM orderId,
+                               @Valid @ModelAttribute("phone") String phone,
                                HttpServletResponse response,
                                HttpServletRequest request,
                                final Principal principal) {
@@ -84,38 +85,42 @@ public class TrackingController extends  BaseController{
 
         List<Order> orderEntityList = null;
 
-        if(principal != null) {
-            String  username = SecurityContextHolder.getContext().getAuthentication().getName();
-            orderEntityList = orderService.findOrderByGuidOrUserName2(null,username);
+        if(phone!=null){
+            orderEntityList= orderService.findOrderByPhoneNumber(phone);
         } else {
-            if(cookie != null) {
-                for(Cookie c : cookie) {
-                    if(c.getName().equals("guid")) {
-                        flag = true;
-                        guid = c.getValue();
+            if(principal != null) {
+                String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+                orderEntityList = orderService.findOrderByGuidOrUserName2(null,username);
+            } else {
+                if(cookie != null) {
+                    for(Cookie c : cookie) {
+                        if(c.getName().equals("guid")) {
+                            flag = true;
+                            guid = c.getValue();
+                        }
                     }
-                }
-                if(flag == true) {
-                    orderEntityList = orderService.findOrderByGuidOrUserName2(guid,null);
+                    if(flag == true) {
+                        orderEntityList = orderService.findOrderByGuidOrUserName2(guid,null);
+                    }
                 }
             }
         }
 
         List<OrderTrackingVM> orderTrackingVMList = new ArrayList<>();
         if(orderEntityList != null) {
-            for(Order order : orderEntityList) {
+            for (Order order : orderEntityList) {
                 OrderTrackingVM orderTrackingVM = new OrderTrackingVM();
                 orderTrackingVM.setId(order.getId());
                 orderTrackingVM.setCustomerName(order.getCustomerName());
                 orderTrackingVM.setEmail(order.getEmail());
                 orderTrackingVM.setAddress(order.getAddress());
                 orderTrackingVM.setPhoneNumber(order.getPhoneNumber());
-                orderTrackingVM.setPrice( String.format("%,.0f", order.getPrice()));
+                orderTrackingVM.setPrice(String.format("%,.0f", order.getPrice()));
                 orderTrackingVM.setCreatedDate(order.getCreatedDate());
                 orderTrackingVM.setDeliveryStatusId(order.getDeliveryStatusId());
-                double totalPriceOrder=0;
+                double totalPriceOrder = 0;
                 List<OrderProductVM> orderProductVMList = new ArrayList<>();
-                for(OrderProduct orderProduct : order.getListProductOrders()) {
+                for (OrderProduct orderProduct : order.getListProductOrders()) {
                     OrderProductVM orderProductVM = new OrderProductVM();
 
                     orderProductVM.setProductId(orderProduct.getProductEntity().getProduct().getId());
@@ -125,7 +130,7 @@ public class TrackingController extends  BaseController{
                     orderProductVM.setColorName(orderProduct.getProductEntity().getColor().getName());
                     orderProductVM.setSizeName(orderProduct.getProductEntity().getSize().getName());
                     orderProductVM.setPrice((orderProduct.getProductEntity().getProduct().getPrice()));
-                    orderProductVM.setTotalPrice(orderProduct.getProductEntity().getProduct().getPrice()*orderProduct.getAmount());
+                    orderProductVM.setTotalPrice(orderProduct.getProductEntity().getProduct().getPrice() * orderProduct.getAmount());
                     totalPriceOrder += orderProduct.getPrice();
 
                     orderProductVMList.add(orderProductVM);
@@ -135,6 +140,12 @@ public class TrackingController extends  BaseController{
                 orderTrackingVMList.add(orderTrackingVM);
             }
         }
+
+            if(orderEntityList.size()!=0){
+                vm.setKeyWord("OK");
+            } else{
+                vm.setKeyWord("Không tìm thấy đơn hàng");
+            }
 
         //set cart
         int productAmount = 0;

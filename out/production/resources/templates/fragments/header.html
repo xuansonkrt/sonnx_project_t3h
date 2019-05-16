@@ -35,35 +35,60 @@
                 </div>
 
                 <div sec:authorize="isAuthenticated()"  class="right-top-bar text-black-50 flex-w h-full">
-                    <a href="/tracking/" class="flex-c-m trans-04 p-lr-25">
-                        Kiểm tra hóa đơn
-                    </a>
+                    <div class="dropdown" style="">
+                        <a href="#" class="flex-c-m trans-04 p-lr-25"  id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Kiểm tra hóa đơn
+                        </a>
+                        <div style=" z-index: 9999999999999999; width: 300px" class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton2">
+                            Số điện thoại đặt hàng:
+                            <form action="/tracking/">
+                                <div class="input-group mb-3">
 
+                                    <input id="phone" name="phone" type="text" class="form-control" placeholder="Số điện thoại"
+                                           aria-label="Số điện thoại" aria-describedby="basic-addon2">
+                                    <div class="input-group-addon" id="trackingorder">
+                                        <button type="submit" class="input-group-text" id="basic-addon2 " style="cursor: pointer" ><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
 
-                    <a  href="#" class="flex-c-m trans-04 p-lr-25 my-font" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"s>
-                        <!--<a class=" brand-logo" th:href="@{/admin}"><img th:src="${vm.getAvatar()}" alt="logo"/></a>-->
-                        <div  class="nav-profile-img">
-                            <img style="width: 20px"  th:src="${vm.getLayoutHeaderAdminVM().getAvatar()}" class=" mr-3"  alt="image">
-                            <span class="availability-status online"></span>
+                            <div class="dropdown-divider"></div>
+                            <a style="color: black; font-size: 15px" class="dropdown-item" href="/tracking/">
+                                <span class="fa fa-shopping-bag mr-4">       Hóa đơn của tôi</span>
+                            </a>
                         </div>
-                        <!--<img  th:src="${vm.getAvatar()}" class=" brand-logo mr-3" >-->
-                        <span th:text="${vm.getLayoutHeaderAdminVM().getUserName()}"></span>
-                    </a>
-                    <div style=" z-index: 9999999999999999" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a style="color: black;" class="dropdown-item" th:href="@{/user/detail}">
-                            <span class="fa fa-user-circle-o mr-4">       Thông tin cá nhân</span>
-                        </a>
-                        <a style="color: black;" class="dropdown-item" th:href="@{/order/history}">
-                            <span class="fa fa-history mr-4">       Lịch sử mua hàng</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a th:if="${vm.getLayoutHeaderAdminVM().isAdmin()}" style="color: black;" class="dropdown-item" href="/admin/report">
-                            <span class="fa fa-group mr-4">       Trang quản trị</span>
-                        </a>
-                        <a style="color: black;" class="dropdown-item" th:href="@{/logout}">
-                            <span class="fa fa-sign-in mr-4">       Đăng xuất</span>
-                        </a>
                     </div>
+
+                    <div class="dropdown">
+                        <a  href="#" class="flex-c-m trans-04 p-lr-25 my-font" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!--<a class=" brand-logo" th:href="@{/admin}"><img th:src="${vm.getAvatar()}" alt="logo"/></a>-->
+                            <div  class="nav-profile-img">
+                                <img style="width: 20px"  th:src="${vm.getLayoutHeaderAdminVM().getAvatar()}" class=" mr-3"  alt="image">
+                                <span class="availability-status online"></span>
+                            </div>
+                            <!--<img  th:src="${vm.getAvatar()}" class=" brand-logo mr-3" >-->
+                            <span th:text="${vm.getLayoutHeaderAdminVM().getUserName()}"></span>
+                        </a>
+                        <div style=" z-index: 9999999999999999; font-size: 15px" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a style="color: black; font-size: 15px" class="dropdown-item" th:href="@{/user/detail}">
+                                <span class="fa fa-user-circle-o mr-4">       Thông tin cá nhân</span>
+                            </a>
+                            <a style="color: black; font-size: 15px" class="dropdown-item" th:href="@{/order/history}">
+                                <span class="fa fa-history mr-4">       Lịch sử mua hàng</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a th:if="${vm.getLayoutHeaderAdminVM().isAdmin()}" style="color: black;  font-size: 15px" class="dropdown-item" href="/admin/report">
+                                <span class="fa fa-group mr-4">       Trang quản trị</span>
+                            </a>
+                            <a style="color: black;  font-size: 15px" class="dropdown-item" th:href="@{/logout}">
+                                <span class="fa fa-sign-in mr-4">       Đăng xuất</span>
+                            </a>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
             </div>
         </div>
@@ -227,7 +252,9 @@
 </header>
 
 
+<script th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
 
+<script th:src="@{/js/script.js}"></script>
 
 </body>
 </html>

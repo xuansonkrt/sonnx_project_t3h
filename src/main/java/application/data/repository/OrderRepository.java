@@ -25,6 +25,12 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "AND o.deliveryStatusId<3 ")
     List<Order> findOrderByGuidOrUserName2(@Param("guid") String guid, @Param("userName") String userName);
 
+
+    @Query("SELECT o FROM dbo_order o " +
+            "WHERE  o.phoneNumber=:phoneNumber " +
+            "AND o.deliveryStatusId<3 ")
+    List<Order> findOrderByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
     @Query("SELECT p FROM dbo_order p " +
             "WHERE  (:customerName IS NULL OR UPPER(p.customerName) LIKE CONCAT('%',UPPER(:customerName),'%'))")
     Page<Order> getListOrderByCustomerName(Pageable pageable, @Param("customerName") String customerName);

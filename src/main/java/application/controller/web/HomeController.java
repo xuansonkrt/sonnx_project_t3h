@@ -286,7 +286,7 @@ public class HomeController extends BaseController {
 
         if (productName.getName() != null && !productName.getName().isEmpty()) {
             productPage = productService.getListProduct(pageable,categoryId,productName.getName().trim(),colorId,sizeId,supplyId);
-            vm.setKeyWord("Find with key: " + productName.getName());
+            vm.setKeyWord("Tìm kiếm: " + productName.getName());
         } else {
             productPage = productService.getListProduct(pageable,categoryId,null,colorId,sizeId,supplyId);
         }
@@ -369,6 +369,11 @@ public class HomeController extends BaseController {
             //logger.error(e.getMessage());
         }
 
+        if(productVMList.size()==0){
+            vm.setFound(false);
+        } else{
+            vm.setFound(true);
+        }
         vm.setCartProductVMList(cartProductVMS);
         vm.setProductAmount(productAmount);
         vm.setTotalPrice(totalPrice);

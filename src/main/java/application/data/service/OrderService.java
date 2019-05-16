@@ -55,4 +55,8 @@ public class OrderService {
     public List<Order> findOrderByGuidOrUserName2(String guid, String userName){
         return orderRepository.findOrderByGuidOrUserName2(guid,userName);
     }
+
+    public List<Order> findOrderByPhoneNumber( String phoneNumber){
+        return orderRepository.findOrderByPhoneNumber(phoneNumber);
+    }
 }

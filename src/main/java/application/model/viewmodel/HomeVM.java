@@ -19,6 +19,16 @@ public  class HomeVM {
     private String totalPrice;
     private int productAmount;
     private List<ProductEntityVM> productEntityVMList;
+    private boolean found;
+
+
+    public boolean isFound() {
+        return found;
+    }
+
+    public void setFound(boolean found) {
+        this.found = found;
+    }
 
     public List<ProductEntityVM> getProductEntityVMList() {
         return productEntityVMList;

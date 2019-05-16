@@ -95,7 +95,13 @@
 
  <!--breadcrumb -->
 <div class="container">
+
     <h2 style="margin-top: 40px; margin-bottom: 30px">Hóa đơn của bạn</h2>
+    <div th:if="${vm.getKeyWord()!='OK'}">
+        <div class="alert alert-danger"  th:text="${vm.getKeyWord()}">
+            text
+        </div>
+    </div>
     <div class="table-responsive">
         <div class="row p-b-3"   th:each="order : ${vm.getOrderTrackingVMList()}" >
             <div class="col-lg-12 col-xl-12 m-lr-auto m-b-50">
