@@ -1038,6 +1038,10 @@ html.dark .checkbox-text-dark input[type="checkbox"]:checked + label:after,
     /*padding: 5px;*/
 }
 
+.swal2-container{
+    z-index: 99999 !important;
+}
+
 
 /*==================================================================================================================*/
 /*START-CSS:OPEN CART CONTENT

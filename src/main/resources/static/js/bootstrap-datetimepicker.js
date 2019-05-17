@@ -1,4 +1,4 @@
-/*! version : 4.17.43
+glyphicon/*! version : 4.17.43
  =========================================================
  bootstrap-datetimejs
  https://github.com/Eonasdan/bootstrap-datetimepicker
@@ -2450,8 +2450,8 @@
             date: 'glyphicon glyphicon-calendar',
             up: 'glyphicon glyphicon-chevron-up',
             down: 'glyphicon glyphicon-chevron-down',
-            previous: 'glyphicon glyphicon-chevron-left',
-            next: 'glyphicon glyphicon-chevron-right',
+            previous: 'fa fa-long-arrow-left',
+            next: 'fa fa-long-arrow-right',
             today: 'glyphicon glyphicon-screenshot',
             clear: 'glyphicon glyphicon-trash',
             close: 'glyphicon glyphicon-remove'

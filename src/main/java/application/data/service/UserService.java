@@ -96,6 +96,7 @@ public class UserService {
             user.setPasswordHash(passwordEncoder.encode(user.getPassword()));
             user.setCreadedDate(new Date());
             user.setAvatar("/link/avatar.jpg");
+            user.setStatus(1);
             // save user
             userRepository.save(user);
 

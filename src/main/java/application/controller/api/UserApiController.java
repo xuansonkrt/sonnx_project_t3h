@@ -75,14 +75,15 @@ public class UserApiController {
     }
 
     @GetMapping("/delete/{userId}")
-    public BaseApiResult deleteUser(@PathVariable int userId) {
+    public @ResponseBody  BaseApiResult deleteUser(@PathVariable int userId) {
         BaseApiResult result= new BaseApiResult();
         try {
             User user = userService.findOne(userId);
             user.setStatus(0);
-
+            userService.updateUser(user);
             result.setSuccess(true);
             result.setMessage("Xóa tài khoản thành công");
+            return result;
 
         }catch (Exception e) {
             result.setSuccess(false);

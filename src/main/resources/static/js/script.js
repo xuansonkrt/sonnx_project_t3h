@@ -286,8 +286,6 @@ $('.delUser').on('click', function(){
         cancelButtonText:'Hủy'
     }).then(function(result)  {
         if (result.value) {
-
-
             NProgress.start();
             var linkGet = "/api/user/delete/"+id;
             axios.get(linkGet).then(function(res){
