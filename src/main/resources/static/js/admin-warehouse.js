@@ -107,9 +107,13 @@ $(document).ready(function () {
             NProgress.done();
             if(res.data.success) {
                 swal(
-                    'Good job!',
-                    res.data.message,
-                    'success'
+                    {
+                        title:'Thành công',
+                        text:res.data.message,
+                        type:'success',
+                        // showCancelButton: false,
+                        timer:1500
+                    }
                 ).then(function() {
                     location.reload();
                 });

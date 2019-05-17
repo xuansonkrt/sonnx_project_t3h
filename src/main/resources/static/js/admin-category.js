@@ -4,32 +4,53 @@ $(document).ready(function () {
         var categoryId = $(this).data("category");
         console.log(categoryId);
         var linkPost="/api/category/delete/"+categoryId;
-        NProgress.start();
-        axios.post(linkPost).then(function(res){
-            NProgress.done();
-            if(res.data.success) {
-                swal(
-                    'Good job!',
-                    res.data.message,
-                    'success'
-                ).then(function() {
-                    location.reload();
+
+        swal({
+            title: 'Bạn có chắc chắn muốn xóa danh mục?',
+            text: "Bạn sẽ không có khả năng khôi phục!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xóa',
+            cancelButtonText:'Hủy'
+        }).then(function(result)  {
+            if (result.value) {
+                NProgress.start();
+                axios.post(linkPost).then(function(res){
+                    NProgress.done();
+                    if(res.data.success) {
+                        swal(
+                            {
+                                title:'Thành công',
+                                text:'Xóa thành công',
+                                type:'success',
+                                showCancelButton: false,
+                                timer:1500
+                            }
+                        ).then(function() {
+                            location.reload();
+                        });
+                    } else {
+                        swal(
+                            'Error',
+                            res.data.message,
+                            'error'
+                        );
+                    }
+                }, function(err){
+                    NProgress.done();
+                    swal(
+                        'Thất bại',
+                        'Lỗi ghi dữ liệu',
+                        'error'
+                    );
                 });
-            } else {
-                swal(
-                    'Error',
-                    res.data.message,
-                    'error'
-                );
+
+
             }
-        }, function(err){
-            NProgress.done();
-            swal(
-                'Error',
-                'Some error when deleting category',
-                'error'
-            );
         });
+
     });
 
     $(".edit-category").on("click", function () {
@@ -81,9 +102,13 @@ $(document).ready(function () {
            NProgress.done();
             if(res.data.success) {
                 swal(
-                    'Good job!',
-                    res.data.message,
-                    'success'
+                    {
+                        title:'Thành công',
+                        text:'Ghi dữ liệu thành công',
+                        type:'success',
+                        showCancelButton: false,
+                        timer:1500
+                    }
                 ).then(function() {
                     location.reload();
                 });

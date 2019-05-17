@@ -3,6 +3,7 @@ package application.controller.web;
 import application.data.model.*;
 import application.data.service.*;
 import application.extension.DELIVERYSTATUS;
+import application.extension.MyFunction;
 import application.model.api.BaseApiResult;
 import application.model.api.DataApiResult;
 import application.model.dto.OrderDTO;
@@ -593,10 +594,29 @@ public class OrderController extends BaseController {
             productVM.setPrice(product.getPrice());
             productVM.setShortDesc(product.getShortDesc());
          //   productVM.setCreatedDate(product.getCreatedDate());
+            productVM.setSizeVMList(MyFunction.toSizeVMList(sizeService.getListSizeByProductId(product.getId())));
+            productVM.setColorVMList(MyFunction.toColorVMList(colorService.getListColorByProductId(product.getId())));
+            productVM.setProductImageVMList(MyFunction.toProductImageVMList(product.getProductImageList()));
             productVM.setCategoryId(product.getCategoryId());
             productVMList.add(productVM);
         }
 
+
+        List<ProductEntity> productEntityList = productEntityService.getAll();
+        List<ProductEntityVM> productEntityVMList = new ArrayList<>();
+        for(ProductEntity item : productEntityList){
+            ProductEntityVM entityVM = new ProductEntityVM();
+            entityVM.setColorName(item.getColor().getName());
+            entityVM.setSizeName(item.getSize().getName());
+            entityVM.setAmount(item.getAmount());
+            entityVM.setProductId(item.getProductId());
+            entityVM.setColorId(item.getColorId());
+            entityVM.setSizeId(item.getSizeId());
+            entityVM.setProductEntityId(item.getId());
+            productEntityVMList.add(entityVM);
+        }
+
+        vm.setProductEntityVMList(productEntityVMList);
         vm.setProductVMList(productVMList);
         vm.setProductAmount(productAmount);
         vm.setTotalPrice(totalPrice);

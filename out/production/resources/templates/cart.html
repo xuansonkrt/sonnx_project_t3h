@@ -228,35 +228,38 @@
                                         <input required type="text" class="form-control" name="phoneNumber" id="input-phone-number" th:value="${order.phoneNumber}">
                                     </div>
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-5">
-                                            Tạm tính:
-                                        </div>
-                                        <div class="col-7 text-bold" th:text="${vm.getTotalPrice() +' đ'}" style="text-align: right">
-                                            0
-                                        </div>
-                                    </div>
+                                    <div th:if="${vm.getTotalPrice()!='0'}">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                Tạm tính:
+                                            </div>
+                                            <div class="col-7 text-bold" th:text="${vm.getTotalPrice() +' đ'}" style="text-align: right">
+                                                0
 
-                                    <div class="row">
-                                        <div class="col-6">
-                                            Phí giao hàng:
+                                            </div>
                                         </div>
-                                        <div class="col-6 text-bold" th:text="${vm.getShipPrice() +' đ'}"  style="text-align: right">
-                                            0
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            Tổng tiền:
-                                        </div>
-                                        <div class="col-6 text-bold" th:text="${vm.getTotal() +' đ'}" style="text-align: right">
-                                            0
-                                        </div>
-                                    </div>
 
-                                    <div style="text-align: right">
-                                        <!--<button class="btn btn-primary mt-2" type="submit" id="checkout-sonnx" style="background-color: #6c7ae0" >Thanh toán</button>-->
-                                        <input type="submit" value="Thanh toán" class="btn btn-primary mt-2" style="background-color: #6c7ae0">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                Phí giao hàng:
+                                            </div>
+                                            <div class="col-6 text-bold" th:text="${vm.getShipPrice() +' đ'}"  style="text-align: right">
+                                                0
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                Tổng tiền:
+                                            </div>
+                                            <div class="col-6 text-bold" th:text="${vm.getTotal() +' đ'}" style="text-align: right">
+                                                0
+                                            </div>
+                                        </div>
+
+                                        <div style="text-align: right">
+                                            <!--<button class="btn btn-primary mt-2" type="submit" id="checkout-sonnx" style="background-color: #6c7ae0" >Thanh toán</button>-->
+                                            <input  type="submit" value="Thanh toán" class="btn btn-primary mt-2" style="background-color: #6c7ae0; cursor: pointer">
+                                        </div>
                                     </div>
                                 </fieldset>
                         </form>

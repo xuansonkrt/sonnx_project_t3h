@@ -67,20 +67,23 @@
                                     <th style="background-color: #1ab7ea; text-align: center">Mã</th>
                                     <th style="background-color: #1ab7ea; text-align: center">Tên</th>
                                     <th style="background-color: #1ab7ea; text-align: center">Giới thiệu</th>
-                                    <th style="background-color: #1ab7ea; text-align: center; width: 100px">Chức năng</th>
+                                    <th style="background-color: #1ab7ea; text-align: center; width: 100px"></th>
+                                    <th style="background-color: #1ab7ea; text-align: center; width: 100px"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="category,iter:${vm.getCategoryVMList()}">
-                                    <td th:text="${iter.index+1}"></td>
+                                    <td th:text="${iter.index+1}" style="text-align: center"></td>
                                     <td th:text="${category.getId()}"></td>
                                     <td th:text="${category.getName()}"></td>
                                     <td th:text="${category.getShortDesc()}"></td>
-                                    <td >
-                                        <i class="fa fa-edit tooltip-test edit-category" th:attr="data-category = ${category.getId()}" data-toggle="modal" title="Edit Category" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px"></i>
-
-                                        <i class="fa fa-trash-o tooltip-test del-category" th:attr="data-category = ${category.getId()}" style="cursor: pointer; color: red; font-size: 20px"></i>
-
+                                    <td  style="text-align: center">
+                                        <i class="fa fa-edit tooltip-test edit-category" title="Sửa" th:attr="data-category = ${category.getId()}" data-toggle="modal" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px"></i>
+                                        <!--<i class="fa fa-trash-o tooltip-test del-category" th:attr="data-category = ${category.getId()}" style="cursor: pointer; color: red; font-size: 20px"></i>-->
+                                    </td>
+                                    <td  style="text-align: center">
+                                        <!--<i class="fa fa-edit tooltip-test edit-category" th:attr="data-category = ${category.getId()}" data-toggle="modal" title="Edit Category" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px"></i>-->
+                                        <i class="fa fa-trash-o tooltip-test del-category" title="Xóa" th:attr="data-category = ${category.getId()}" style="cursor: pointer; color: red; font-size: 20px"></i>
                                     </td>
                                 </tr>
                             </tbody>

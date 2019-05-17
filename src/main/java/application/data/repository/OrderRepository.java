@@ -32,7 +32,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findOrderByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     @Query("SELECT p FROM dbo_order p " +
-            "WHERE  (:customerName IS NULL OR UPPER(p.customerName) LIKE CONCAT('%',UPPER(:customerName),'%'))")
+            "WHERE  (:customerName IS NULL OR UPPER(p.customerName) LIKE CONCAT('%',UPPER(:customerName),'%')) " +
+            "OR  (:customerName IS NULL OR UPPER(p.phoneNumber) LIKE CONCAT('%',UPPER(:customerName),'%')) " +
+            "ORDER BY p.createdDate desc ")
     Page<Order> getListOrderByCustomerName(Pageable pageable, @Param("customerName") String customerName);
 
     @Query (value = "CALL TotalPriceOfWeek()", nativeQuery = true)

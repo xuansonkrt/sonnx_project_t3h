@@ -15,6 +15,15 @@ public class OrderDetailVM {
     private String keyWord;
     private List<ProductVM> productVMList;
     private int deliveryStatusId;
+    private List<ProductEntityVM> productEntityVMList;
+
+    public List<ProductEntityVM> getProductEntityVMList() {
+        return productEntityVMList;
+    }
+
+    public void setProductEntityVMList(List<ProductEntityVM> productEntityVMList) {
+        this.productEntityVMList = productEntityVMList;
+    }
 
     public int getDeliveryStatusId() {
         return deliveryStatusId;

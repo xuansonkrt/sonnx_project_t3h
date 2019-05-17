@@ -1,14 +1,9 @@
 package application.controller.web;
 
 import application.constant.StatusRegisterUserEnum;
-import application.data.model.Cart;
-import application.data.model.CartProduct;
-import application.data.model.Product;
-import application.data.model.User;
-import application.data.service.CartProductService;
-import application.data.service.CartService;
-import application.data.service.ProductService;
-import application.data.service.UserService;
+import application.data.model.*;
+import application.data.service.*;
+import application.extension.MyFunction;
 import application.model.dto.ProductDTO;
 import application.model.dto.UserDTO;
 import application.model.viewmodel.*;
@@ -50,6 +45,19 @@ public class UserController extends  BaseController{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private SizeService sizeService;
+
+
+    @Autowired
+    private ColorService colorService;
+
+    @Autowired
+    private ProductEntityService productEntityService;
 
     @GetMapping(value = {"/sign-in"})
     public String signIn(Model model,
@@ -146,6 +154,9 @@ public class UserController extends  BaseController{
             productVM.setShortDesc(product.getShortDesc());
            // productVM.setCreatedDate(product.getCreatedDate());
             productVM.setCategoryId(product.getCategoryId());
+            productVM.setSizeVMList(MyFunction.toSizeVMList(sizeService.getListSizeByProductId(product.getId())));
+            productVM.setColorVMList(MyFunction.toColorVMList(colorService.getListColorByProductId(product.getId())));
+            productVM.setProductImageVMList(MyFunction.toProductImageVMList(product.getProductImageList()));
             productVMList.add(productVM);
         }
 
@@ -190,6 +201,22 @@ public class UserController extends  BaseController{
         } catch (Exception e) {
             //logger.error(e.getMessage());
         }
+
+        List<ProductEntity> productEntityList = productEntityService.getAll();
+        List<ProductEntityVM> productEntityVMList = new ArrayList<>();
+        for(ProductEntity item : productEntityList){
+            ProductEntityVM entityVM = new ProductEntityVM();
+            entityVM.setColorName(item.getColor().getName());
+            entityVM.setSizeName(item.getSize().getName());
+            entityVM.setAmount(item.getAmount());
+            entityVM.setProductId(item.getProductId());
+            entityVM.setColorId(item.getColorId());
+            entityVM.setSizeId(item.getSizeId());
+            entityVM.setProductEntityId(item.getId());
+            productEntityVMList.add(entityVM);
+        }
+
+        vm.setProductEntityVMList(productEntityVMList);
 
         vm.setCartProductVMList(cartProductVMS);
         vm.setProductAmount(productAmount);

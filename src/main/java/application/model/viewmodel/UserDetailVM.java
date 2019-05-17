@@ -11,7 +11,15 @@ public class UserDetailVM {
     private List<CartProductVM> cartProductVMList;
     private double totalPrice;
     private int productAmount;
+    private List<ProductEntityVM> productEntityVMList;
 
+    public List<ProductEntityVM> getProductEntityVMList() {
+        return productEntityVMList;
+    }
+
+    public void setProductEntityVMList(List<ProductEntityVM> productEntityVMList) {
+        this.productEntityVMList = productEntityVMList;
+    }
 
     public List<CartProductVM> getCartProductVMList() {
         return cartProductVMList;

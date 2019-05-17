@@ -3,32 +3,54 @@ $(document).ready(function () {
     $(".del-size").on("click", function () {
         var sizeId = $(this).data("size");
         var linkPost="/api/size/delete/"+sizeId;
-        NProgress.start();
-        axios.post(linkPost).then(function(res){
-            NProgress.done();
-            if(res.data.success) {
-                swal(
-                    'Good job!',
-                    res.data.message,
-                    'success'
-                ).then(function() {
-                    location.reload();
+        swal({
+            title: 'Bạn có chắc chắn muốn xóa size?',
+            text: "Bạn sẽ không có khả năng khôi phục!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xóa',
+            cancelButtonText:'Hủy'
+        }).then(function(result)  {
+            if (result.value) {
+                NProgress.start();
+                axios.post(linkPost).then(function(res){
+                    NProgress.done();
+                    if(res.data.success) {
+                        swal(
+                            {
+                                title:'Thành công',
+                                text:'Xóa thành công',
+                                type:'success',
+                                showCancelButton: false,
+                                timer:1500
+                            }
+                        ).then(function() {
+                            location.reload();
+                        });
+                    } else {
+                        swal(
+                            'Error',
+                            res.data.message,
+                            'error'
+                        );
+                    }
+                }, function(err){
+                    NProgress.done();
+                    swal(
+                        'Error',
+                        'Some error when deleting size',
+                        'error'
+                    );
                 });
-            } else {
-                swal(
-                    'Error',
-                    res.data.message,
-                    'error'
-                );
+
+
+
+
             }
-        }, function(err){
-            NProgress.done();
-            swal(
-                'Error',
-                'Some error when deleting size',
-                'error'
-            );
         });
+
     });
 
     $(".edit-size").on("click", function () {
@@ -80,9 +102,13 @@ $(document).ready(function () {
            NProgress.done();
             if(res.data.success) {
                 swal(
-                    'Good job!',
-                    res.data.message,
-                    'success'
+                    {
+                        title:'Thành công',
+                        text:'Cập nhật thành công',
+                        type:'success',
+                        showCancelButton: false,
+                        timer:1500
+                    }
                 ).then(function() {
                     location.reload();
                 });

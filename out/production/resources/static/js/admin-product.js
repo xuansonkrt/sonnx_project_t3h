@@ -87,8 +87,8 @@ $(document).ready(function() {
     $(".btn-save-product").on("click", function () {
         if($("#input-product-name").val() === "" || $("#input-product-desc").val() === "" || $("#input-product-price").val()==="") {
             swal(
-                'Error',
-                'You need to fill all values',
+                'Thất bại',
+                'Thông tin chưa được điền đầy đủ',
                 'error'
             );
             return;
@@ -114,9 +114,13 @@ $(document).ready(function() {
             NProgress.done();
             if(res.data.success) {
                 swal(
-                    'Good job!',
-                    res.data.message,
-                    'success'
+                    {
+                        title:'Thành công',
+                        text:res.data.message,
+                        type:'success',
+                        showCancelButton: false,
+                        timer:1500
+                    }
                 ).then(function() {
                     location.reload();
                 });
@@ -160,9 +164,8 @@ $(document).ready(function() {
     });
 
     $("#btn-add-image").click(function (e) {
-        debugger
         var str=$("#input-image")[0].files[0];
-        if(typeof(str) == "undefined"){
+        if(typeof(str) == "undefined" && str ==null){
 
             swal(
                 'Error',
@@ -183,6 +186,7 @@ $(document).ready(function() {
             formData.append('file',$("#input-image")[0].files[0]);
             axios.post("/api/upload/upload-image", formData).then(function (res) {
                 NProgress.done();
+                console.log("image: ", res.data);
                 if(res.data.success) {
                     flag=1;
                     $("#image-link").val(res.data.link);
@@ -195,8 +199,7 @@ $(document).ready(function() {
             });
         }
 
-
-        if(flag==1||$("#image-link").val()!=""){
+        if($("#image-link").val()!=""){
             var productImage={};
             productImage.title= $("#input-title").val();
             productImage.link=  $("#image-link").val();
@@ -210,6 +213,7 @@ $(document).ready(function() {
                 dataType:"json",
                 contentType: "application/json",
                 success: function (data) {
+                    console.log("load len: ", data.data);
                     if (data.success === true) {
                         if(add==1)
                         {
@@ -223,7 +227,7 @@ $(document).ready(function() {
 
                             var image=$("<img>")
                             image.attr("src",data.data.link);
-                            image.attr("width","100%");
+                            image.attr("width","100px");
                             image.attr("id",data.data.id);
                             image.attr("onclick","myFunction(this)");
                             image.attr("class","image-product-2");
@@ -252,39 +256,57 @@ $(document).ready(function() {
 
     $(".del-product").click(function () {
         var productId= $(this).data("product");
-        $.ajax({
-            url:"/api/product/delete/"+productId,
-            data: JSON.stringify(productId),
-            type:"POST",
-            dataType:"json",
-            contentType: "application/json",
-            success: function (data) {
-                if (data.success === true) {
-                    swal(
-                        'Good job!',
-                        data.message,
-                        'success'
-                    ).then(function() {
-                        location.reload();
-                    });
-                }
-                else {
-                    swal(
-                        'Error',
-                        data.message,
-                        'error'
-                    );
-                }
-            }.bind(this),
-            error: function (e) {
-                swal(
-                    'Error',
-                    'Some error when delete product',
-                    'error'
-                );
-                console.log(e);
+        swal({
+            title: 'Bạn có chắc chắn muốn xóa sản phẩm?',
+            text: "Bạn sẽ không có khả năng khôi phục!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xóa',
+            cancelButtonText:'Hủy'
+        }).then(function(result)  {
+            if (result.value) {
+                $.ajax({
+                    url:"/api/product/delete/"+productId,
+                    data: JSON.stringify(productId),
+                    type:"POST",
+                    dataType:"json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        if (data.success === true) {
+                            swal(
+                                {
+                                    title:'Thành công',
+                                    text:'Xóa thành công',
+                                    type:'success',
+                                    showCancelButton: false,
+                                    timer:1500
+                                }
+                            ).then(function() {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            swal(
+                                'Error',
+                                data.message,
+                                'error'
+                            );
+                        }
+                    }.bind(this),
+                    error: function (e) {
+                        swal(
+                            'Error',
+                            'Some error when delete product',
+                            'error'
+                        );
+                        console.log(e);
+                    }
+                });
             }
         });
+
 
     });
 

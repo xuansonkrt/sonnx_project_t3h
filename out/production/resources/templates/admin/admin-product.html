@@ -132,12 +132,18 @@
                                 <th style="background-color: #1ab7ea; text-align: center">
 
                                 </th>
+                                <th style="background-color: #1ab7ea; text-align: center">
+
+                                </th>
+                                <th style="background-color: #1ab7ea; text-align: center">
+
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="product,iter : ${vm.getProductVMList()}">
-                                <td  th:text="${page.number*page.size + iter.index+1}"></td>
-                                <td  th:text="${product.getName()}"></td>
+                                <td  th:text="${page.number*page.size + iter.index+1}" style="text-align: center;"></td>
+                                <td  th:text="${product.getName()}" style="width: 250px"></td>
                                 <td  th:text="${product.getCategoryName()}"></td>
                                 <td th:text="${product.getSupplyName()}"></td>
                                 <!--<td  th:text="${product.getPromotionName()}"></td>-->
@@ -146,7 +152,23 @@
                                 <td  th:text="${product.getCreatedDate()}"></td>
                                 <td style="text-align: center" >
                                     <i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px" title="Edit"></i>
+                                    <!--<i id="" class=" addImage fa fa-file-image-o tooltip-test image-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#ImageModal" style="cursor: pointer; color: blue; font-size: 20px" title="Add image"></i>-->
+                                    <!--<i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px" title="Delete"></i>-->
+                                    <!--<i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#DescriptionModal" style="cursor: pointer; font-size: 20px" title="Edit"></i>-->
+
+
+                                </td>
+                                <td style="text-align: center" >
+                                    <!--<i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px" title="Edit"></i>-->
                                     <i id="" class=" addImage fa fa-file-image-o tooltip-test image-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#ImageModal" style="cursor: pointer; color: blue; font-size: 20px" title="Add image"></i>
+                                    <!--<i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px" title="Delete"></i>-->
+                                    <!--<i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#DescriptionModal" style="cursor: pointer; font-size: 20px" title="Edit"></i>-->
+
+
+                                </td>
+                                <td style="text-align: center" >
+                                    <!--<i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#exampleModalLong" style="cursor: pointer; font-size: 20px" title="Edit"></i>-->
+                                    <!--<i id="" class=" addImage fa fa-file-image-o tooltip-test image-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#ImageModal" style="cursor: pointer; color: blue; font-size: 20px" title="Add image"></i>-->
                                     <i class="fa fa-trash-o tooltip-test del-product" th:attr="data-product = ${product.getId()}" style="cursor: pointer; color: red; font-size: 20px" title="Delete"></i>
                                     <!--<i class="fa fa-edit tooltip-test edit-product" th:attr="data-product = ${product.getId()}" data-toggle="modal" data-target="#DescriptionModal" style="cursor: pointer; font-size: 20px" title="Edit"></i>-->
 

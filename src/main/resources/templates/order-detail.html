@@ -256,8 +256,8 @@
                         <div class="block2-pic hov-img0">
                             <img th:src="${product.getMainImage()}" alt="IMG-PRODUCT">
 
-                            <a th:attr="data-id=${product.getId()}" href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1 quickView">
-                                Quick View
+                            <a href="#" th:attr="data-product=${product.getId()}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                Xem nhanh
                             </a>
                         </div>
 

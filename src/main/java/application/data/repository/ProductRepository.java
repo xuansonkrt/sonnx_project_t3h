@@ -47,7 +47,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 //            " and pe.size_id=:sizeId and upper(:productName) like concat('%',UPPER(p.name),'%')", nativeQuery = true)
 
     @Query("SELECT p FROM dbo_product p " +
-            "INNER JOIN p.productEntityList pe " +
+            "LEFT  JOIN p.productEntityList pe " +
             "WHERE (:categoryId IS NULL OR (p.categoryId = :categoryId)) " +
             "AND (:colorId IS NULL OR (pe.colorId = :colorId)) " +
             "AND (:sizeId IS NULL OR (pe.sizeId = :sizeId)) " +
