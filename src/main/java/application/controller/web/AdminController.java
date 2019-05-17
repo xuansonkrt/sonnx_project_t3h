@@ -560,10 +560,18 @@ public class AdminController extends  BaseController {
         Page<Order> orderPage = null;
 
         if (customerName.getCustomerName() != null && !customerName.getCustomerName().isEmpty()) {
-            orderPage = orderService.getListOrderByCustomerName(pageable,customerName.getCustomerName().trim());
+            if(customerName.getDeliveryStatusId()==0)
+                orderPage = orderService.getListOrderByCustomerName(pageable,customerName.getCustomerName().trim());
+            else
+                orderPage = orderService.getListOrderByCustomerName2(pageable,customerName.getCustomerName().trim(),customerName.getDeliveryStatusId());
+
             vm.setKeyWord("Tìm kiếm: " + customerName.getCustomerName());
         } else {
-            orderPage = orderService.getListOrderByCustomerName(pageable,null);
+            if(customerName.getDeliveryStatusId()==0)
+                orderPage = orderService.getListOrderByCustomerName(pageable,null);
+            else
+                orderPage = orderService.getListOrderByCustomerName2(pageable,null,customerName.getDeliveryStatusId());
+
         }
 
 
@@ -577,6 +585,7 @@ public class AdminController extends  BaseController {
             }
             orderVM.setCreatedDate(order.getCreatedDate());
             orderVM.setCustomerName(order.getCustomerName());
+            orderVM.setPhoneNumber(order.getPhoneNumber());
             orderVM.setPrice(order.getPrice());
             orderVM.setId(order.getId());
             orderVM.setDeliveryStatusId(order.getDeliveryStatusId());

@@ -40,6 +40,9 @@ public class OrderService {
     public  Page<Order> getListOrderByCustomerName(Pageable pageable, String customerName){
         return  orderRepository.getListOrderByCustomerName(pageable,customerName);
     }
+    public  Page<Order> getListOrderByCustomerName2(Pageable pageable, String customerName, Integer deliveryStatusId){
+        return  orderRepository.getListOrderByCustomerName2(pageable,customerName,deliveryStatusId);
+    }
     public Double totalPriceOfWeek(){
         return orderRepository.totalPriceOfWeek();
     }

@@ -508,3 +508,6 @@ function getAmount() {
 
 };
 
+$('#selectDeliveryStaus').on('change',function () {
+   $('#myFormOrderList').trigger('submit');
+});

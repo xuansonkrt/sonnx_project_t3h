@@ -34,8 +34,17 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("SELECT p FROM dbo_order p " +
             "WHERE  (:customerName IS NULL OR UPPER(p.customerName) LIKE CONCAT('%',UPPER(:customerName),'%')) " +
             "OR  (:customerName IS NULL OR UPPER(p.phoneNumber) LIKE CONCAT('%',UPPER(:customerName),'%')) " +
+            "OR  (:customerName IS NULL OR UPPER(p.id) LIKE CONCAT('%',UPPER(:customerName),'%')) " +
             "ORDER BY p.createdDate desc ")
     Page<Order> getListOrderByCustomerName(Pageable pageable, @Param("customerName") String customerName);
+
+    @Query("SELECT p FROM dbo_order p " +
+            "WHERE  ((:customerName IS NULL OR UPPER(p.customerName) LIKE CONCAT('%',UPPER(:customerName),'%')) " +
+            "OR  (:customerName IS NULL OR UPPER(p.phoneNumber) LIKE CONCAT('%',UPPER(:customerName),'%')) " +
+            "OR  (:customerName IS NULL OR UPPER(p.id) LIKE CONCAT('%',UPPER(:customerName),'%'))) " +
+            "AND p.deliveryStatusId=:deliveryStatusId " +
+            "ORDER BY p.createdDate desc ")
+    Page<Order> getListOrderByCustomerName2(Pageable pageable, @Param("customerName") String customerName,@Param("deliveryStatusId") Integer deliveryStatusId);
 
     @Query (value = "CALL TotalPriceOfWeek()", nativeQuery = true)
     Double totalPriceOfWeek();
