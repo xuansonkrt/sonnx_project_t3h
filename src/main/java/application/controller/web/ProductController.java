@@ -86,7 +86,7 @@ public class ProductController extends  BaseController{
         }
 
 
-        List<ProductEntity> productEntityList = productEntityService.findByProductId(productId);
+        List<ProductEntity> productEntityList = productEntityService.getAll();
         List<ProductEntityVM> productEntityVMList = new ArrayList<>();
         for(ProductEntity item : productEntityList){
             ProductEntityVM entityVM = new ProductEntityVM();
